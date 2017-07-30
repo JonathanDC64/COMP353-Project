@@ -1,6 +1,8 @@
 CREATE TABLE Users(
     UsersID INT(8) UNSIGNED AUTO_INCREMENT,
 	UserTypeID INT(8) UNSIGNED,
+	Username VARCHAR(30),
+	Password VARCHAR(95),
 	First_Name VARCHAR(30),
 	Last_Name VARCHAR(30),
 	Phone_Number VARCHAR(10),
@@ -17,12 +19,13 @@ CREATE TABLE Experience(
 CREATE TABLE UserType(
 	UserTypeID INT(8) UNSIGNED AUTO_INCREMENT,
     AccessRightsID INT(8) UNSIGNED,
-	Role VARCHAR(50),
+	Role VARCHAR(30),
     PRIMARY KEY(UserTypeID)
 );	
 
 CREATE TABLE AccessRights(
     AccessRightsID INT(8) UNSIGNED AUTO_INCREMENT,
+	Name VARCHAR(30),
     AccessLevel INT(2),
     PRIMARY KEY(AccessRightsID)
 );
@@ -50,14 +53,14 @@ ALTER TABLE Experience
 	
 CREATE TABLE Treatment(
     TreatmentID INT(8) UNSIGNED AUTO_INCREMENT,
-    TreatmentDescription VARCHAR(50),
+    Description VARCHAR(50),
 	Cost DOUBLE(10,2),
     PRIMARY KEY(TreatmentID)
 );
 
 CREATE TABLE Diagnosis(
     DiagnosisID INT(8) UNSIGNED AUTO_INCREMENT,
-    DiagnosisDescription VARCHAR(50),
+    Description VARCHAR(50),
     PRIMARY KEY(DiagnosisID)
 );
 
@@ -153,7 +156,7 @@ CREATE TABLE Appointment(
 	PrescriptionID INT(8) UNSIGNED,
 	CenterID INT(8) UNSIGNED,
 	Cost DOUBLE(10,2),
-	Date VARCHAR(10),
+	Appointment_Date Date,
     PRIMARY KEY(AppointmentID)
 );
 
