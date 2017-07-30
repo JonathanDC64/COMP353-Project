@@ -1,1 +1,1 @@
-Select * From Test
+CREATE Table Test(a int);
