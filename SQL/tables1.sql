@@ -7,7 +7,8 @@ CREATE TABLE Users(
 	Last_Name VARCHAR(30),
 	Phone_Number VARCHAR(10),
     Age INT(3) UNSIGNED,
-    PRIMARY KEY(UsersID)
+    PRIMARY KEY(UsersID),
+	CHECK (Age>=18)
 );
      
 CREATE TABLE Experience(
@@ -180,6 +181,25 @@ ALTER TABLE Appointment
     REFERENCES Center(CenterID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
+
+-- Trigger checks to make sure TrainerID references a Trainer --
+CREATE TRIGGER TR_Appointment_Insert
+ON Appointment
+INSTEAD OF INSERT
+AS
+  BEGIN
+      INSERT INTO Appointment
+      SELECT * 
+      FROM   inserted
+      WHERE  EXISTS (
+		SELECT TrainerID
+		FROM   inserted
+		INNER  JOIN Users ON inserted.TrainerID=Users.UserID
+		INNER  JOIN UserType ON User.UserTypeID=UserType.UserTypeID
+		WHERE  Role = 'Trainer'
+	  )
+  END 	
+	
 	
 CREATE TABLE DailyPayment(
     DailyPaymentID INT(8) UNSIGNED AUTO_INCREMENT,
