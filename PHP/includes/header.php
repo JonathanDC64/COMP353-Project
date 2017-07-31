@@ -44,24 +44,8 @@ include('config.php');
     <?=isset($pageDescription)?'<meta name="description" content="'.$pageDescription.'" />':''?>
 	<title><?=$pageTitle?>: <?=$siteTitle?></title>
 	<link rel=" shortcut icon" type="image/ico" href="/favicon.ico?v=1" />
-    <!-- global css -->
-	<link rel="stylesheet" type="text/css" href="/css/main.css?v=1" />
-	<script type="text/javascript" src="<?=PROTOCOL?>ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <?php
-	// js that is hotlinked from a full server path
-	// TODO: we should maintain these in one place and just specify $jsLib('swfObject') so each page doesn't have to track version number
-	for($i=0;$i<count($jsExternal);$i++){
-		echo '<script type="text/javascript" src="'.PROTOCOL.$jsLib[$i].'"></script>';
-	}
-	// load page specific dynamic js
-	for($i=0;$i<count($js);$i++){
-		echo '<script type="text/javascript" src="/js/'.$js[$i].'.js?v='.CACHEBUST.'"></script>';
-	}
-	// css
-	for($i=0;$i<count($css);$i++){
-		echo '<link rel="stylesheet" type="text/css" href="/css/'.$css[$i].'.css?v='.CACHEBUST.'" />';
-	}
-?>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div id="header">
