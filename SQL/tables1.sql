@@ -1,28 +1,28 @@
 CREATE TABLE User(
     UserID INT(8) UNSIGNED AUTO_INCREMENT,
-	UserTypeID INT(8) UNSIGNED,
 	Username VARCHAR(30),
 	Password VARCHAR(95),
+    PRIMARY KEY(UserID)
+);
+
+CREATE TABLE UserInformation(
+    UserInformationID INT(8) UNSIGNED AUTO_INCREMENT,
+	UserID INT(8) UNSIGNED ,
 	First_Name VARCHAR(30),
 	Last_Name VARCHAR(30),
 	Phone_Number VARCHAR(10),
     Age INT(3) UNSIGNED,
-    PRIMARY KEY(UserID),
+    PRIMARY KEY(UserInformationID),
 	CHECK (Age>=18)
 );
-     
-CREATE TABLE Experience(
-	ExperienceID INT(8) UNSIGNED AUTO_INCREMENT,
-    UserID INT(8) UNSIGNED,
-    PRIMARY KEY(ExperienceID)
-);	
+
+ALTER TABLE UserInformation 
+    ADD CONSTRAINT FK_UserInformation_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
-CREATE TABLE UserType(
-	UserTypeID INT(8) UNSIGNED AUTO_INCREMENT,
-    AccessRightsID INT(8) UNSIGNED,
-	Role VARCHAR(30),
-    PRIMARY KEY(UserTypeID)
-);	
 
 CREATE TABLE AccessRights(
     AccessRightsID INT(8) UNSIGNED AUTO_INCREMENT,
@@ -30,25 +30,6 @@ CREATE TABLE AccessRights(
     AccessLevel INT(2),
     PRIMARY KEY(AccessRightsID)
 );
-
-ALTER TABLE UserType 
-    ADD CONSTRAINT FK_AccessRights_UserType
-    FOREIGN KEY(AccessRightsID)
-    REFERENCES AccessRights(AccessRightsID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
-	
-ALTER TABLE User 
-    ADD CONSTRAINT FK_UserType_User
-    FOREIGN KEY(UserTypeID)
-    REFERENCES UserType(UserTypeID);
-	
-ALTER TABLE Experience 
-    ADD CONSTRAINT FK_User_Experience
-    FOREIGN KEY(UserId)
-    REFERENCES User(UserID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
 	
 CREATE TABLE Treatment(
     TreatmentID INT(8) UNSIGNED AUTO_INCREMENT,
@@ -136,27 +117,7 @@ ALTER TABLE Prescription_Diagnosis
     FOREIGN KEY(DiagnosisID)
     REFERENCES Diagnosis(DiagnosisID)
     ON DELETE CASCADE
-    ON UPDATE CASCADE;
-	
--- Trigger checks to make sure TherapistID and PatientID  references a Therapist and Patient respectively --
-CREATE TRIGGER TR_Prescription_Insert
-ON Prescription
-INSTEAD OF INSERT
-AS
-  BEGIN
-      INSERT INTO Prescription
-      SELECT * 
-      FROM   inserted
-      WHERE  EXISTS (
-		SELECT TherapistID, PatientID
-		FROM   inserted
-		INNER  JOIN User Therapist ON inserted.TherapistID=User.UserID
-		INNER  JOIN User Patient ON inserted.PatientID=User.UserID
-		INNER  JOIN UserType TherapistUserType ON Therapist.UserTypeID=UserType.UserTypeID
-		INNER  JOIN UserType PatientUserType ON Patient.UserTypeID=UserType.UserTypeID
-		WHERE  Therapist.Role = 'Therapist' AND Patient.Role = 'Patient'
-	  )
-  END 	
+    ON UPDATE CASCADE;	
 	
 CREATE TABLE Center(
     CenterID INT(8) UNSIGNED AUTO_INCREMENT,
@@ -195,24 +156,6 @@ ALTER TABLE Appointment
     REFERENCES Center(CenterID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
-
--- Trigger checks to make sure TrainerID references a Trainer --
-CREATE TRIGGER TR_Appointment_Insert
-ON Appointment
-INSTEAD OF INSERT
-AS
-  BEGIN
-      INSERT INTO Appointment
-      SELECT * 
-      FROM   inserted
-      WHERE  EXISTS (
-		SELECT TrainerID
-		FROM   inserted
-		INNER  JOIN User    ON inserted.TrainerID=User.UserID
-		INNER  JOIN UserType ON User.UserTypeID=UserType.UserTypeID
-		WHERE  Role = 'Trainer'
-	  )
-  END 	
 	
 	
 CREATE TABLE DailyPayment(

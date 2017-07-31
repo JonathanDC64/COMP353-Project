@@ -1,39 +1,4 @@
 <?php
-/**
- * The site wide header
- * This file should draw out the Doctype, meta tags, etc
- * and dynamically load js/css and set title, etc via configs from the laoding file
- * Example use:
- * 
- 	index.php:
-    <?php
-	// setup php configs
-	$js = array('js_file_name_1','js_file_name_2');
-	$jsExteral = array('path/tojs','anotherLib/jsfile');
-	$jsLib = array(PROTOCOL.'www.google.com/api/blah.js');
-	$css = array('css_file_name_1','css_file_name_2');
-	$pageName = 'Profile'; // used in language pack to get title, etc
-	$pageKeywords = 'one,two'; // optional
-	$pageDescription 'some description';// optional
-    $pageTitle = $Text['page_title_'.$pageName];
-	include('header.php'); // load it all
-    ?>
-	// the rest of the page
-	...
- * 
- * @package Core
- */
-
-// handle any universal redirects, etc
-
-// setup generic data:
-if(!$pageTitle) 		$pageTitle = 'Home'; // TODO: localize
-if(!$pageKeywords) 		$pageKeywords = siteKeywords; // TODO: localize
-if(!$js)				$js = array();
-if(!$jsExternal)		$jsExteral = array();
-if(!$css)				$css = array();
-
-// Generic site includes
 include('config.php');
 ?>
 <!DOCTYPE html>
