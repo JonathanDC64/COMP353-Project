@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 	include('/database/database_connect.php'); 
 ?>
 <!DOCTYPE html>
