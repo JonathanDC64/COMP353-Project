@@ -126,7 +126,7 @@ ALTER TABLE Treatment
 
 CREATE TABLE Prescription(
     PrescriptionID INT(8) UNSIGNED AUTO_INCREMENT,
-	DoctorNode VARCHAR(1000),
+	DoctorsNote VARCHAR(1000),
     PRIMARY KEY(PrescriptionID)
 );
 
