@@ -1,5 +1,3 @@
-START TRANSACTION;
-
 CREATE TABLE User(
     UserID INT(8) UNSIGNED AUTO_INCREMENT,
 	AccessRightsID INT(8) UNSIGNED,
@@ -71,7 +69,7 @@ ALTER TABLE Therapist
 CREATE TABLE Patient(
     PatientID INT(8) UNSIGNED AUTO_INCREMENT,
 	UserID INT(8) UNSIGNED ,
-	PRIMARY KEY(PatientID),
+	PRIMARY KEY(PatientID)
 );
 
 ALTER TABLE Patient 
@@ -84,7 +82,7 @@ ALTER TABLE Patient
 CREATE TABLE Receptionist(
     ReceptionistID INT(8) UNSIGNED AUTO_INCREMENT,
 	UserID INT(8) UNSIGNED ,
-	PRIMARY KEY(ReceptionistID),
+	PRIMARY KEY(ReceptionistID)
 );
 
 ALTER TABLE Receptionist 
@@ -97,11 +95,11 @@ ALTER TABLE Receptionist
 CREATE TABLE Nurse(
     NurseID INT(8) UNSIGNED AUTO_INCREMENT,
 	UserID INT(8) UNSIGNED ,
-	PRIMARY KEY(NurseID),
+	PRIMARY KEY(NurseID)
 );
 
 ALTER TABLE Nurse 
-    ADD CONSTRAINT FK_Receptionist_User
+    ADD CONSTRAINT FK_Nurse_User
     FOREIGN KEY(UserID)
     REFERENCES User(UserID)
     ON DELETE CASCADE
@@ -109,7 +107,7 @@ ALTER TABLE Nurse
 
 CREATE TABLE Treatment(
     TreatmentID INT(8) UNSIGNED AUTO_INCREMENT,
-	EquipmentID INT(8) UNSIGNED
+	EquipmentID INT(8) UNSIGNED,
     Description VARCHAR(50),
 	Cost DOUBLE(10,2),
     PRIMARY KEY(TreatmentID)
@@ -119,7 +117,7 @@ CREATE TABLE Equipment(
     EquipmentID INT(8) UNSIGNED AUTO_INCREMENT,
     Name VARCHAR(30),
     PRIMARY KEY(EquipmentID)
-)
+);
 
 ALTER TABLE Treatment
     ADD CONSTRAINT FK_Treatment_Equipment
@@ -306,5 +304,3 @@ ALTER TABLE DailyPayment
     REFERENCES Appointment(AppointmentID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
-	
-COMMIT;
