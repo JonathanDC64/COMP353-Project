@@ -1,9 +1,11 @@
-CREATE TABLE Users(
-    UserssID INT(8) UNSIGNED AUTO_INCREMENT,
+START TRANSACTION;
+
+CREATE TABLE User(
+    UserID INT(8) UNSIGNED AUTO_INCREMENT,
 	AccessRightsID INT(8) UNSIGNED,
-	Usersname VARCHAR(30),
+	Username VARCHAR(30),
 	Password VARCHAR(95),
-    PRIMARY KEY(UsersID)
+    PRIMARY KEY(UserID)
 );
 
 CREATE TABLE AccessRights(
@@ -13,102 +15,98 @@ CREATE TABLE AccessRights(
     PRIMARY KEY(AccessRightsID)
 );
 
-ALTER TABLE Users 
-    ADD CONSTRAINT FK_Users_AccessRights
+ALTER TABLE User 
+    ADD CONSTRAINT FK_User_AccessRights
     FOREIGN KEY(AccessRightsID)
     REFERENCES AccessRights(AccessRightsID);
 
-CREATE TABLE UsersInformation(
-    UsersInformationID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersID INT(8) UNSIGNED ,
+CREATE TABLE UserInformation(
+    UserInformationID INT(8) UNSIGNED AUTO_INCREMENT,
+	UserID INT(8) UNSIGNED ,
 	First_Name VARCHAR(30),
 	Last_Name VARCHAR(30),
 	Phone_Number VARCHAR(10),
     Age INT(3) UNSIGNED,
-    PRIMARY KEY(UsersInformationID),
+    PRIMARY KEY(UserInformationID),
 	CHECK (Age>=18)
 );
 
-ALTER TABLE UsersInformation 
-    ADD CONSTRAINT FK_UsersInformation_Users
-    FOREIGN KEY(UsersID)
-    REFERENCES Users(UsersID)
+ALTER TABLE UserInformation 
+    ADD CONSTRAINT FK_UserInformation_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 	
 CREATE TABLE Doctor(
     DoctorID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersInformationID INT(8) UNSIGNED ,
+	UserID INT(8) UNSIGNED ,
 	Experience INT(2),
     PRIMARY KEY(DoctorID),
 	CHECK (Experience>=6)
 );
 
 ALTER TABLE Doctor 
-    ADD CONSTRAINT FK_Doctor_UsersInformation
-    FOREIGN KEY(UsersInformationID)
-    REFERENCES UsersInformation(UsersInformationID)
+    ADD CONSTRAINT FK_Doctor_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 	
 CREATE TABLE Therapist(
     TherapistID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersInformationID INT(8) UNSIGNED ,
+	UserID INT(8) UNSIGNED ,
 	Experience INT(2),
     PRIMARY KEY(TherapistID),
 	CHECK (Experience>=2)
 );
 
 ALTER TABLE Therapist 
-    ADD CONSTRAINT FK_Therapist_UsersInformation
-    FOREIGN KEY(UsersInformationID)
-    REFERENCES UsersInformation(UsersInformationID)
+    ADD CONSTRAINT FK_Therapist_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 	
 CREATE TABLE Patient(
     PatientID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersInformationID INT(8) UNSIGNED ,
+	UserID INT(8) UNSIGNED ,
 	PRIMARY KEY(PatientID),
 );
 
 ALTER TABLE Patient 
-    ADD CONSTRAINT FK_Patient _UsersInformation
-    FOREIGN KEY(UsersInformationID)
-    REFERENCES UsersInformation(UsersInformationID)
+    ADD CONSTRAINT FK_Patient_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
 CREATE TABLE Receptionist(
     ReceptionistID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersInformationID INT(8) UNSIGNED ,
+	UserID INT(8) UNSIGNED ,
 	PRIMARY KEY(ReceptionistID),
 );
 
 ALTER TABLE Receptionist 
-    ADD CONSTRAINT FK_Receptionist _UsersInformation
-    FOREIGN KEY(UsersInformationID)
-    REFERENCES UsersInformation(UsersInformationID)
+    ADD CONSTRAINT FK_Receptionist_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
  	
 CREATE TABLE Nurse(
     NurseID INT(8) UNSIGNED AUTO_INCREMENT,
-	UsersInformationID INT(8) UNSIGNED ,
+	UserID INT(8) UNSIGNED ,
 	PRIMARY KEY(NurseID),
 );
 
 ALTER TABLE Nurse 
-    ADD CONSTRAINT FK_Receptionist _UsersInformation
-    FOREIGN KEY(UsersInformationID)
-    REFERENCES UsersInformation(UsersInformationID)
+    ADD CONSTRAINT FK_Receptionist_User
+    FOREIGN KEY(UserID)
+    REFERENCES User(UserID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;	
 
-
-
-
-	
 CREATE TABLE Treatment(
     TreatmentID INT(8) UNSIGNED AUTO_INCREMENT,
 	EquipmentID INT(8) UNSIGNED
@@ -128,10 +126,6 @@ ALTER TABLE Treatment
     FOREIGN KEY(EquipmentID)
     REFERENCES Equipment(EquipmentID);
 
-
-	
-
-	
 CREATE TABLE Prescription(
     PrescriptionID INT(8) UNSIGNED AUTO_INCREMENT,
 	DoctorNode VARCHAR(1000),
@@ -160,10 +154,6 @@ ALTER TABLE Prescription_Diagnosis
     FOREIGN KEY(PrescriptionID)
     REFERENCES Prescription(PrescriptionID);
 
-
-
-
-	
 CREATE TABLE Appointment(
     AppointmentID INT(8) UNSIGNED AUTO_INCREMENT,
 	CenterID INT(8) UNSIGNED,
@@ -194,16 +184,16 @@ ALTER TABLE Appointment
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
-
-
-
+	
+	
+	
 	
 CREATE TABLE TherapistAppointment(
-	TherapistID INT(8) UNSIGNED,
 	AppointmentID INT(8) UNSIGNED,
+	TherapistID INT(8) UNSIGNED,
 	PrescriptionID INT(8) UNSIGNED,
 	TreatmentID INT(8) UNSIGNED,
-    PRIMARY KEY(TherapistID, AppointmentID, PrescriptionID, TreatmentID)
+    PRIMARY KEY(AppointmentID)
 );
 
 ALTER TABLE TherapistAppointment
@@ -238,7 +228,7 @@ CREATE TABLE DoctorAppointment(
 	DoctorID INT(8) UNSIGNED,
 	AppointmentID INT(8) UNSIGNED,
 	PrescriptionID INT(8) UNSIGNED,
-    PRIMARY KEY(DoctorID, AppointmentID, PrescriptionID)
+    PRIMARY KEY(AppointmentID)
 );
 
 ALTER TABLE DoctorAppointment
@@ -316,3 +306,5 @@ ALTER TABLE DailyPayment
     REFERENCES Appointment(AppointmentID)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
+	
+COMMIT;
