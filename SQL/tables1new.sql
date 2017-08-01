@@ -1,7 +1,7 @@
 CREATE TABLE User(
     UserID INT(8) UNSIGNED AUTO_INCREMENT,
 	AccessRightsID INT(8) UNSIGNED,
-	Username VARCHAR(30),
+	Username VARCHAR(30) UNIQUE,
 	Password VARCHAR(95),
     PRIMARY KEY(UserID)
 );
@@ -12,6 +12,12 @@ CREATE TABLE AccessRights(
     AccessLevel INT(2),
     PRIMARY KEY(AccessRightsID)
 );
+
+INSERT INTO AccessRights VALUES(0, "Patient", 1);
+INSERT INTO AccessRights VALUES(0, "Nurse", 2);
+INSERT INTO AccessRights VALUES(0, "Therapist", 2);
+INSERT INTO AccessRights VALUES(0, "Doctor", 2);
+INSERT INTO AccessRights VALUES(0, "Receptionist", 3);
 
 ALTER TABLE User 
     ADD CONSTRAINT FK_User_AccessRights
