@@ -104,19 +104,15 @@
                 <input type="hidden" name="submitted" value="true" />
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="Register"></label>
-
+                    
                     <div class="col-lg-8">
                         <input type="button" class="btn btn-success" role="button" id="Register" value="Register">
+                        <div id="errors"></div>
                     </div>
+                    
                 </div>
             </form>
-        </div>
-
-        <!-- Errors -->
-        <div class="col-sm-6">
-            <div id="errors">
-                
-            </div>
+            
         </div>
     </div>
 </div>
