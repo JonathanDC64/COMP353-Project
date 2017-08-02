@@ -7,9 +7,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Bahamas Sports Physio Center</title>
-	<link rel=" shortcut icon" type="image/ico" href="../webroot/favicon.ico?v=1" />
-	<link rel="stylesheet" href="../webroot/css/bootstrap.min.css">
-	<script src="../webroot/js/bootstrap.min.js"></script>
+	<link rel=" shortcut icon" type="image/ico" href="./favicon.ico?v=1" />
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script src="./js/bootstrap.min.js"></script>
 </head>
 <body>
     <div id="header">
