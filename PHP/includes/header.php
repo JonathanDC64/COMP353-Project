@@ -21,8 +21,8 @@
 <body>
 	<div class="container">
 		<div id="header">
-			<div class="page-header;">
-				<h1 style = "margin-left: 300px; margin-right: 250px; margin-top: 50px ;color : #E32934; font-size: 35px">
+			<div class="page-header">
+				<h1>
 					Bahamas Sports Physio Center
 				</h1>
 			</div>
@@ -30,7 +30,9 @@
 			<!--Navbar-->
 			<nav class="navbar navbar-inverse">
 				<div class="container-fluid">
-					
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">BSPC</a>
+					</div>
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="SearchPatient.html">Home</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>

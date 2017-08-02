@@ -20,11 +20,13 @@
     });
 </script>
 <div id="content">
+    <div class="page-header text-center">
+        <h2>Registration</h2>
+    </div>
     <div class="row">
-        <div class="col-sm-6">
-            <h2>Registration</h2>
+        <div class="col-md-8 col-md-offset-2"> 
             <form class="form-horizontal" method="POST" id="registration_form" action="../includes/authentication/registration.php">
-
+                
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="Username">Username:</label>
 
@@ -106,7 +108,7 @@
                     <label class="control-label col-sm-3" for="Register"></label>
                     
                     <div class="col-lg-8">
-                        <input type="button" class="btn btn-success" role="button" id="Register" value="Register">
+                        <input type="button" class="btn btn-success btn-block" role="button" id="Register" value="Register">
                         <div id="errors"></div>
                     </div>
                     
