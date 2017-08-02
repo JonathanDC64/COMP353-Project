@@ -4,7 +4,7 @@
     //TODO check for access rights here, use die() function
     
     //Only execute this when form is submitted
-    //Use <input type="hidden" name="submited" value="true" />
+    //Use <input type="hidden" name="submitted" value="true" />
     if(isset($_REQUEST["submitted"])){
         
         $errors = array();
@@ -80,6 +80,13 @@
         else{
             array_push($errors, "Age is required");
         }
+
+        // Find user access rights
+        $AccessRightsID = User::get_access_rights($Role);
+
+        if(!isset($AccessRightsID)){
+            array_push($errors, "Role does not exist");
+        }
         
         //If there are validation errors, display error message and stop page
         if(count($errors) > 0){
@@ -88,13 +95,6 @@
         }
 
         $connection->beginTransaction();
-        // Find user access rights
-        $AccessRightsID = User::get_access_rights($Role);
-
-        if(!isset($AccessRightsID)){
-            $connection->rollBack();
-            die("Role does not exist");
-        }
 
         // Create the user
         $UserID = User::create_user($AccessRightsID, $Username, $Password);

@@ -1,5 +1,4 @@
 <?php 
-$pageName = 'index';
 $pageTitle = 'Home';
 include('../includes/header.php'); 
 ?>
