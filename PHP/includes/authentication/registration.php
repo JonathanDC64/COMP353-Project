@@ -38,6 +38,16 @@
             array_push($errors, "Role is required");
         }
 
+        $Experience = 0;
+        if($Role == User::Doctor || $Role == User::Therapist){
+            if(isset($_POST["Experience"])){
+                $Experience = $_POST["Experience"];
+            }
+            else{
+                array_push($errors, "Experience is required");
+            }
+        }
+
         // Get UserInformation data
         $First_Name = "";
         if(isset($_POST["First_Name"])){
@@ -77,10 +87,12 @@
             die();
         }
 
+        $connection->beginTransaction();
         // Find user access rights
         $AccessRightsID = User::get_access_rights($Role);
 
         if(!isset($AccessRightsID)){
+            $connection->rollBack();
             die("Role does not exist");
         }
 
@@ -89,5 +101,25 @@
 
         // Create the user information
         User::create_user_information($UserID, $First_Name, $Last_Name, $Phone_Number, $Age);
+
+        switch($Role){
+            case User::Patient :
+                User::create_patient($UserID);
+                break;
+            case User::Nurse :
+                User::create_nurse($UserID);
+                break;
+            case User::Therapist : 
+                User::create_therapist($UserID, $Experience);
+                break;
+            case User::Doctor :
+                User::create_doctor($UserID, $Experience);
+                break;
+            case User::Receptionist :
+                User::create_receptionist($UserID, $Experience);
+                break;
+        }
+
+        $connection->commit();
     }
 ?>

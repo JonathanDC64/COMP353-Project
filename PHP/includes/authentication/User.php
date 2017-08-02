@@ -1,6 +1,12 @@
 <?php
     class User{
-        
+
+        const Patient = "Patient";
+        const Nurse = "Nurse";
+        const Therapist = "Therapist";
+        const Doctor = "Doctor";
+        const Receptionist = "Receptionist";
+
         // Creates a user and returns their id
         public static function create_user($AccessRightsID, $Username, $Password){
             global $connection;
@@ -43,6 +49,53 @@
             $stmt->execute();
             $row = $stmt->fetch();
             return $row["AccessRightsID"];
+        }
+
+        // Create user with Doctor role
+        public static function create_doctor($UserID, $Experience){
+            global $connection;
+            $stmt = $connection->prepare("INSERT INTO Doctor VALUES(0, :UserID, :Experience)"); 
+            $stmt->bindParam(':UserID', $UserID);
+            $stmt->bindParam(':Experience', $Experience);
+            $stmt->execute();
+            return $connection->lastInsertId();
+        }
+
+        // Create user with Therapist role
+        public static function create_therapist($UserID){
+            global $connection;
+            $stmt = $connection->prepare("INSERT INTO Therapist VALUES(0, :UserID, :Experience)"); 
+            $stmt->bindParam(':UserID', $UserID);
+            $stmt->bindParam(':Experience', $Experience);
+            $stmt->execute();
+            return $connection->lastInsertId();
+        }
+
+        // Create user with Nurse role
+        public static function create_nurse($UserID){
+            global $connection;
+            $stmt = $connection->prepare("INSERT INTO Nurse VALUES(0, :UserID)"); 
+            $stmt->bindParam(':UserID', $UserID);
+            $stmt->execute();
+            return $connection->lastInsertId();
+        }
+
+        // Create user with Receptionist role
+        public static function create_receptionist($UserID){
+            global $connection;
+            $stmt = $connection->prepare("INSERT INTO Receptionist VALUES(0, :UserID)"); 
+            $stmt->bindParam(':UserID', $UserID);
+            $stmt->execute();
+            return $connection->lastInsertId();
+        }
+
+        // Create user with Patient role
+        public static function create_patient($UserID){
+            global $connection;
+            $stmt = $connection->prepare("INSERT INTO Patient VALUES(0, :UserID)"); 
+            $stmt->bindParam(':UserID', $UserID);
+            $stmt->execute();
+            return $connection->lastInsertId();
         }
     }
 ?>
