@@ -1,4 +1,6 @@
 <?php
+
+    // User based functions
     class User{
 
         const Patient = "Patient";
