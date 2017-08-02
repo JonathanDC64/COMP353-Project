@@ -160,19 +160,11 @@ ALTER TABLE Prescription_Diagnosis
 
 CREATE TABLE Appointment(
     AppointmentID INT(8) UNSIGNED AUTO_INCREMENT,
-	CenterID INT(8) UNSIGNED,
 	PatientID INT(8) UNSIGNED,
 	Appointment_Date Date,
     PRIMARY KEY(AppointmentID)
 );
 
-CREATE TABLE Center(
-    CenterID INT(8) UNSIGNED AUTO_INCREMENT,
-    Name VARCHAR(30),
-	PhoneNumber VARCHAR(10),
-	Address VARCHAR(100),
-    PRIMARY KEY(CenterID)
-);
 
 ALTER TABLE Appointment
     ADD CONSTRAINT FK_Appoitment_Patient
@@ -181,23 +173,15 @@ ALTER TABLE Appointment
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
-ALTER TABLE Appointment 
-    ADD CONSTRAINT FK_Appointment_Center
-    FOREIGN KEY(CenterID)
-    REFERENCES Center(CenterID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
-
-	
-	
 	
 	
 CREATE TABLE TherapistAppointment(
+    TherapistAppointmentID INT(8) UNSIGNED AUTO_INCREMENT,
 	AppointmentID INT(8) UNSIGNED,
 	TherapistID INT(8) UNSIGNED,
 	PrescriptionID INT(8) UNSIGNED,
 	TreatmentID INT(8) UNSIGNED,
-    PRIMARY KEY(AppointmentID)
+    PRIMARY KEY(TherapistAppointmentID)
 );
 
 ALTER TABLE TherapistAppointment
@@ -229,10 +213,11 @@ ALTER TABLE TherapistAppointment
 	
 	
 CREATE TABLE DoctorAppointment(
+    DoctorAppointmentID INT(8) UNSIGNED AUTO_INCREMENT,
+    AppointmentID INT(8) UNSIGNED,
 	DoctorID INT(8) UNSIGNED,
-	AppointmentID INT(8) UNSIGNED,
 	PrescriptionID INT(8) UNSIGNED,
-    PRIMARY KEY(AppointmentID)
+    PRIMARY KEY(DoctorAppointmentID)
 );
 
 ALTER TABLE DoctorAppointment
