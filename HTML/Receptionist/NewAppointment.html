@@ -39,6 +39,8 @@
                 <li><a href="ListTherapist.html">Therapist</a></li>
                 <li><a href="ListNurse.html">Nurse</a></li>
 				<li><a href="ListAppointment.html">Appointment</a></li>
+				<li><a href="ListEquipment.html">Equipment</a></li>
+				<li><a href="ListTreatment.html">Treatment</a></li>
             </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report <span class="caret"></span></a>
@@ -65,40 +67,6 @@
     
 <div class="container">
     <div class="col-sm-6">
-        <h2>Patient Details</h2>
-        <form class="form-horizontal" action=" ">
-            
-            <div class="form-group">
-                    <label class="control-label col-sm-3" for="FirstName">First Name:</label>
-                    
-                    <div class="col-lg-8">
-                        <input type="FName" class="form-control" id="FirstName" placeholder=" " name="FirstName">
-                    </div>
-            </div>
-            
-            <div class="form-group">
-                    <label class="control-label col-sm-3" for="LastName">Last Name:</label>
-                    <div class="col-lg-8">
-                        <input type="LName" class="form-control" id="LastName" placeholder=" " name="Last">
-                    </div>
-            </div>
-            
-            <div class="form-group">
-                    <label class="control-label col-sm-3" for="PHN">
-                    Health Number:</label>
-                    <div class="col-lg-8">
-                        <input type="HealthNum" class="form-control" id="HealthNum" placeholder=" " name="HealthNum">
-                    </div>
-            </div>
-            
-            <div class="form-group">
-                    <label class="control-label col-sm-3" for="Age">Phone Number:</label>
-                    <div class="col-lg-8">
-                        <input type="PhoneNum" class="form-control" id="PhoneNum" placeholder=" " name="PhoneNUm">
-                    </div>
-            </div>
-            
-            <hr>
             
             <h2>Select Doctor</h2>
             
@@ -114,6 +82,17 @@
                 </div>
             </div>
             
+			<div class="form-group">
+                <label class="control-label col-sm-3" for="SelectDoctor">Treatment:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" >
+                        <option>Select Treatment</option>
+                        <option>Ahnaf Shahariar</option>
+                        <option>Ali</option>
+                        <option>Jonathon</option>
+                    </select>
+                </div>
+            </div>
             
             <div class="form-group">
                 <div class = "col-sm-3">
@@ -136,10 +115,12 @@
             <br/>
             <!--Button-->
             <div class="form-group"> 
+                
                 <div class="col-sm-offset-2 col-lg-9" style="margin-left: 200px">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Submit">
-                    <input type="submit" class="btn btn-primary btn-lg" value="Reset">
+					<a href="ListAppointment.html" style ="width:100px" class="btn btn-success" role="button">Sumbit</a>
+					<a href="ListAppointment.html" style ="width:100px" class="btn btn-danger" role="button">Reset</a>
                 </div>  
+                
             </div>
             
         </form>
