@@ -1,6 +1,7 @@
 <?php 
 	session_start();
-	include('/database/database_connect.php'); 
+	include_once('/database/database_connect.php'); 
+	include_once('/authentication/User.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@
 						<a class="navbar-brand" href="#">BSPC</a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="SearchPatient.html">Home</a></li>
+						<li class=""><a href="SearchPatient.html">Home</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="PatientRegistration.html">Registration</a></li>
@@ -64,7 +65,10 @@
 						</ul>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="Loging.html"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+						<?php 
+						if(User::loggedin()) : ?>
+								<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+						<?php endif; ?>
 					</ul>
 				</div>
 			</nav>

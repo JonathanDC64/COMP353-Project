@@ -53,6 +53,11 @@
             return $row["AccessRightsID"];
         }
 
+        // Checks wether the user is logged in or not
+        public static function loggedin(){
+            return isset($_SESSION["User"]);
+        }
+
         // Create user with Doctor role
         public static function create_doctor($UserID, $Experience){
             global $connection;

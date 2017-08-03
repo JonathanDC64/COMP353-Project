@@ -80,13 +80,13 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!--div class="form-group">
                     <label class="control-label col-sm-3" for="Health_Number">Health Number:</label>
 
                     <div class="col-lg-8">
                         <input type="text" class="form-control" id="Health_Number" name="Health_Number" placeholder="Health Number">
                     </div>
-                </div>
+                </div-->
 
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="Phone_Number">Phone Number:</label>

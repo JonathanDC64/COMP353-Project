@@ -1,49 +1,49 @@
 <?php
+	include_once("../database/database_connect.php");
+	
+	class UserInfo{
+		public $userId;
+		public $accessLevel;
+		
+		function __construct($_userId, $_accessLevel)
+		{
+			$this->userId = $_userId;
+			$this->accessLevel = $_accessLevel;
+		}
+	}
 
-	//OLD WAY(DEPRECATED)
-	/*if(isset($_POST["Username"], $_POST["Password"]))
-	{
-		$Username = $_POST["Username"];
-		$Password = $_POST["Password"];
+	//NEW WAY(PDO)
+	// include connection functions (houses the 'dbConnect()' function)
+    //require_once(PATH_TO_INCLUDES_FOLDER . 'connection_inc.php');	
+	if(isset($_POST["Username"], $_POST["Password"])){
+		//$conn = dbConnect('read');
 		
-		$result = mysql_query("SELECT Username, Password FROM User WHERE Username = '" .$name. "' AND Password = '" .$Password. "'");
+		$sql = 'SELECT UserID, Password, AccessLevel FROM User
+				INNER JOIN AccessRights ON User.AccessRightsID = AccessRights.AccessRightsID
+				WHERE Username = :Username';
 		
-		if(mysql_num_rows($result > 0) )
-		{
-			$_SESSION["logged_in"] = true;
-			$_SESSION["name"]= $Username;
+		$statement = $connection->prepare($sql);
+		
+		$statement->bindParam(':Username', $_POST['Username']);
+		
+		$statement->execute();
+		$row=$statement->fetch();
+		
+		// Make sure username is found
+		if($statement->rowCount() && password_verify($_POST["Password"], $row["Password"])){
+			//Success
+			$userID = $row["UserID"];
+			$accessLevel = $row["AccessLevel"];
+			
+			$userInfo = new UserInfo($userID, $accessLevel);
+			
+			session_start();
+
+			$_SESSION["User"] = serialize($userInfo);
 		}
-		else
-		{
-			echo 'The provided credentials are not correct';
+		else{
+			//Failure
+			die('The provided credentials are not correct');
 		}
-	}*/
-	
-	
-	 //NEW WAY(PDO)
-	 // include connection functions (houses the 'dbConnect()' function)
-     //require_once(PATH_TO_INCLUDES_FOLDER . 'connection_inc.php');	
-	 
-	 if(isset($_POST["Username"], $_POST["Password"]))
-	 {
-		 $conn = dbConnect('read');
-		 
-		 $sql = 'SELECT Username, Password FROM User WHERE Username = :Username AND Password = :Password';
-		 $statement = $conn->prepare($sql);
-		 $encrypted_pwd = password_hash($Password,PASSWORD_BCRYPT);
-		 
-		 $statement->bindParam(':Username', $_POST['Username'], PDO::PARAM_STR);
-		 $statement->bindParam(':Password', $encrypted_pwd, PDO::PARAM_STR);
-		 
-		 $statement->execute();
-		 
-		 if($statment->rowCount())
-		 {
-			 //Success
-		 }
-		 elseif(!$statement->rowCount())
-		 {
-			echo 'The provided credentials are not correct';
-		 }
-	 }
+	}
 ?>
