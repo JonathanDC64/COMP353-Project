@@ -1,7 +1,22 @@
 <?php 
 	session_start();
-	include_once('/database/database_connect.php'); 
+	
 	include_once('/authentication/User.php');
+	include_once('/database/database_connect.php'); 
+	
+	//redirect user to login page if not logged in
+	if(basename($_SERVER['PHP_SELF']) != "login.php" && !User::loggedin()){
+		header('Location: login.php');
+	}
+
+	// check if we are on local machine or school server
+	if (strpos($_SERVER['DOCUMENT_ROOT'], 'xampp') !== false) {
+		set_include_path("/COMP353-Project/PHP/includes");
+	}
+	else{
+		set_include_path("/includes");
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">

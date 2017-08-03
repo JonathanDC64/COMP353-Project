@@ -1,5 +1,5 @@
 <?php
-
+    include_once("UserInfo.php");
     // User based functions
     class User{
 
@@ -56,6 +56,14 @@
         // Checks wether the user is logged in or not
         public static function loggedin(){
             return isset($_SESSION["User"]);
+        }
+
+        public static function get_user_info(){
+            return unserialize($_SESSION["User"]);
+        }
+
+        public static function logout(){
+            unset($_SESSION["User"]);
         }
 
         // Create user with Doctor role

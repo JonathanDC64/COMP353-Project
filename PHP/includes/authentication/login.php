@@ -1,17 +1,6 @@
 <?php
 	include_once("../database/database_connect.php");
-	
-	class UserInfo{
-		public $userId;
-		public $accessLevel;
-		
-		function __construct($_userId, $_accessLevel)
-		{
-			$this->userId = $_userId;
-			$this->accessLevel = $_accessLevel;
-		}
-	}
-
+	include_once("UserInfo.php");
 	//NEW WAY(PDO)
 	// include connection functions (houses the 'dbConnect()' function)
     //require_once(PATH_TO_INCLUDES_FOLDER . 'connection_inc.php');	
@@ -32,10 +21,10 @@
 		// Make sure username is found
 		if($statement->rowCount() && password_verify($_POST["Password"], $row["Password"])){
 			//Success
-			$userID = $row["UserID"];
-			$accessLevel = $row["AccessLevel"];
+			$UserID = $row["UserID"];
+			$AccessLevel = $row["AccessLevel"];
 			
-			$userInfo = new UserInfo($userID, $accessLevel);
+			$userInfo = new UserInfo($UserID, $AccessLevel);
 			
 			session_start();
 
