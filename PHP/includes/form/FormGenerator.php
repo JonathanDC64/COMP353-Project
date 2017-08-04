@@ -82,7 +82,7 @@
                         if(is_array($Value)){
                             $ID = $Value[0];
                             $Text = $Value[1];
-                            echo "<option value='$ID'>$Text</option>";
+                            echo "<option value='$ID'>$Text ($ID)</option>";
                         }
                         else
                             echo "<option value='$Value'>$Value</option>";
