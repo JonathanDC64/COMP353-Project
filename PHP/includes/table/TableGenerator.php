@@ -51,10 +51,10 @@
                     echo "</td>";
                 }
                 if($AccessLevel >= $Permissions->UpdateAccessLevel){
-                    echo "<td>Update</td>";
+                    echo "<td><button type='button' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span></button></td>";
                 }
                 if($AccessLevel >= $Permissions->DeleteAccessLevel){
-                    echo "<td>Delete</td>";
+                    echo "<td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></button></td>";
                 }
             echo "</tr>";
         }
