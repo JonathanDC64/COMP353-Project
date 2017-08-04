@@ -76,9 +76,16 @@
                     echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name'>";
                     break;
                 case "select":
+
                     echo "<select class='form-control' id='$Name' name='$Name'>";
                     foreach ($Element->Values as $Value) {
-                        echo "<option value='$Value'>$Value</option>";
+                        if(is_array($Value)){
+                            $ID = $Value[0];
+                            $Text = $Value[1];
+                            echo "<option value='$ID'>$Text</option>";
+                        }
+                        else
+                            echo "<option value='$Value'>$Value</option>";
                     }
                     echo "</select>";
                     break;
