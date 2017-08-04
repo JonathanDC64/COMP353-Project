@@ -14,7 +14,8 @@ include_once('../includes/authentication/AccessRights.php');
             ["4","5","6"],
             ["7","8","9"]
         ],
-        "","",TableGenerator::generate_permission(AccessRights::AdminReceptionist, AccessRights::AdminReceptionist)
+        "","",TableGenerator::generate_permission(AccessRights::AdminReceptionist, AccessRights::AdminReceptionist),
+        "../includes/authentication/registration_form.php"
     );
 ?>
 </div>
