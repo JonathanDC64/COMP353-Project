@@ -11,6 +11,7 @@
         } 
     }
 
+    // Auto generates forms
     class FormGenerator{
         public static function generate_form($Title, $Action, $Success, $Elements){
             echo "
@@ -24,8 +25,12 @@
                                 success: function(response) {
                                     if(response != '')
                                         $('#errors').html(response);
-                                    else
+                                    else{
                                         $('#errors').html('$Success');
+                                        if (typeof callback !== 'undefined' && typeof callback === 'function') {
+                                            callback();
+                                        }
+                                    }
                                 }
                             });
                         });
@@ -56,14 +61,16 @@
         }
 
         private static function display_element($Element){
+            //remove underscores for displayed text
+            $DisplayName = str_replace("_"," ", $Element->Name);
             $Name = $Element->Name;
             $Type = $Element->Type;
             echo "<div class='form-group'>
-                    <label class='control-label' for='$Name'>$Name:</label>";
+                    <label class='control-label' for='$Name'>$DisplayName:</label>";
             switch($Element->Type){
                 case "text":
                 case "password":
-                    echo "<input type='$Type' class='form-control' id='$Name' placeholder='$Name' name='$Name'>";
+                    echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name'>";
                     break;
                 case "select":
                     echo "<select class='form-control' id='$Name' name='$Name'>";
@@ -71,6 +78,13 @@
                         echo "<option value='$Value'>$Value</option>";
                     }
                     echo "</select>";
+                    break;
+                case "radio":
+                    foreach ($Element->Values as $Value) {
+                        echo "<div class='radio'>";
+                        echo "  <label><input type='$Type' name='$Name' value='$Value'>$Value</label>"
+                        echo "</div>";
+                    }
                     break;
             }
             echo "</div>";
