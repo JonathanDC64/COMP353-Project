@@ -12,8 +12,10 @@
                 success: function(response) {
                     if(response != "")
                         $("#errors").html(response);
-                    else
+                    else{
                         $("#errors").html("Login Succeeded");
+                        window.location.replace("index.php");
+                    }
                 }
             });
         });
