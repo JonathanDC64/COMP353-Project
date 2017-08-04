@@ -70,6 +70,7 @@
             switch($Element->Type){
                 case "text":
                 case "password":
+                case "date":
                     echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name'>";
                     break;
                 case "select":
@@ -89,7 +90,7 @@
             }
             echo "</div>";
         }
-        
+
         public static function generate_element($Name, $Type, $Values){
             return new FormElement($Name, $Type, $Values);
         }
