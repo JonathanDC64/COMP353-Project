@@ -3,9 +3,11 @@
 //get,update insert appointment
 	include_once("../database/database_connect.php");
 	
-	global $connection
-	class bookAppointment
+	global $connection;
+	class Appointment(Test)
 	{	
+		global $FirstName = $_POST["FirstName"];
+
 		
 		static function book_appointment($PatientID,$Appointment_Date)
 		{
