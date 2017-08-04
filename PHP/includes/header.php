@@ -52,7 +52,7 @@
 						<li class=""><a href="index.php">Home</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="PatientRegistration.html">Registration</a></li>
+							<li><a href="registration.php">Registration</a></li>
 						</ul>
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Information <span class="caret"></span></a>
