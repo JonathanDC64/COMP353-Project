@@ -59,7 +59,7 @@
                 </div>
             ";
         }
-
+        
         private static function display_element($Element){
             //remove underscores for displayed text
             $DisplayName = str_replace("_"," ", $Element->Name);
@@ -89,7 +89,7 @@
             }
             echo "</div>";
         }
-
+        
         public static function generate_element($Name, $Type, $Values){
             return new FormElement($Name, $Type, $Values);
         }

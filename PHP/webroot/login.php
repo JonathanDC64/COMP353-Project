@@ -9,6 +9,7 @@
         window.location.replace("index.php");
     }
 </script>
+
 <div id="content">
     <?php
         FormGenerator::generate_form("Login", "../includes/authentication/login.php", "Login Succeeded",
