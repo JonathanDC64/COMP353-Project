@@ -7,16 +7,7 @@
 //	$FirstName = $_POST["FirstName"];
 
 	class Appointment
-	{	
-		static function retrieve_doctor()
-		{
-			 $sql = 'SELECT UserInformation.First_Name,UserInformation.Last_Name 
-						FROM Doctor, UserInformation
-							WHERE Doctor.UserID = UserInformation.UserID';
-			$statement = $connection->prepare($sql);
-			$statement->execute();
-		}
-		
+	{			
 		static function book_appointment($PatientID,$Appointment_Date)
 		{
 			$sql = $connection->prepare('INSERT INTO Appointment(PatientID,Appointment_Date)
