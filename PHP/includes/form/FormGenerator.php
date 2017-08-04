@@ -82,7 +82,7 @@
                 case "radio":
                     foreach ($Element->Values as $Value) {
                         echo "<div class='radio'>";
-                        echo "  <label><input type='$Type' name='$Name' value='$Value'>$Value</label>"
+                        echo "  <label><input type='$Type' name='$Name' value='$Value'>$Value</label>";
                         echo "</div>";
                     }
                     break;
