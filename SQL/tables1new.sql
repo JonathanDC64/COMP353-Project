@@ -267,6 +267,11 @@ CREATE TABLE PaymentType(
     PRIMARY KEY(PaymentTypeID)
 );
 
+insert into PaymentType values(0,"Cash");
+insert into PaymentType values(0,"Cheque");
+insert into PaymentType values(0,"Debit");
+insert into PaymentType values(0,"Credit");
+
 ALTER TABLE Payment
     ADD CONSTRAINT FK_PaymentType_Payment
     FOREIGN KEY(PaymentTypeID)
