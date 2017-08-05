@@ -69,7 +69,7 @@
         
         }
         
-        public static function retrieve_Dailypayment(){
+        public static function retrieve_dailypayment(){
         global $connection;
         $stmt = $connection->prepare("SELECT PaymentType.Type,DailyPayment.AccountNumber,DailyPayment.Account,
                                       FROM DailyPayment,PaymentType

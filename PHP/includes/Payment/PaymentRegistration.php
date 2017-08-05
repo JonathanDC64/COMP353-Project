@@ -49,9 +49,6 @@
         //$AppointmentID = Appointment:: get_AppointmentID()
         
         
-            
-        
-        
         //If there are validation errors, display error message and stop page
         if(count($errors) > 0){
             echo implode("\n", $errors);
