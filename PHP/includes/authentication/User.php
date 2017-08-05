@@ -1,5 +1,5 @@
 <?php
-    include_once("UserInfo.php");
+    include_once ("UserInfo.php");
     // User based functions
     class User{
 
@@ -23,14 +23,26 @@
 		public static function retrieve_patients()
 		{
 			global $connection;
-			$stmt = $connection->prepare("SELECT PatientID,First_Name,Last_Name 
+			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
 											FROM Patient, User, UserInformation 
 												WHERE Patient.UserID = User.UserID AND User.UserID = UserInformation.UserID");					
 			$stmt->execute();
 			
 			return $stmt->fetchAll();
 		}
-		
+
+        public static function retrieve_patient($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
+											FROM Patient, User, UserInformation 
+												WHERE Patient.UserID = User.UserID 
+                                                AND User.UserID = UserInformation.UserID
+                                                AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
 		
 		public static function retrieve_doctors()
 		{

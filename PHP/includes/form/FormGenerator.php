@@ -26,14 +26,26 @@
                                 url: '$Action',
                                 data: $('#$ID_Title-Form').serialize(),
                                 success: function(response) {
-                                    if(response != '')
-                                        $('#errors').html(response);
-                                    else{
-                                        $('#errors').html('$Success');
-                                        if (typeof callback !== 'undefined' && typeof callback === 'function') {
-                                            callback();
+                                    $('#errors').html(response);
+                                    /*if(IsJsonString(response)){
+                                        response = JSON.parse(response);
+                                        if(reponse.Type == 'Success'){
+                                            $('#errors').html('$Success\n' + response.Data);
+                                        }
+                                        else{
+                                            $('#errors').html(response.Data);
                                         }
                                     }
+                                    else{
+                                        if(response != '')
+                                            $('#errors').html(response);
+                                        else{
+                                            $('#errors').html('$Success');
+                                            if (typeof callback !== 'undefined' && typeof callback === 'function') {
+                                                callback();
+                                            }
+                                        }
+                                    }*/
                                 }
                             });
                         });
