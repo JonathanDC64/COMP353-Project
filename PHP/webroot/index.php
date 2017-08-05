@@ -3,6 +3,7 @@ $pageTitle = 'Home';
 include('../includes/header.php'); 
 include_once('../includes/table/TableGenerator.php');
 include_once('../includes/authentication/AccessRights.php');
+include_once('../includes/authentication/User.php');
 ?>
 <div id="content">
 <h1>My Page</h1>

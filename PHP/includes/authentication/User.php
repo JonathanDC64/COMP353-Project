@@ -88,6 +88,38 @@
             return $row["AccessRightsID"];
         }
 
+        public static function login($Username, $Password){
+            global $connection;
+            $sql = 'SELECT UserID, Password, AccessLevel, Name FROM User
+                    INNER JOIN AccessRights USING (AccessRightsID)
+                    WHERE Username = :Username';
+		
+            $statement = $connection->prepare($sql);
+            
+            $statement->bindParam(':Username', $Username);
+            
+            $statement->execute();
+            $row=$statement->fetch();
+            
+            // Make sure username is found
+            if($statement->rowCount() && password_verify($Password, $row["Password"])){
+                //Success
+                $UserID = $row["UserID"];
+                $AccessLevel = $row["AccessLevel"];
+                $Role = $row["Name"];
+                
+                $userInfo = new UserInfo($UserID, $AccessLevel, $Role);
+                
+                session_start();
+
+                $_SESSION["User"] = serialize($userInfo);
+            }
+            else{
+                //Failure
+                die('The provided credentials are not correct');
+            }
+        }
+
         // Checks wether the user is logged in or not
         public static function loggedin(){
             return isset($_SESSION["User"]);

@@ -16,7 +16,6 @@
 		array_push($Doctors_Select, [$Doctor["DoctorID"], $Doctor["First_Name"] . " " . $Doctor["Last_Name"]]);
 	}
 	
-	
 	$Therapists = User::retrieve_therapists();
 	$Therapist_Select = array();
 	foreach($Therapists as $Therapist){

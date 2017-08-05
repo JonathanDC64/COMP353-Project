@@ -16,6 +16,7 @@
         public static function generate_form($Title, $Action, $Success, $Elements){
             $DisplayTitle = $Title;
             $ID_Title = str_replace(" ","_", $Title);
+            // col-md-offset-3
             echo "
                 <script>
                     $(function(){
@@ -42,7 +43,7 @@
                     <h2>$DisplayTitle</h2>
                 </div>
                 <div class='row'>
-                    <div class='col-md-6 col-md-offset-3'>
+                    <div class='col-md-12'> 
                         <div class='jumbotron'>
                             <form class='form-horizontal' method='POST' id='$ID_Title-Form' action='$Action'>";
                                 foreach ($Elements as $Element) {
@@ -73,7 +74,8 @@
                 case "text":
                 case "password":
                 case "date":
-                    echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name'>";
+                    $Value = isset($Element->Values[0]) ? $Element->Values[0] : "";
+                    echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name' value='$Value'>";
                     break;
                 case "select":
 
@@ -82,17 +84,23 @@
                         if(is_array($Value)){
                             $ID = $Value[0];
                             $Text = $Value[1];
-                            echo "<option value='$ID'>$Text ($ID)</option>";
+                            $Selected = isset($Value[2]) ? "selected='selected'" : "";
+                            echo "<option value='$ID' $Selected>$Text ($ID)</option>";
                         }
-                        else
-                            echo "<option value='$Value'>$Value</option>";
+                        else{
+                            $Selected = substr($Value, 0 , 1) == "*" ? "selected='selected'" : "";
+                            $Value = str_replace("*", "", $Value);
+                            echo "<option value='$Value' $Selected>$Value</option>";
+                        }
                     }
                     echo "</select>";
                     break;
                 case "radio":
                     foreach ($Element->Values as $Value) {
+                        $Checked = substr($Value, 0 , 1) == "*" ? "checked='checked'" : "";
+                        $Value = str_replace("*", "", $Value);
                         echo "<div class='radio'>";
-                        echo "  <label><input type='$Type' name='$Name' value='$Value'>$Value</label>";
+                        echo "  <label><input type='$Type' name='$Name' value='$Value' $Checked>$Value</label>";
                         echo "</div>";
                     }
                     break;
