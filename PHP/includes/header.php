@@ -67,6 +67,7 @@
 							<li><a href="registration.php">Registration</a></li>
 							<li><a href="appointment.php">Appointment</a></li>
 							<li><a href="prescription.php">Prescription</a></li>
+							<li><a href="patients.php">Patients</a></li>
 						</ul>
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Information <span class="caret"></span></a>
