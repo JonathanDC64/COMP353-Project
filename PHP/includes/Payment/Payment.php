@@ -15,7 +15,7 @@
         }
         
         //Note:Misssing AppointmentID
-        public static function create_Payment($PaymentTypeID, $AppointmentID, $Amount, $AccountNumber){
+        public static function create_Payment($PaymentTypeID, $AppointmentID, $Ammount, $AccountNumber){
          global $connection;
 		$stmt = $connection->prepare("INSERT INTO Payment VALUES(0, :PaymentTypeID, :AppointmentID, :Amount, : AccountNumber)"); 
 		$stmt->bindParam(':PaymentTypeID', $PaymentTypeID);
@@ -38,7 +38,7 @@
        
         public static function payment_exists($PaymentType){
             global $connection;
-            $stmt = $connection->prepare("SELECT Type FROM PaymentType  WHERE Type = :PaymentType"); 
+            $stmt = $connection->prepare("SELECT Type FROM PaymentType  WHERE Type = :Type"); 
             $stmt->bindParam(':Type', $PaymentType);
             $stmt->execute();
             $row = $stmt->fetch();
