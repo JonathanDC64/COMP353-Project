@@ -54,9 +54,16 @@
         }
         
         
+        $connection->beginTransaction();
         
-        // Create PaymentType
+         // Create PaymentType
         Payment::create_PaymentType($PaymentType);
+        
+        $connection->commit();
+        
+        
+        
+        $connection->beginTransaction();
         
         //Find  Payment ID
         $PaymentTypeID = Payment::get_PaymentType($PaymentType);
@@ -65,8 +72,6 @@
             array_push($errors, "Payment does not exist");
         }
         
-        
-         $connection->beginTransaction();
         
         // Create Dailypaymeny and Payment
             if($PaymentType == "Cash"){
