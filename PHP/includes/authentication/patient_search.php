@@ -32,7 +32,7 @@
 <?php           
         }
         else{
-            echo "Patient does not exist.";
+            echo "Patient does not exist.\n <a href='registration.php'>Register a new patient.</a>";
         }
     }
     else{
