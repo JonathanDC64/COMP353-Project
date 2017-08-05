@@ -142,7 +142,7 @@
             }
             else{
                 //Failure
-                die('The provided credentials are not correct');
+                echo "The provided credentials are not correct";
             }
         }
 
