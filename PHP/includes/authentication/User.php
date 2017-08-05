@@ -55,6 +55,20 @@
 			
 			return $stmt->fetchAll();
 		}
+
+
+        // Gets user information on the specified user
+        public static function retrieve_user($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT User.UserID, First_Name, Last_Name, Phone_Number, Age 
+											FROM User, UserInformation 
+                                            WHERE User.UserID = UserInformation.UserID
+                                            AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
 		
         // Creates a user and returns their id
         public static function create_user($AccessRightsID, $Username, $Password){
@@ -137,12 +151,22 @@
             return isset($_SESSION["User"]);
         }
 
+        // Gets User session information as an object
         public static function get_user_info(){
             return unserialize($_SESSION["User"]);
         }
 
+        // Ends the users session
         public static function logout(){
             unset($_SESSION["User"]);
+        }
+
+        // Gets the name of the logged in user
+        public static function get_name(){
+            $User = User::get_user_info();
+            $UserID = $User->UserID;
+            $User = User::retrieve_user($UserID);
+            return $User["First_Name"] . " " . $User["Last_Name"];
         }
 
         // Create user with Doctor role

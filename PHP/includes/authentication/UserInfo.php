@@ -1,12 +1,12 @@
 <?php
     class UserInfo{
-		public $UserId;
+		public $UserID;
 		public $AccessLevel;
 		public $Role;
 		
-		function __construct($_UserId, $_AccessLevel, $_Role)
+		function __construct($_UserID, $_AccessLevel, $_Role)
 		{
-			$this->UserId = $_UserId;
+			$this->UserID = $_UserID;
 			$this->AccessLevel = $_AccessLevel;
 			$this->Role = $_Role;
 		}

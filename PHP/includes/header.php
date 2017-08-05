@@ -94,6 +94,7 @@
 						</ul>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>
 						<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
 					</ul>
 					<?php endif; ?>
