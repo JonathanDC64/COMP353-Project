@@ -27,6 +27,9 @@
                                 data: $('#$ID_Title-Form').serialize(),
                                 success: function(response) {
                                     $('#errors').html(response);
+                                    if (typeof callback !== 'undefined' && typeof callback === 'function') {
+                                        callback();
+                                    }
                                     /*if(IsJsonString(response)){
                                         response = JSON.parse(response);
                                         if(reponse.Type == 'Success'){
