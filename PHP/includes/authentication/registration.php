@@ -143,6 +143,6 @@
 
         $connection->commit();
 
-        echo "Registration successful";
+        echo "Registration successful <br /> You can now <a href='login.php'>Login</a>";
     }
 ?>
