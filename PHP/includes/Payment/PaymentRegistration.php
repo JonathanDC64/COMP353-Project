@@ -10,24 +10,24 @@
         
         $errors = array();
         
-        $PaymentType= " ";
+        $Payment_Type= " ";
         
-        if(isset($_POST["PaymentType"])){
-            $PaymentType = $_POST["PaymentType"];
+        if(isset($_POST["Payment_Type"])){
+            $Payment_Type = $_POST["Payment_Type"];
             
         }else{
-            array_push($errors, "PaymentType is required");
+            array_push($errors, "Payment Type is required");
         }
         
-        $AccountNumber= " ";
+        $Account_Number= " ";
         
-        if($PaymentType != "Cash"){
+        if($Payment_Type != "Cash"){
             
-           if(isset($_POST["AccountNumber"])){
-               $AccountNumber = $_POST["AccountNumber"]; 
+           if(isset($_POST["Account_Number"])){
+               $Account_Number = $_POST["Account_Number"]; 
            }
             else{
-                array_push($errors, "PaymentType is required");
+                array_push($errors, "Payment Type is required");
             }
          
         }
@@ -46,7 +46,7 @@
     
         
         // Find Appointment ID from get_AppointmentID
-        //$AppointmentID = Appointment:: get_AppointmentID()
+        $AppointmentID = Appointment:: get_AppointmentID()
         
         
         //If there are validation errors, display error message and stop page
@@ -54,36 +54,47 @@
             echo implode("\n", $errors);
             die();
         }
-        
+        /*
+			foreach($PatientAppointments as $PatientAppointment){
+				?>
+				<tr>
+					<td><?= $PatientAppointment["Date"]; ?></td>
+					
+					<td><a href='make_payment.php?AppointmentID=<?= $PatientAppointment["AppointmentID"]; ?>'>Make Payement</a></td>
+				</tr>
+				<?php
+			}
+		*/
         
         $connection->beginTransaction();
         
-        // Create PaymentType
-        Payment::create_PaymentType($PaymentType);
+        // Create Payment_Type
+        Payment::create_Payment_Type($Payment_Type);
         
         $connection->commit();
         
         
         //Find  Payment ID
-        $PaymentTypeID = Payment::get_PaymentType($PaymentType);
+        $Payment_TypeID = Payment::get_Payment_Type($Payment_Type);
         
-         if(!isset($PaymentTypeID)){
+         if(!isset($Payment_TypeID)){
             array_push($errors, "Payment does not exist");
         }
         
+
         
         
         $connection->beginTransaction();
         
         // Create Dailypaymeny and Payment
-            if($PaymentType == "Cash"){
-                Payment::create_Payment($PaymentTypeID,$AppointmentID,$Amount, null);
+            if($Payment_Type == "Cash"){
+                Payment::create_Payment($Payment_TypeID,$AppointmentID,$Amount, null);
             }
-            esleif($PaymentType == "Cheque"){
-                Payment::create_Payment($PaymentTypeID,$AppointmentID,$Amount, $AccountNumber);
+            elseif($Payment_Type == "Cheque"){
+                Payment::create_Payment($Payment_TypeID,$AppointmentID,$Amount, $Account_Number);
             }
             else{
-                Payment::create_DailyPayment($PaymentTypeID,$AppointmentID,$Amount, $AccountNumber);
+                Payment::create_DailyPayment($Payment_TypeID,$AppointmentID,$Amount, $Account_Number);
             }
                 
             
