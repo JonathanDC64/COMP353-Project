@@ -8,7 +8,42 @@
         const Therapist = "Therapist";
         const Doctor = "Doctor";
         const Receptionist = "Receptionist";
-
+		
+		public static function retrieve_therapists()
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT TherapistID,UserInformation.First_Name,UserInformation.Last_Name 
+												FROM Therapist, UserInformation
+													WHERE Therapist.UserID = UserInformation.UserID");
+			$stmt->execute();
+			
+			return $stmt->fetchAll();
+		}
+		
+		public static function retrieve_patients()
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT PatientID,First_Name,Last_Name 
+											FROM Patient, User, UserInformation 
+												WHERE Patient.UserID = User.UserID AND User.UserID = UserInformation.UserID");					
+			$stmt->execute();
+			
+			return $stmt->fetchAll();
+		}
+		
+		
+		public static function retrieve_doctors()
+		{
+			global $connection;
+			$sql = 'SELECT DoctorID,UserInformation.First_Name,UserInformation.Last_Name 
+						FROM Doctor, UserInformation
+							WHERE Doctor.UserID = UserInformation.UserID';
+			$stmt = $connection->prepare($sql);
+			$stmt->execute();
+			
+			return $stmt->fetchAll();
+		}
+		
         // Creates a user and returns their id
         public static function create_user($AccessRightsID, $Username, $Password){
             global $connection;
@@ -112,5 +147,6 @@
             $stmt->execute();
             return $connection->lastInsertId();
         }
+
     }
 ?>

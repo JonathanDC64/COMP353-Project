@@ -1,14 +1,13 @@
 <?php
 //create function doctor,therapist function
 //get,update insert appointment
-	include_once("../database/database_connect.php");
+	include_once("../includes/database/database_connect.php");
 	
 	global $connection;
-	class Appointment(Test)
-	{	
-		global $FirstName = $_POST["FirstName"];
+//	$FirstName = $_POST["FirstName"];
 
-		
+	class Appointment
+	{			
 		static function book_appointment($PatientID,$Appointment_Date)
 		{
 			$sql = $connection->prepare('INSERT INTO Appointment(PatientID,Appointment_Date)

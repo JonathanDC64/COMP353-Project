@@ -13,6 +13,8 @@
         // For Patient users only
         const Patient = 1;
 
+        #### These functions kill the page if the user lacks the necessary access ####
+
         public static function verify_admin_receptionist(){
             AccessRights::verify(AccessRights::AdminReceptionist, "Admin Receptionist");
         }
@@ -34,5 +36,27 @@
                 die();
             }
         }
+
+
+        #### These functions return a boolean representing whether the user has the specified access ####
+
+        public static function has_admin_receptionist_access(){
+            return AccessRights::has_access(AccessRights::AdminReceptionist);
+        }
+
+        public static function has_admin_hcp_access(){
+            return AccessRights::has_access(AccessRights::AdminHCP);
+        }
+
+        public static function has_admin_patient_access(){
+            return AccessRights::has_access(AccessRights::Patient);
+        }
+
+        private static function has_access($Access){
+            $User = User::get_user_info();
+            return $User->AccessLevel >= $Access;
+        }
+
+        
     }
 ?>
