@@ -1,5 +1,5 @@
 <?php
-    include_once("UserInfo.php");
+    include_once ("UserInfo.php");
     // User based functions
     class User{
 
@@ -23,14 +23,26 @@
 		public static function retrieve_patients()
 		{
 			global $connection;
-			$stmt = $connection->prepare("SELECT PatientID,First_Name,Last_Name 
+			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
 											FROM Patient, User, UserInformation 
 												WHERE Patient.UserID = User.UserID AND User.UserID = UserInformation.UserID");					
 			$stmt->execute();
 			
 			return $stmt->fetchAll();
 		}
-		
+
+        public static function retrieve_patient($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
+											FROM Patient, User, UserInformation 
+												WHERE Patient.UserID = User.UserID 
+                                                AND User.UserID = UserInformation.UserID
+                                                AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
 		
 		public static function retrieve_doctors()
 		{
@@ -43,6 +55,20 @@
 			
 			return $stmt->fetchAll();
 		}
+
+
+        // Gets user information on the specified user
+        public static function retrieve_user($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT User.UserID, First_Name, Last_Name, Phone_Number, Age 
+											FROM User, UserInformation 
+                                            WHERE User.UserID = UserInformation.UserID
+                                            AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
 		
         // Creates a user and returns their id
         public static function create_user($AccessRightsID, $Username, $Password){
@@ -88,17 +114,59 @@
             return $row["AccessRightsID"];
         }
 
+        public static function login($Username, $Password){
+            global $connection;
+            $sql = 'SELECT UserID, Password, AccessLevel, Name FROM User
+                    INNER JOIN AccessRights USING (AccessRightsID)
+                    WHERE Username = :Username';
+		
+            $statement = $connection->prepare($sql);
+            
+            $statement->bindParam(':Username', $Username);
+            
+            $statement->execute();
+            $row=$statement->fetch();
+            
+            // Make sure username is found
+            if($statement->rowCount() && password_verify($Password, $row["Password"])){
+                //Success
+                $UserID = $row["UserID"];
+                $AccessLevel = $row["AccessLevel"];
+                $Role = $row["Name"];
+                
+                $userInfo = new UserInfo($UserID, $AccessLevel, $Role);
+                
+                session_start();
+
+                $_SESSION["User"] = serialize($userInfo);
+            }
+            else{
+                //Failure
+                die('The provided credentials are not correct');
+            }
+        }
+
         // Checks wether the user is logged in or not
         public static function loggedin(){
             return isset($_SESSION["User"]);
         }
 
+        // Gets User session information as an object
         public static function get_user_info(){
             return unserialize($_SESSION["User"]);
         }
 
+        // Ends the users session
         public static function logout(){
             unset($_SESSION["User"]);
+        }
+
+        // Gets the name of the logged in user
+        public static function get_name(){
+            $User = User::get_user_info();
+            $UserID = $User->UserID;
+            $User = User::retrieve_user($UserID);
+            return $User["First_Name"] . " " . $User["Last_Name"];
         }
 
         // Create user with Doctor role

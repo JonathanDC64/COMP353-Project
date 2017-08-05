@@ -21,6 +21,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>BSPC : <?= isset($pageTitle) ? $pageTitle : '' ?></title>
 	<link rel=" shortcut icon" type="image/ico" href="../webroot/favicon.ico?v=1" />
 	<!-- Latest compiled and minified CSS -->
@@ -32,6 +33,16 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="../webroot/js/jquery.min.js"></script>
+	<script>
+		function IsJsonString(str) {
+			try {
+				JSON.parse(str);
+			} catch (e) {
+				return false;
+			}
+			return true;
+		}
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -48,11 +59,15 @@
 					<div class="navbar-header">
 						<a class="navbar-brand" href="#">BSPC</a>
 					</div>
+					<?php if(User::loggedin()) : ?>
 					<ul class="nav navbar-nav">
 						<li class=""><a href="index.php">Home</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="registration.php">Registration</a></li>
+							<li><a href="appointment.php">Appointment</a></li>
+							<li><a href="prescription.php">Prescription</a></li>
+							<li><a href="patients.php">Patients</a></li>
 						</ul>
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Information <span class="caret"></span></a>
@@ -79,11 +94,10 @@
 						</ul>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<?php 
-						if(User::loggedin()) : ?>
-								<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
-						<?php endif; ?>
+						<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>
+						<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
 					</ul>
+					<?php endif; ?>
 				</div>
 			</nav>
 		</div>

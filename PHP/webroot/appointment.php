@@ -1,7 +1,7 @@
 <?php 
 	$pageTitle = 'New Appointment';
-	include('../includes/header.php'); 
-	include_once('../includes/form/FormGenerator.php');
+	include ('../includes/header.php'); 
+	include_once ('../includes/form/FormGenerator.php');
 	include_once ("../includes/authentication/User.php");
 	include_once ("../includes/database/database_connect.php");
 	$Patients = User::retrieve_patients();
@@ -15,7 +15,6 @@
 	foreach($Doctors as $Doctor){
 		array_push($Doctors_Select, [$Doctor["DoctorID"], $Doctor["First_Name"] . " " . $Doctor["Last_Name"]]);
 	}
-	
 	
 	$Therapists = User::retrieve_therapists();
 	$Therapist_Select = array();
