@@ -4,7 +4,7 @@
 	include_once('../includes/form/FormGenerator.php');
 	include_once("../includes/authentication/User.php");
 	include_once("../includes/database/database_connect.php");
-	include_once("../includes/appointment/AppointmentScheduling.php");
+	//include_once("../includes/appointment/AppointmentScheduling.php");
 	
 	$Patients = User::retrieve_patients();
 	$Patients_Select = array();
@@ -28,6 +28,7 @@
 <div id="content">
 <?php
         FormGenerator::generate_form("Add Doctor Appointment", "../includes/.php", "Doctor Appointment added Succeeded",
+		//FormGenerator::generate_form("Add Doctor Appointment", "../includes/appointment/AppointmentScheduling.php", "Doctor Appointment added Succeeded",
             [
                 FormGenerator::generate_element("Appointment_Date", "date", []),
                 FormGenerator::generate_element("Patient_ID", "select", $Patients_Select),
@@ -36,7 +37,8 @@
             ]
         );
 		
-		 FormGenerator::generate_form("Add Therapist Appointment", "../includes/.php", "Doctor Appointment added Succeeded",
+		FormGenerator::generate_form("Add Therapist Appointment", "../includes/.php", "Doctor Appointment added Succeeded",
+		//FormGenerator::generate_form("Add Doctor Appointment", "../includes/appointment/AppointmentScheduling.php", "Doctor Appointment added Succeeded",
             [
                 FormGenerator::generate_element("Appointment_Date", "date", []),
                 FormGenerator::generate_element("Patient_ID", "select", $Patients_Select),
