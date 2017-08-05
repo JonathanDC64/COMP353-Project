@@ -32,7 +32,7 @@
             if($User->AccessLevel < $Access){
                 $access = $Message;
                 include("forbiden.php");
-                include("footer.php");
+                include("../includes/footer.php");
                 die();
             }
         }

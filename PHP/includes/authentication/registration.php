@@ -38,13 +38,27 @@
             array_push($errors, "Role is required");
         }
 
+        $DoctorExperience = 6;
+        $TherapistExperience = 2;
+
         $Experience = 0;
-        if($Role == User::Doctor || $Role == User::Therapist){
-            if(isset($_POST["Experience"])){
-                $Experience = $_POST["Experience"];
+        if(isset($_POST["Experience"])){
+            $Exp = intval($_POST["Experience"]);
+            if($Role == User::Doctor){
+                if($Exp >= $DoctorExperience){
+                    $Experience = $_POST["Experience"];
+                }
+                else{
+                    array_push($errors, "Doctors require $DoctorExperience years of experience.");
+                }
             }
-            else{
-                array_push($errors, "Experience is required");
+            elseif($Role == User::Therapist){
+                if($Exp >= $TherapistExperience ){
+                    $Experience = $_POST["Experience"];
+                }
+                else{
+                    array_push($errors, "Therapists require $TherapistExperience years of experience");
+                }
             }
         }
 
@@ -73,12 +87,19 @@
             array_push($errors, "Phone Number is required");
         }
 
+
+        // Must be at least 18 years old
         $Age = "";
         if(isset($_POST["Age"])){
-            $Age = $_POST["Age"];
+            if(intval($_POST["Age"]) >= 18){
+                $Age = $_POST["Age"];
+            }
+            else{
+                array_push($errors, "Must be at least 18 years old.");
+            }
         }
         else{
-            array_push($errors, "Age is required");
+            array_push($errors, "Age is required.");
         }
 
         // Find user access rights
@@ -90,7 +111,7 @@
         
         //If there are validation errors, display error message and stop page
         if(count($errors) > 0){
-            echo implode("\n", $errors);
+            echo implode("<br />", $errors);
             die();
         }
 
@@ -121,5 +142,7 @@
         }
 
         $connection->commit();
+
+        echo "Registration successful";
     }
 ?>
