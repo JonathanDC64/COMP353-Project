@@ -3,6 +3,7 @@ $pageTitle = 'Home';
 include('../includes/header.php'); 
 include_once('../includes/table/TableGenerator.php');
 include_once('../includes/authentication/AccessRights.php');
+include_once('../includes/authentication/User.php');
 ?>
 <div id="content">
 <h1>My Page</h1>
@@ -14,7 +15,8 @@ include_once('../includes/authentication/AccessRights.php');
             ["4","5","6"],
             ["7","8","9"]
         ],
-        "","",TableGenerator::generate_permission(AccessRights::AdminReceptionist, AccessRights::AdminReceptionist)
+        "","",TableGenerator::generate_permission(AccessRights::AdminReceptionist, AccessRights::AdminReceptionist),
+        "../includes/authentication/registration_form.php"
     );
 ?>
 </div>

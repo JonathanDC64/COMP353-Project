@@ -12,6 +12,14 @@
             return $connection->lastInsertId();
         }
 	
+		public static function retrieve_equipment()
+		{
+			global $connection;
+			$stmt=$connection->prepare("SELECT EquipmentID,Name FROM Equipment");
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}
+		
         // Check  if equipment already exists
         public static function equipment_exists($Name){
             global $connection;
