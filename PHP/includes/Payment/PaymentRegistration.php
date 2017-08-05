@@ -2,6 +2,8 @@
 
     include_once("../database/database_connect.php");
     include_once("Payment.php");
+    //include_once("Appointment.php");
+    
     
     
     if(isset($_REQUEST["submitted"])){
@@ -34,7 +36,7 @@
         $Amount = " ";
         
         if(isset($_POST["Amount"])){
-            $Price = $_POST["Amount"];
+            $Amount = $_POST["Amount"];
             
         }else{
             array_push($errors, "Amount is required");
@@ -42,9 +44,12 @@
         
         
     
-        //TODO
-        // Find Appointment ID
-        //$AppointmentID = :: get_AppointmentID()
+        
+        // Find Appointment ID from get_AppointmentID
+        //$AppointmentID = Appointment:: get_AppointmentID()
+        
+        
+            
         
         
         //If there are validation errors, display error message and stop page
@@ -56,14 +61,11 @@
         
         $connection->beginTransaction();
         
-         // Create PaymentType
+        // Create PaymentType
         Payment::create_PaymentType($PaymentType);
         
         $connection->commit();
         
-        
-        
-        $connection->beginTransaction();
         
         //Find  Payment ID
         $PaymentTypeID = Payment::get_PaymentType($PaymentType);
@@ -72,6 +74,9 @@
             array_push($errors, "Payment does not exist");
         }
         
+        
+        
+        $connection->beginTransaction();
         
         // Create Dailypaymeny and Payment
             if($PaymentType == "Cash"){

@@ -4,8 +4,7 @@
     
     class Payment{
         
-       
-        public static function create_PaymentType($PaymentType){
+       public static function create_PaymentType($PaymentType){
             global $connection;
         
             $stmt = $connection->prepare("INSERT INTO PaymentType VALUES(0, :Type)"); 
@@ -24,6 +23,7 @@
 		$stmt->bindParam(':AccountNumber', $AccountNumber);
         $stmt->execute();	
 	   }
+        
         //Note:Misssing AppointmentID
         public static function create_DailyPayment($PaymentTypeID, $AppointmentID, $Amount, $AccountNumber){
 		$global connection;
@@ -57,7 +57,34 @@
         }
         
         
+      /*
+        public static function retrieve_payment(){
+        global $connection;
+        $stmt = $connection->prepare("SELECT PaymentType.Type,Payment.AccountNumber,Payment.Account,
+                                      FROM Payment,PaymentType
+                                      WHERE Payment.PaymentID = PaymentType.PaymentTypeID);
+                                        
+        $stmt->execute();
+        return $stmt->fetchAll();
+        
+        }
+        
+        public static function retrieve_Dailypayment(){
+        global $connection;
+        $stmt = $connection->prepare("SELECT PaymentType.Type,DailyPayment.AccountNumber,DailyPayment.Account,
+                                      FROM DailyPayment,PaymentType
+                                      WHERE DailyPayment.PaymentID = PaymentType.PaymentTypeID);
+                                        
+        $stmt->execute();
+        return $stmt->fetchAll();
+        
+        }
+        
+        
+        
       
+      
+      */
         
 	
         
