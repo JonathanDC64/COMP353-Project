@@ -39,5 +39,75 @@
 
             return $stmt->fetchAll();
         }
+
+        //3)
+        public static function patients_list(){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT PatientID, First_Name, Last_Name, Phone_Number, Age
+                FROM Patient
+                INNER JOIN User ON Patient.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+            "
+            );
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        }
+
+        //4)
+        public static function therapist_list(){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT TherapistID, First_Name, Last_Name, Phone_Number, Age
+                FROM Therapist
+                INNER JOIN User ON Therapist.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+            "
+            );
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        }
+
+        //5)
+        public static function working_therapist_list(){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT DISTINCT Therapist.TherapistID, First_Name, Last_Name, Phone_Number, Age
+                FROM Therapist
+                INNER JOIN User ON Therapist.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+                INNER JOIN TherapistAppointment ON Therapist.TherapistID = TherapistAppointment.TherapistID
+            "
+            );
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        }
+
+        //6)
+        public static function patient_reservations($PatientID){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT TherapistID, CONCAT(First_Name, ' ', Last_Name) AS Therapist_Name, Appointment_Date 
+                FROM Appointment
+                INNER JOIN TherapistAppointment USING(AppointmentID)
+                INNER JOIN Therapist USING(TherapistID)
+                INNER JOIN User ON Therapist.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+                WHERE PatientID = :PatientID;
+            "
+            );
+
+            $stmt->bindParam(':PatientID', $PatientID);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        }
     }
 ?>
