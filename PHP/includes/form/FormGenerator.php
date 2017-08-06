@@ -78,6 +78,7 @@
             ";
         }
         
+        
         private static function display_element($Element){
             //remove underscores for displayed text
             $DisplayName = str_replace("_"," ", $Element->Name);

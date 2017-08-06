@@ -1,4 +1,5 @@
 <?php
+    //echo shell_exec("ssh -L 3306:ytc353_1.encs.concordia.ca:3306 login.encs.concordia.ca");
     // Database info
     $servername = "localhost";//"ytc353_1.encs.concordia.ca";
     $dbName = "ytc353_1";
