@@ -4,9 +4,9 @@
 	include_once('../includes/database/database_connect.php'); 
 	
 	//redirect user to login page if not logged in
-	/*if(basename($_SERVER['PHP_SELF']) != "login.php" && !User::loggedin()){
+	if(basename($_SERVER['PHP_SELF']) != "login.php" && !User::loggedin()){
 		header('Location: login.php');
-	}*/
+	}
 
 	// check if we are on local machine or school server
 	/*if (strpos($_SERVER['DOCUMENT_ROOT'], 'xampp') !== false) {
