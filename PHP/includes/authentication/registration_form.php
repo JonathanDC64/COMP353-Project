@@ -1,6 +1,6 @@
 <?php
-    include_once('AccessRights.php'); 
-    include_once('../includes/form/FormGenerator.php');
+    include_once ('AccessRights.php'); 
+    include_once ('../includes/form/FormGenerator.php');
     FormGenerator::generate_form("Register", "../includes/authentication/registration.php", "Registration Succeeded",
             [
                 FormGenerator::generate_element("Referal#", "text", []),
