@@ -22,8 +22,22 @@
             return $stmt->fetchAll();
         }
 
+        //2)
         public static function equipment_never_used(){
-            
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT EquipmentID, Name 
+                FROM Equipment
+                WHERE EquipmentID NOT IN (
+                    SELECT EquipmentID 
+                    FROM Equipment 
+                    INNER JOIN Treatment USING(EquipmentID)
+                )"
+            );
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
         }
     }
 ?>
