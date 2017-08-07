@@ -2,34 +2,14 @@
 
     //Class to add Therapist appointment
     class TherapistAppointment{
-		
-		//Create diagnosis
-		public static function create_diagnosis($Description)
-		{
-			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Diagnosis VALUES(0, :Description)");
-			$stmt->bindParam(':Description', $Description);
-			$stmt->execute();
-			return $connection->lastInsertId();
-		}
-		
+				
 		//Create Prescription
-		public static function create_prescription($DoctorNote)
+		public static function create_prescription($DoctorNote,$Diagnosis)
 		{
 			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Prescription VALUES(0, :DoctorNote)");
+			$stmt = $connection->prepare("INSERT INTO Prescription VALUES(0, :DoctorNote, :Diagnosis)");
 			$stmt->bindParam(':DoctorNote', $DoctorNote);
-			$stmt->execute();
-			return $connection->lastInsertId();
-		}
-		
-		//Create Prescription_Diagnosis
-		public static function create_prescription_diagnosis($PrescriptionID,$DiagnosisID)
-		{
-			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Prescription_Diagnosis VALUES(:PrescriptionID, :DiagnosisID)");
-			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
-			$stmt->bindParam(':DiagnosisID', $DiagnosisID);
+			$stmt->bindParam(':Diagnosis', $Diagnosis);
 			$stmt->execute();
 			return $connection->lastInsertId();
 		}
@@ -68,18 +48,6 @@
 			return $connection->lastInsertId();
 		}
 		
-		// Check  if diagnosis already exists
-        public static function diagnosis_exists($Description)
-		{
-            global $connection;
-			$stmt = $connection->prepare("SELECT Description FROM Diagnosis WHERE Description = :Description"); 
-            $stmt->bindParam(':Description', $Description);
-            $stmt->execute();
-            $row = $stmt->fetch();
-            return $stmt->rowCount() > 0;
-
-        }
-		
 		// Check  if equipment already exists
         public static function equipment_exists($Name)
 		{
@@ -101,16 +69,7 @@
             $row = $stmt->fetch();
             return $stmt->rowCount() > 0;
         }
-		
-		public static function retrieve_diagnosisID($Description){
-            global $connection;
-			$stmt = $connection->prepare("SELECT DiagnosisID FROM Diagnosis WHERE Description = :Description"); 
-            $stmt->bindParam(':Description', $Description);
-            $stmt->execute();
-            $row = $stmt->fetch();	
-			return $row["DiagnosisID"];
-	
-        }
+
 		
         public static function retrieve_equipmentID($Name){
             global $connection;
@@ -130,6 +89,19 @@
             $row = $stmt->fetch();
 			return $row["TreatmentID"];
         }	
+		
+		public static function retrieve_therapist_appointment($TherapistAppointmentID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT Prescription.DoctorsNote, Prescription.Diagnosis, Treatment.Description, Treatment.Cost, Equipment.Name
+										  FROM TherapistAppointment, Prescription, Treatment, Equipment
+										  WHERE TherapistAppointment.TherapistAppointmentID = :TherapistAppointmentID AND
+											    TherapistAppointment.PrescriptionID = Prescription.PrescriptionID AND
+												TherapistAppointment.TreatmentID = Treatment.TreatmentID AND
+												Treatment.EquipmentID = Equipment.EquipmentID");
+            $stmt->bindParam(':TherapistAppointmentID', $TherapistAppointmentID);
+            $stmt->execute();
+			return $stmt->fetchAll();
+        }
 		
     }
 ?>

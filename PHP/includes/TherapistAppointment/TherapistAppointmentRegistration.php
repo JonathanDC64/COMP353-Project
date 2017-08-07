@@ -67,21 +67,6 @@
 		
 
 		$connection->beginTransaction();
-		
-		
-        // Create
-	/*
-		if(ThAp::equipment_exists($Equipment))
-		{
-			$EquipmentID=ThAp::retrieve_equipmentID($Equipment);
-		}
-		else
-		{
-			$EquipmentID=ThAp::create_equipment($Equipment);
-		}
-	*/	
-
-
 			
 		if(TherapistAppointment::treatment_exists($Treatment))
 		{
@@ -101,17 +86,8 @@
 			$TreatmentID=TherapistAppointment::create_treatment($EquipmentID,$Treatment,$Treatment_Cost);
 		}
 		
-		if(TherapistAppointment::diagnosis_exists($Diagnosis))
-		{
-			$DiagnosisID=TherapistAppointment::retrieve_diagnosisID($Diagnosis);
-		}
-		else
-		{
-			$DiagnosisID=TherapistAppointment::create_diagnosis($Diagnosis);
-		}
 
-		$PrescriptionID=TherapistAppointment::create_prescription($Note);
-		TherapistAppointment::create_prescription_diagnosis($PrescriptionID,$DiagnosisID);
+		$PrescriptionID=TherapistAppointment::create_prescription($Note,$Diagnosis);
 		TherapistAppointment::create_therapist_appointment($Therapist_Appointment,$PrescriptionID,$TreatmentID);
 		
         $connection->commit();

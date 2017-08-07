@@ -13,9 +13,9 @@
 		
         // Get User data
 		
-        $DoctorAppointment = "";
-        if(isset($_POST["DoctorAppointment"])){
-            $DoctorAppointment = $_POST["DoctorAppointment"];
+        $Doctor_Appointment = "";
+        if(isset($_POST["Doctor_Appointment"])){
+            $Doctor_Appointment = $_POST["Doctor_Appointment"];
         }
 		
 		$Note = "";
@@ -44,19 +44,10 @@
 
 		$connection->beginTransaction();
 
-		
-		if(DoctorAppointment::diagnosis_exists($Diagnosis))
-		{
-			$DiagnosisID=DoctorAppointment::retrieve_diagnosisID($Diagnosis);
-		}
-		else
-		{
-			$DiagnosisID=DoctorAppointment::create_diagnosis($Diagnosis);
-		}
 
-		$PrescriptionID=DoctorAppointment::create_prescription($Note);
-		DoctorAppointment::create_prescription_diagnosis($PrescriptionID,$DiagnosisID);
-		DoctorAppointment::create_doctor_appointment($DoctorAppointment,$PrescriptionID);
+		$PrescriptionID=DoctorAppointment::create_prescription($Note,$Diagnosis);
+		echo $PrescriptionID;
+		DoctorAppointment::create_doctor_appointment($Doctor_Appointment,$PrescriptionID);
 		
         $connection->commit();
     }

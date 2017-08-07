@@ -3,81 +3,39 @@
     //Class to add doctor appointment
     class DoctorAppointment{
 		
-		//Create diagnosis
-		public static function create_diagnosis($Description)
-		{
-			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Diagnosis VALUES(0, :Description)");
-			$stmt->bindParam(':Description', $Description);
-			$stmt->execute();
-			return $connection->lastInsertId();
-		}
-		
 		//Create Prescription
-		public static function create_prescription($DoctorNote)
+		public static function create_prescription($DoctorNote,$Diagnosis)
 		{
 			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Prescription VALUES(0, :DoctorNote)");
+			$stmt = $connection->prepare("INSERT INTO Prescription VALUES(0, :DoctorNote, :Diagnosis)");
 			$stmt->bindParam(':DoctorNote', $DoctorNote);
+			$stmt->bindParam(':Diagnosis', $Diagnosis);
 			$stmt->execute();
 			return $connection->lastInsertId();
 		}
-		
-		//Create Prescription_Diagnosis
-		public static function create_prescription_diagnosis($PrescriptionID,$DiagnosisID)
-		{
-			global $connection;
-			$stmt = $connection->prepare("INSERT INTO Prescription_Diagnosis VALUES(:PrescriptionID, :DiagnosisID)");
-			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
-			$stmt->bindParam(':DiagnosisID', $DiagnosisID);
-			$stmt->execute();
-			return $connection->lastInsertId();
-		}	
 		
 		//Create Doctor Appointment
-		public static function create_doctor_appointment($DoctorAppointmentID,$PrescriptionID)
+		public static function create_doctor_appointment($AppointmentID,$PrescriptionID)
 		{
 			global $connection;
-			$stmt = $connection->prepare("UPDATE DoctorAppointment SET DoctorAppointment.PrescriptionID=:PrescriptionID WHERE DoctorAppointment.DoctorAppointmentID=:DoctorAppointmentID");
+			$stmt = $connection->prepare("UPDATE DoctorAppointment SET DoctorAppointment.PrescriptionID = :PrescriptionID WHERE DoctorAppointment.DoctorAppointmentID = :AppointmentID");
 			$stmt->bindParam(':AppointmentID', $AppointmentID);
 			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
 			$stmt->execute();
 			return $connection->lastInsertId();
 		}
 		
-				//Create Therapist Appointment
-		public static function create_therapist_appointment($TherapistAppointmentID,$PrescriptionID,$TreatmentID)
+		//Create Doctor Appointment
+		public static function retrive_doctor_appointment($AppointmentID)
 		{
 			global $connection;
-			$stmt = $connection->prepare("UPDATE TherapistAppointment SET TherapistAppointment.PrescriptionID=:PrescriptionID, TherapistAppointment.TreatmentID=:TreatmentID WHERE TherapistAppointment.TherapistAppointmentID=:TherapistAppointmentID");
-			$stmt->bindParam(':TherapistAppointmentID', $TherapistAppointmentID);
-			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
-			$stmt->bindParam(':TreatmentID', $TreatmentID);
+			$stmt = $connection->prepare("SELECT Prescription.DoctorsNote, Prescription.Diagnosis
+										  FROM DoctorAppointment, Prescription
+										  WHERE DoctorAppointment.DoctorAppointmentID = :AppointmentID AND
+												DoctorAppointment.PrescriptionID=Prescription.PrescriptionID");
+			$stmt->bindParam(':AppointmentID', $AppointmentID);
 			$stmt->execute();
-			return $connection->lastInsertId();
+			return $stmt->fetchAll();
 		}
-		
-		// Check  if diagnosis already exists
-        public static function diagnosis_exists($Description)
-		{
-            global $connection;
-			$stmt = $connection->prepare("SELECT Description FROM Diagnosis WHERE Description = :Description"); 
-            $stmt->bindParam(':Description', $Description);
-            $stmt->execute();
-            $row = $stmt->fetch();
-            return $stmt->rowCount() > 0;
-
-        }
-		
-		public static function retrieve_diagnosisID($Description){
-            global $connection;
-			$stmt = $connection->prepare("SELECT DiagnosisID FROM Diagnosis WHERE Description = :Description"); 
-            $stmt->bindParam(':Description', $Description);
-            $stmt->execute();
-            $row = $stmt->fetch();	
-			return $row["DiagnosisID"];
-	
-        }
-		
     }
 ?>
