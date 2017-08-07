@@ -26,29 +26,10 @@
                                 url: '$Action',
                                 data: $('#$ID_Title-Form').serialize(),
                                 success: function(response) {
-                                    $('#errors').html(response);
+                                    $('#$ID_Title-output').html(response);
                                     if (typeof callback !== 'undefined' && typeof callback === 'function') {
                                         callback();
                                     }
-                                    /*if(IsJsonString(response)){
-                                        response = JSON.parse(response);
-                                        if(reponse.Type == 'Success'){
-                                            $('#errors').html('$Success\n' + response.Data);
-                                        }
-                                        else{
-                                            $('#errors').html(response.Data);
-                                        }
-                                    }
-                                    else{
-                                        if(response != '')
-                                            $('#errors').html(response);
-                                        else{
-                                            $('#errors').html('$Success');
-                                            if (typeof callback !== 'undefined' && typeof callback === 'function') {
-                                                callback();
-                                            }
-                                        }
-                                    }*/
                                 }
                             });
                         });
@@ -69,7 +50,7 @@
                                 <div class='form-group'>
                                     <label class='control-label' for='$ID_Title'></label>
                                     <input type='button' class='btn btn-success btn-block' role='button' id='$ID_Title' value='$DisplayTitle'>
-                                    <div id='errors'></div>
+                                    <div id='$ID_Title-output'></div>
                                 </div>
                             </form>
                         </div>
