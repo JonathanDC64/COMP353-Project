@@ -56,6 +56,31 @@
 			return $stmt->fetchAll();
 		}
 
+        public static function retrieve_doctor($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT DoctorID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
+											FROM Doctor, User, UserInformation 
+												WHERE Doctor.UserID = User.UserID 
+                                                AND User.UserID = UserInformation.UserID
+                                                AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
+
+        public static function retrieve_therapist($UserID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT TherapistID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
+											FROM Therapist, User, UserInformation 
+												WHERE Therapist.UserID = User.UserID 
+                                                AND User.UserID = UserInformation.UserID
+                                                AND User.UserID = :UserID");
+            $stmt->bindParam(':UserID', $UserID);					
+			$stmt->execute();
+			
+			return $stmt->fetch();
+        }
 
         // Gets user information on the specified user
         public static function retrieve_user($UserID){

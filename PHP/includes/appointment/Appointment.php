@@ -1,8 +1,6 @@
 <?php
 	//create function doctor,therapist function
 	//get,update insert appointment
-	include_once("../includes/database/database_connect.php");
-
 	class Appointment
 	{	
 		public static function get_patient_appointment_doctor()
@@ -14,14 +12,15 @@
 				FROM Appointment 
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
-				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID'
+				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID
+				ORDER BY Appointment.Appointment_Date ASC'
 			);
 			
 			$sql->execute();
 			return $sql->fetchAll();
 		}
 
-		public static function get_doctor_appointment($AppointmentID)
+		public static function get_patient_doctor_appointment($AppointmentID)
 		{
 			global $connection;
 			
@@ -31,6 +30,23 @@
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
 				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID
+				WHERE Appointment.AppointmentID = :AppointmentID'
+			);
+			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+			return $sql->fetchAll();
+		}
+
+		public static function get_doctor_patient_appointment($AppointmentID)
+		{
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+				FROM DoctorAppointment 
+				INNER JOIN Appointment ON DoctorAppointment.AppointmentID = Appointment.AppointmentID 
+				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID 
+				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
@@ -52,7 +68,7 @@
 			return $sql->fetchAll();
 		}
 
-		public static function get_therapist_appointment($AppointmentID)
+		public static function get_patient_therapist_appointment($AppointmentID)
 		{
 			global $connection;
 			
@@ -65,6 +81,59 @@
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+			return $sql->fetchAll();
+		}
+
+		public static function get_therapist_patient_appointment($AppointmentID)
+		{
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+				FROM TherapistAppointment 
+				INNER JOIN Appointment ON TherapistAppointment.AppointmentID = Appointment.AppointmentID 
+				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID 
+				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				WHERE Appointment.AppointmentID = :AppointmentID'
+			);
+			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+			return $sql->fetchAll();
+		}
+
+		public static function get_doctor_appointments($DoctorID){
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+				FROM Appointment 
+				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
+				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
+				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID
+				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				WHERE DoctorAppointment.DoctorID = :DoctorID
+				ORDER BY Appointment.Appointment_Date ASC'
+			);
+			$sql->bindParam(':DoctorID', intval($DoctorID));
+			$sql->execute();
+			return $sql->fetchAll();
+		}
+
+		public static function get_therapist_appointments($TherapistID){
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+				FROM Appointment 
+				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
+				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
+				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID
+				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				WHERE TherapistAppointment.TherapistID = :TherapistID
+				ORDER BY Appointment.Appointment_Date ASC'
+			);
+			$sql->bindParam(':TherapistID', intval($TherapistID));
 			$sql->execute();
 			return $sql->fetchAll();
 		}
@@ -91,7 +160,8 @@
 				FROM Appointment 
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
-				INNER JOIN userinformation ON Therapist.UserID = userinformation.UserID');
+				INNER JOIN userinformation ON Therapist.UserID = userinformation.UserID
+				ORDER BY Appointment.Appointment_Date ASC');
 			
 			$sql->execute();
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -162,6 +232,36 @@
 			
             $stmt->bindParam(':AppointmentID', intval($AppointmentID), PDO::PARAM_INT);		
 			$stmt->bindParam(':PatientID', intval($PatientID), PDO::PARAM_INT);	
+			$stmt->execute();
+			$row = $stmt->fetch();
+            return isset($row["AppointmentID"]);
+		}
+
+		public static function validate_doctor_appointment($AppointmentID, $DoctorID){
+			global $connection;
+			$stmt = $connection->prepare("SELECT AppointmentID 
+											FROM Appointment
+											INNER JOIN DoctorAppointment USING(AppointmentID) 
+                                            WHERE AppointmentID = :AppointmentID
+											AND DoctorID = :DoctorID");
+			
+            $stmt->bindParam(':AppointmentID', intval($AppointmentID), PDO::PARAM_INT);		
+			$stmt->bindParam(':DoctorID', intval($DoctorID), PDO::PARAM_INT);	
+			$stmt->execute();
+			$row = $stmt->fetch();
+            return isset($row["AppointmentID"]);
+		}
+
+		public static function validate_therapist_appointment($AppointmentID, $TherapistID){
+			global $connection;
+			$stmt = $connection->prepare("SELECT AppointmentID 
+											FROM Appointment
+											INNER JOIN TherapistAppointment USING(AppointmentID) 
+                                            WHERE AppointmentID = :AppointmentID
+											AND TherapistID = :TherapistID");
+			
+            $stmt->bindParam(':AppointmentID', intval($AppointmentID), PDO::PARAM_INT);		
+			$stmt->bindParam(':TherapistID', intval($TherapistID), PDO::PARAM_INT);	
 			$stmt->execute();
 			$row = $stmt->fetch();
             return isset($row["AppointmentID"]);
