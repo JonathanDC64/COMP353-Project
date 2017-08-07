@@ -21,8 +21,8 @@
 	}
 	else
 	{
-		$DocNote="--";
-		$DocDiagnosis="--";
+		$DocNote="";
+		$DocDiagnosis="";
 	}
 	
 ?>

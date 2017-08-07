@@ -25,11 +25,11 @@
 	}
 	else
 	{
-		$TheNote="--";
-		$TheDiagnosis="--";
-		$TheTreatment="--";
-		$TheTrCost="--";
-		$TheEquipment="--";
+		$TheNote="";
+		$TheDiagnosis="";
+		$TheTreatment="";
+		$TheTrCost="";
+		$TheEquipment="";
 	}
 
 ?>
