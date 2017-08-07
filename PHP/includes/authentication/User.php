@@ -33,11 +33,11 @@
 
         public static function retrieve_patient($UserID){
             global $connection;
-			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name,Last_Name, Phone_Number, Age 
+			$stmt = $connection->prepare("SELECT PatientID, User.UserID, First_Name, Last_Name, Phone_Number, Age 
 											FROM Patient, User, UserInformation 
 												WHERE Patient.UserID = User.UserID 
                                                 AND User.UserID = UserInformation.UserID
-                                                AND User.UserID = :UserID");
+                                                AND (User.UserID = :UserID OR Patient.PatientID = :UserID)");
             $stmt->bindParam(':UserID', $UserID);					
 			$stmt->execute();
 			

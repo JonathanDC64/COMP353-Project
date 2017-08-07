@@ -6,22 +6,34 @@
 	include_once('../includes/database/database_connect.php');
 	include_once('../includes/Payment/Payment.php');
 
-	//$AppointmentID=$_GET["AppointmentID"];
-	
+	if(isset($_GET["AppointmentID"]) && !empty($_GET["AppointmentID"])){
+        $AppointmentID = $_GET["AppointmentID"];
 	
 ?>
 
-<div id="content">
-    <?php
-        FormGenerator::generate_form("Payment", "../includes/Payment/PaymentRegistration.php", "Registration Succeeded",
-            [
-				FormGenerator::generate_element("Appointment_ID", "select", ["1","2"]),
-				FormGenerator::generate_element("Payment_Type", "select", ["Cash","Credit","Debit","Cheque"]),
-				FormGenerator::generate_element("Account_Number_for_card_or_cheque", "text", []),
-				FormGenerator::generate_element("Amount", "text", [])
-            ]
-        );
-    ?>
-</div>
+        <div id="content">
+            <?php
+                FormGenerator::generate_form("Payment for $AppointmentID", "../includes/Payment/PaymentRegistration.php", "",
+                    [
+                        //FormGenerator::generate_element("Appointment_ID", "select", ["1","2"]),
+                        FormGenerator::generate_element("Payment_Type", "select", 
+                        [
+                            [Payment::Cash,     "Cash"],
+                            [Payment::Cheque,   "Cheque"],
+                            [Payment::Debit,    "Debit"], 
+                            [Payment::Credit,   "Credit"]
+                        ]),
+                        FormGenerator::generate_element("Account_Number_for_card_or_cheque", "text", []),
+                        FormGenerator::generate_element("Amount", "text", [])
+                    ]
+                );
+            ?>
+        </div>
 
-<?php include('../includes/footer.php'); ?>
+<?php 
+    }
+    else{
+        echo "invalid appointment";
+    }
+    include('../includes/footer.php'); 
+?>

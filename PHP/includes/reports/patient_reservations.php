@@ -1,5 +1,8 @@
 <?php
-    include_once ("../database/database_connect.php");
+    if(!isset($connection)){
+        include_once ("../database/database_connect.php");
+    }
+    
     include_once ('Reports.php');
     if(isset($_POST["Patient"])){
         $PatientID = $_POST["Patient"];

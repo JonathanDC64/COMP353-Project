@@ -10,20 +10,11 @@
 
 <div id="content">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#Patient-Search">Patient Search</a></li>
-		<li><a data-toggle="tab" href="#Patients-List">Patients List</a></li>
+        <li class="active"><a data-toggle="tab" href="#Patients-List">Patients List</a></li>
+        <li><a data-toggle="tab" href="#Patient-Search">Patient Search</a></li>
 	</ul>
 	<div class="tab-content well">
-        <div id="Patient-Search" class="tab-pane fade in active">
-			<?php
-                FormGenerator::generate_form("Patient Search", "../includes/authentication/patient_search.php", "Search successful",
-					[
-						FormGenerator::generate_element("PHN", "text", [])
-					]
-				);
-            ?>
-		</div>
-		<div id="Patients-List" class="tab-pane fade in">
+        <div id="Patients-List" class="tab-pane fade in active">
             <h2>Patients</h2>
             <table class="table">
                 <thead>
@@ -33,6 +24,7 @@
                         <th>Last Name</th>
                         <th>Phone Number</th>
                         <th>Age</th>
+                        <th>View Appointments</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,10 +35,20 @@
                             <td><?= $Patient["Last_Name"]; ?></td>
                             <td><?= $Patient["Phone_Number"]; ?></td>
                             <td><?= $Patient["Age"]; ?></td>
+                            <td><a class="btn btn-primary" href="patient_appointments.php?PatientID=<?= $Patient["PatientID"]; ?>">View Appointments</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
+		</div>
+        <div id="Patient-Search" class="tab-pane fade in">
+			<?php
+                FormGenerator::generate_form("Patient Search", "../includes/authentication/patient_search.php", "Search successful",
+					[
+						FormGenerator::generate_element("PHN", "text", [])
+					]
+				);
+            ?>
 		</div>
 	</div>
 

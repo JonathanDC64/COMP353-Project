@@ -58,20 +58,16 @@
 		}
 		else
 		{
-			if($Payment_Type == "Cash"){
-				$Payment_Type=1;
+			if($Payment_Type == Payment::Cash){
 				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, null);
 			}
-			elseif($Payment_Type == "Cheque"){
-				$Payment_Type=2;
+			elseif($Payment_Type == Payment::Cheque){
 				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
 			}
-			elseif($Payment_Type == "Debit"){
-				$Payment_Type=3;
+			elseif($Payment_Type == Payment::Debit){
 				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
 			}
-			else{
-				$Payment_Type=4;
+			else{//$Payment_Type == Payment::Credit
 				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
 			}
         }
@@ -79,9 +75,5 @@
         
         $connection->commit();
         
-    }
-
-
-
-
+	}
 ?>
