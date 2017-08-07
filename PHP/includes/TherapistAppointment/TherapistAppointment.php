@@ -57,12 +57,11 @@
 		}
 		
 		//Create Therapist Appointment
-		public static function create_therapist_appointment($AppointmentID,$TherapistID,$PrescriptionID,$TreatmentID)
+		public static function create_therapist_appointment($TherapistAppointmentID,$PrescriptionID,$TreatmentID)
 		{
 			global $connection;
-			$stmt = $connection->prepare("INSERT INTO TherapistAppointment VALUES(0,:AppointmentID, :TherapistID, :PrescriptionID, :TreatmentID)");
-			$stmt->bindParam(':AppointmentID', $AppointmentID);
-			$stmt->bindParam(':TherapistID', $TherapistID);
+			$stmt = $connection->prepare("UPDATE TherapistAppointment SET TherapistAppointment.PrescriptionID=:PrescriptionID, TherapistAppointment.TreatmentID=:TreatmentID WHERE TherapistAppointment.TherapistAppointmentID=:TherapistAppointmentID");
+			$stmt->bindParam(':TherapistAppointmentID', $TherapistAppointmentID);
 			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
 			$stmt->bindParam(':TreatmentID', $TreatmentID);
 			$stmt->execute();

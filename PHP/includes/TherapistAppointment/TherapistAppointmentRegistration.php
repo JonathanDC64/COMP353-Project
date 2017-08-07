@@ -13,25 +13,15 @@
 		$TreatmentID;
 		
         // Get User data
-		$Appointment = "";
-        if(isset($_POST["Appointment"])){
-            $Appointment = $_POST["Appointment"];
+
+        $Therapist_Appointment= "";
+        if(isset($_POST["Therapist_Appointment"])){
+            $Therapist_Appointment = $_POST["Therapist_Appointment"];
         }
-        else{
-            array_push($errors, "Appointment is required");
-        }
-		
-        $Therapist = "";
-        if(isset($_POST["Therapist"])){
-            $Therapist = $_POST["Therapist"];
-        }
-        else{
-            array_push($errors, "Therapist is required");
-        }
-		
-		$DoctorNote = "";
-		if(isset($_POST["DoctorNote"])){
-			$DoctorNote = $_POST["DoctorNote"];
+ 
+		$Note = "";
+		if(isset($_POST["Note"])){
+			$Note = $_POST["Note"];
 		}
 		else{
 			array_push($errors, "Prescription Notes is required");
@@ -53,9 +43,9 @@
 			array_push($errors, "Treatment description is required");
 		}
 		
-		$TreatmentCost = "";
-		if(isset($_POST["TreatmentCost"])){
-			$TreatmentCost = $_POST["TreatmentCost"];
+		$Treatment_Cost = "";
+		if(isset($_POST["Treatment_Cost"])){
+			$Treatment_Cost = $_POST["Treatment_Cost"];
 		}
 		else{
 			array_push($errors, "Treatment cost is required");
@@ -108,7 +98,7 @@
 				$EquipmentID=TherapistAppointment::create_equipment($Equipment);
 			}
 			
-			$TreatmentID=TherapistAppointment::create_treatment($EquipmentID,$Treatment,$TreatmentCost);
+			$TreatmentID=TherapistAppointment::create_treatment($EquipmentID,$Treatment,$Treatment_Cost);
 		}
 		
 		if(TherapistAppointment::diagnosis_exists($Diagnosis))
@@ -120,9 +110,9 @@
 			$DiagnosisID=TherapistAppointment::create_diagnosis($Diagnosis);
 		}
 
-		$PrescriptionID=TherapistAppointment::create_prescription($DoctorNote);
+		$PrescriptionID=TherapistAppointment::create_prescription($Note);
 		TherapistAppointment::create_prescription_diagnosis($PrescriptionID,$DiagnosisID);
-		TherapistAppointment::create_therapist_appointment($Appointment,$Therapist,$PrescriptionID,$TreatmentID);
+		TherapistAppointment::create_therapist_appointment($Therapist_Appointment,$PrescriptionID,$TreatmentID);
 		
         $connection->commit();
     }

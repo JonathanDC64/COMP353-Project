@@ -12,25 +12,15 @@
 		
 		
         // Get User data
-		$Appointment = "";
-        if(isset($_POST["Appointment"])){
-            $Appointment = $_POST["Appointment"];
-        }
-        else{
-            array_push($errors, "Appointment is required");
+		
+        $DoctorAppointment = "";
+        if(isset($_POST["DoctorAppointment"])){
+            $DoctorAppointment = $_POST["DoctorAppointment"];
         }
 		
-        $Doctor = "";
-        if(isset($_POST["Doctor"])){
-            $Doctor = $_POST["Doctor"];
-        }
-        else{
-            array_push($errors, "Doctor is required");
-        }
-		
-		$DoctorNote = "";
-		if(isset($_POST["DoctorNote"])){
-			$DoctorNote = $_POST["DoctorNote"];
+		$Note = "";
+		if(isset($_POST["Note"])){
+			$Note = $_POST["Note"];
 		}
 		else{
 			array_push($errors, "Prescription Notes is required");
@@ -64,9 +54,9 @@
 			$DiagnosisID=DoctorAppointment::create_diagnosis($Diagnosis);
 		}
 
-		$PrescriptionID=DoctorAppointment::create_prescription($DoctorNote);
+		$PrescriptionID=DoctorAppointment::create_prescription($Note);
 		DoctorAppointment::create_prescription_diagnosis($PrescriptionID,$DiagnosisID);
-		DoctorAppointment::create_doctor_appointment($Appointment,$Doctor,$PrescriptionID);
+		DoctorAppointment::create_doctor_appointment($DoctorAppointment,$PrescriptionID);
 		
         $connection->commit();
     }
