@@ -132,11 +132,72 @@
 
         //7)
         public static function doctor_availabilities($DoctorID, $StartDate, $EndDate){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT Appointment_Date 
+                FROM Appointment
+                INNER JOIN DoctorAppointment USING(AppointmentID)
+                INNER JOIN Doctor USING(DoctorID)
+                INNER JOIN User ON Doctor.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+                WHERE DoctorID = :DoctorID
+                ORDER BY Appointment_Date ASC
+            "
+            );
 
+            $stmt->bindParam(':DoctorID', $DoctorID);
+
+            $stmt->execute();
+
+            $row = $stmt->fetchAll();
+
+            return Reports::availabilities($StartDate, $EndDate, $row);
         }
 
         public static function therapist_availabilities($TherapistID, $StartDate, $EndDate){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT Appointment_Date 
+                FROM Appointment
+                INNER JOIN TherapistAppointment USING(AppointmentID)
+                INNER JOIN Therapist USING(TherapistID)
+                INNER JOIN User ON Therapist.UserID = User.UserID
+                INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
+                WHERE TherapistID = :TherapistID
+                ORDER BY Appointment_Date ASC
+            "
+            );
 
+            $stmt->bindParam(':TherapistID', $TherapistID);
+
+            $stmt->execute();
+
+            $row = $stmt->fetchAll();
+
+            return Reports::availabilities($StartDate, $EndDate, $row);
+        }
+
+        private static function availabilities($StartDate, $EndDate, $Data){
+            $dt1 = new DateTime($StartDate);
+            $dt2 = new DateTime($EndDate);
+            $dt2->add(new DateInterval('P1D'));
+            $period = new DatePeriod($dt1, new DateInterval('P1D'), $dt2);
+
+            $availabilities = array();
+            $counter = 0;
+            foreach($period as $day){
+                $day = $day->format('Y-m-d');
+                //echo "day: $day data: " . $Data[$counter]["Appointment_Date"] . "<br / >";
+                //Not available on that day
+                if($counter < count($Data) && $day == $Data[$counter]["Appointment_Date"]){
+                    
+                    $counter = $counter + 1;
+                }
+                else{
+                    array_push($availabilities, $day);
+                }
+            }
+            return $availabilities;
         }
     }
 ?>

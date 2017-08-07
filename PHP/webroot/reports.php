@@ -14,8 +14,6 @@
 		<li><a data-toggle="tab" href="#Equipment-Never-Used">Equipment Never Used</a></li>
         <li><a data-toggle="tab" href="#Patient-Visitation-List">Patient Visitation List</a></li>
         <li><a data-toggle="tab" href="#Therapist-Visitation-List">Therapist Visitation List</a></li>
-        <li><a data-toggle="tab" href="#Working-Therapist-List">Working Therapist List</a></li>
-        <li><a data-toggle="tab" href="#Patient-Reservations">Patient Reservations</a></li>
 	</ul>
 	<div class="tab-content well">
         <div id="Therapist-Patients" class="tab-pane fade in active">
@@ -101,7 +99,15 @@
                 </tbody>
             </table>
         </div>
-        <div id="Working-Therapist-List" class="tab-pane fade in">
+	</div>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#Working-Therapist-List">Working Therapist List</a></li>
+        <li><a data-toggle="tab" href="#Patient-Reservations">Patient Reservations</a></li>
+        <li><a data-toggle="tab" href="#Doctor-Therapist-Availabilities">Doctor/Therapist-Availabilities</a></li>
+    </ul>
+    <div class="tab-content well">
+        <div id="Working-Therapist-List" class="tab-pane fade in active">
             <h2>Working Therapist List</h2>
             <table class="table">
                 <thead>
@@ -143,7 +149,46 @@
 				);
             ?>
 		</div>
-	</div>
+        <div id="Doctor-Therapist-Availabilities" class="tab-pane fade in">
+            <?php
+                $Doctors = User::retrieve_doctors();
+                $Doctors_Select = array();
+                foreach($Doctors as $Doctor){
+                    array_push($Doctors_Select, [$Doctor["DoctorID"], $Doctor["First_Name"] . " " . $Doctor["Last_Name"]]);
+                }
+
+                $Therapists = User::retrieve_therapists();
+                $Therapists_Select = array();
+                foreach($Therapists as $Therapist){
+                    array_push($Therapists_Select, [$Therapist["TherapistID"], $Therapist["First_Name"] . " " . $Therapist["Last_Name"]]);
+                }
+            ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php
+                        FormGenerator::generate_form("Doctor Availabilities", "../includes/reports/availabilities.php", "Search successful",
+                            [
+                                FormGenerator::generate_element("Doctor", "select", $Doctors_Select),
+                                FormGenerator::generate_element("Start_Date", "date", []),
+                                FormGenerator::generate_element("End_Date", "date", [])
+                            ]
+                        );
+                    ?>
+                </div>
+                <div class="col-md-6">
+                    <?php
+                        FormGenerator::generate_form("Therapist Availabilities", "../includes/reports/availabilities.php", "Search successful",
+                            [
+                                FormGenerator::generate_element("Therapist", "select", $Therapists_Select),
+                                FormGenerator::generate_element("Start_Date", "date", []),
+                                FormGenerator::generate_element("End_Date", "date", [])
+                            ]
+                        );
+                    ?>
+                </div>
+            </div>
+		</div>
+    </div>
 </div>
 
 <?php include ('../includes/footer.php'); ?>
