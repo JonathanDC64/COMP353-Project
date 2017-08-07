@@ -46,7 +46,8 @@
     
         
         // Find Appointment ID from get_AppointmentID
-        $AppointmentID = Appointment:: get_AppointmentID()
+        $AppointmentID = null ;
+            //Appointment:: get_AppointmentID()
         
         
         //If there are validation errors, display error message and stop page
