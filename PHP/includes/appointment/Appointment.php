@@ -266,5 +266,24 @@
 			$row = $stmt->fetch();
             return isset($row["AppointmentID"]);
 		}
+		
+		
+		public static function appointment_time_constraint($AppointmentDate)
+		{
+			$currentDay=date("d");
+			$currentMonth=date("m");
+			$currentYear=date("Y");
+			$currentDate=date_create($currentYear ."-". $currentMonth ."-". $currentDay);
+	
+			$FutureDay=substr($AppointmentDate,8,2);
+			$FutureMonth=substr($AppointmentDate,5,2);
+			$FutureYear=substr($AppointmentDate,0,4);
+			$FutureDate=date_create($FutureYear ."-". $FutureMonth ."-". $FutureDay);
+
+			$diff=date_diff($currentDate,$FutureDate);
+			return $diff;
+		}
+		
+			
 	}
 ?>
