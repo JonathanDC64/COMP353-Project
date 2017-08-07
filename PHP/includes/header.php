@@ -52,27 +52,31 @@
 						<a class="navbar-brand" href="#">BSPC</a>
 					</div>
 					<?php if(User::loggedin()) : ?>
-					<ul class="nav navbar-nav">
-						<li class=""><a href="index.php">Home</a></li>
-						<?php if(AccessRights::has_admin_hcp_access()): ?>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="registration.php">Registration</a></li>
-								<li><a href="appointment.php">Appointment</a></li>
-								<li><a href="prescription.php">Prescription</a></li>
-								<li><a href="patients.php">Patients</a></li>
-							</ul>
-						</li>
-						<?php endif; ?>
-						<?php if(AccessRights::has_admin_receptionist_access()): ?>
-						<li class=""><a href="reports.php">Reports</a></li>
-						<?php endif; ?>
-						<li class=""><a href="my_appointments.php">Appointments</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>
-						<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
-					</ul>
+						<ul class="nav navbar-nav">
+							<li class=""><a href="index.php">Home</a></li>
+
+							<?php if(AccessRights::require_admin_receptionist_access()): ?>
+								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="registration.php">Registration</a></li>
+										<li><a href="appointment.php">Appointment</a></li>
+										<li><a href="patients.php">Patients</a></li>
+									</ul>
+								</li>
+							<?php endif; ?>
+
+							<?php if(AccessRights::has_admin_receptionist_access()): ?>
+								<li class=""><a href="reports.php">Reports</a></li>
+							<?php endif; ?>
+
+							<?php if(AccessRights::require_patient_access() || AccessRights::require_hcp_access()): ?>
+								<li class=""><a href="my_appointments.php">Appointments</a></li>
+							<?php endif; ?>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>
+							<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+						</ul>
 					<?php endif; ?>
 				</div>
 			</nav>
