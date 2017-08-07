@@ -20,7 +20,13 @@
 			//Appointment::book_doctor_appointment($_POST["Appointment_ID"],$_POST["Doctor_ID"],null);
 			Appointment::book_doctor_appointment($previousID,$_POST["Doctor_ID"],null);
 			
-			echo "Successfully added doctors appointment.";
+			//echo "Successfully added doctors appointment.";
+?>
+				<h2>Successfully added doctors appointment.</h2>
+				<script>
+					window.location.replace("");
+				</script>
+<?php
 		}
 		else
 		{
