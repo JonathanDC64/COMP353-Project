@@ -255,28 +255,22 @@ insert into PaymentType values(0,"Credit");
 ALTER TABLE Payment
     ADD CONSTRAINT FK_PaymentType_Payment
     FOREIGN KEY(PaymentTypeID)
-    REFERENCES PaymentType(PaymentTypeID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
+    REFERENCES PaymentType(PaymentTypeID);
  
 ALTER TABLE Payment 
     ADD CONSTRAINT FK_Appointment_Payment
     FOREIGN KEY(AppointmentID)
     REFERENCES Appointment(AppointmentID)
-    ON DELETE CASCADE
     ON UPDATE CASCADE;
 
 ALTER TABLE DailyPayment
     ADD CONSTRAINT FK_PaymentType_DailyPayment
     FOREIGN KEY(PaymentTypeID)
-    REFERENCES PaymentType(PaymentTypeID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
+    REFERENCES PaymentType(PaymentTypeID);
  
 
 ALTER TABLE DailyPayment
     ADD CONSTRAINT FK_Appointment_DailyPayment
     FOREIGN KEY(AppointmentID)
     REFERENCES Appointment(AppointmentID)
-    ON DELETE CASCADE
     ON UPDATE CASCADE;
