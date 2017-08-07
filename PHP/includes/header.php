@@ -1,21 +1,13 @@
 <?php 
 	session_start();
-	include_once('../includes/authentication/User.php');
-	include_once('../includes/database/database_connect.php'); 
+	include_once ('../includes/authentication/User.php');
+	include_once ('../includes/database/database_connect.php'); 
+	include_once ('../includes/authentication/AccessRights.php');
 	
 	//redirect user to login page if not logged in
 	if(basename($_SERVER['PHP_SELF']) != "login.php" && !User::loggedin()){
 		header('Location: login.php');
 	}
-
-	// check if we are on local machine or school server
-	/*if (strpos($_SERVER['DOCUMENT_ROOT'], 'xampp') !== false) {
-		set_include_path("/COMP353-Project/PHP/includes");
-	}
-	else{
-		set_include_path("/includes");
-	}*/
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,15 +54,20 @@
 					<?php if(User::loggedin()) : ?>
 					<ul class="nav navbar-nav">
 						<li class=""><a href="index.php">Home</a></li>
+						<?php if(AccessRights::has_admin_hcp_access()): ?>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="registration.php">Registration</a></li>
-							<li><a href="appointment.php">Appointment</a></li>
-							<li><a href="prescription.php">Prescription</a></li>
-							<li><a href="patients.php">Patients</a></li>
-						</ul>
+							<ul class="dropdown-menu">
+								<li><a href="registration.php">Registration</a></li>
+								<li><a href="appointment.php">Appointment</a></li>
+								<li><a href="prescription.php">Prescription</a></li>
+								<li><a href="patients.php">Patients</a></li>
+							</ul>
 						</li>
+						<?php endif; ?>
+						<?php if(AccessRights::has_admin_receptionist_access()): ?>
 						<li class=""><a href="reports.php">Reports</a></li>
+						<?php endif; ?>
+						<li class=""><a href="my_appointments.php">Appointments</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>

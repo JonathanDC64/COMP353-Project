@@ -37,6 +37,26 @@
             }
         }
 
+        ### These functions enforce that a user MUST be a certain level of privilige. No more. No less
+
+        public static function require_admin_receptionist_access(){
+            AccessRights::require_access(AccessRights::AdminReceptionist, "Admin Receptionist");
+        }
+
+        public static function require_hcp_access(){
+            AccessRights::require_access(AccessRights::AdminHCP, "Admin HCP");
+        }
+
+        public static function require_patient_access(){
+            AccessRights::require_access(AccessRights::Patient, "Patient");
+        }
+
+
+        private static function require_access($Access, $Message){
+            $User = User::get_user_info();
+            return $User->AccessLevel === $Access;
+        }
+
 
         #### These functions return a boolean representing whether the user has the specified access ####
 
