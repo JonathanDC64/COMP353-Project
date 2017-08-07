@@ -18,6 +18,7 @@
                             <th>Doctor ID</th>
                             <th>Doctor Name</th>
                             <th>Appointment Date</th>
+                            <th>Make Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,7 @@
                                 <td><?= $DoctorReservation["DoctorID"]; ?></td>
                                 <td><?= $DoctorReservation["Doctor_Name"]; ?></td>
                                 <td><?= $DoctorReservation["Appointment_Date"]; ?></td>
+                                <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>">Make Payment</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -41,6 +43,7 @@
                             <th>Therapist ID</th>
                             <th>Therapist Name</th>
                             <th>Appointment Date</th>
+                            <th>Make Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +53,7 @@
                                 <td><?= $TherapistReservation["TherapistID"]; ?></td>
                                 <td><?= $TherapistReservation["Therapist_Name"]; ?></td>
                                 <td><?= $TherapistReservation["Appointment_Date"]; ?></td>
+                                <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $TherapistReservation["AppointmentID"];?>">Make Payment</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>

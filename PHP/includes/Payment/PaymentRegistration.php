@@ -8,9 +8,9 @@
         
         $errors = array();
 		
-		$Appointment_ID = "";
-        if(isset($_POST["Appointment_ID"])){
-            $Appointment_ID = $_POST["Appointment_ID"];
+		$AppointmentID = "";
+        if(isset($_POST["AppointmentID"])){
+            $AppointmentID = $_POST["AppointmentID"];
         }
 		else
 		{
@@ -42,34 +42,35 @@
 		else
 		{
 			array_push($errors, "Amount is required");
-			echo "WTF";
 		}
 		//If there are validation errors, display error message and stop page
         if(count($errors) > 0){
-            echo "Enter required fields!";
+            echo implode($errors, "<br/>");
             die();
         }
 		
         $connection->beginTransaction();
 		
-		if(Payment::payment_exists($Appointment_ID))
+		if(Payment::payment_exists($AppointmentID))
 		{
 			echo "Thank you for wanting to give us more money, but no thanks!";
 		}
 		else
 		{
 			if($Payment_Type == Payment::Cash){
-				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, null);
+				Payment::create_Payment($Payment_Type,$AppointmentID,$Amount, null);
 			}
 			elseif($Payment_Type == Payment::Cheque){
-				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+				Payment::create_Payment($Payment_Type,$AppointmentID,$Amount, $Account_Number_for_card_or_cheque);
 			}
 			elseif($Payment_Type == Payment::Debit){
-				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+				Payment::create_DailyPayment($Payment_Type,$AppointmentID,$Amount, $Account_Number_for_card_or_cheque);
 			}
 			else{//$Payment_Type == Payment::Credit
-				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+				Payment::create_DailyPayment($Payment_Type,$AppointmentID,$Amount, $Account_Number_for_card_or_cheque);
 			}
+
+			echo "Thank you! Your payment has been received!";
         }
 
         

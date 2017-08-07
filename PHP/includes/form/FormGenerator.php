@@ -65,12 +65,14 @@
             $DisplayName = str_replace("_"," ", $Element->Name);
             $Name = $Element->Name;
             $Type = $Element->Type;
-            echo "<div class='form-group'>
-                    <label class='control-label' for='$Name'>$DisplayName:</label>";
+            echo "<div class='form-group'>";
+            $label = $Element->Type != "hidden" ? "<label class='control-label' for='$Name'>$DisplayName:</label>" : "";
+            echo $label;
             switch($Element->Type){
                 case "text":
                 case "password":
                 case "date":
+                case "hidden":
                     $Value = isset($Element->Values[0]) ? $Element->Values[0] : "";
                     echo "<input type='$Type' class='form-control' id='$Name' placeholder='$DisplayName' name='$Name' value='$Value'>";
                     break;

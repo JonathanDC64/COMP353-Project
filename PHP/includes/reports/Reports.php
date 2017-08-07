@@ -93,7 +93,7 @@
         public static function patient_doctor_reservations($PatientID){
             global $connection;
             $stmt = $connection->prepare(
-            "SELECT DoctorID, CONCAT(First_Name, ' ', Last_Name) AS Doctor_Name, Appointment_Date 
+            "SELECT AppointmentID, DoctorID, CONCAT(First_Name, ' ', Last_Name) AS Doctor_Name, Appointment_Date 
                 FROM Appointment
                 INNER JOIN DoctorAppointment USING(AppointmentID)
                 INNER JOIN Doctor USING(DoctorID)
@@ -113,7 +113,7 @@
         public static function patient_therapist_reservations($PatientID){
             global $connection;
             $stmt = $connection->prepare(
-            "SELECT TherapistID, CONCAT(First_Name, ' ', Last_Name) AS Therapist_Name, Appointment_Date 
+            "SELECT AppointmentID, TherapistID, CONCAT(First_Name, ' ', Last_Name) AS Therapist_Name, Appointment_Date 
                 FROM Appointment
                 INNER JOIN TherapistAppointment USING(AppointmentID)
                 INNER JOIN Therapist USING(TherapistID)

@@ -8,14 +8,12 @@
 
 	if(isset($_GET["AppointmentID"]) && !empty($_GET["AppointmentID"])){
         $AppointmentID = $_GET["AppointmentID"];
-	
 ?>
 
         <div id="content">
             <?php
-                FormGenerator::generate_form("Payment for $AppointmentID", "../includes/Payment/PaymentRegistration.php", "",
+                FormGenerator::generate_form("Payment for Appointment #$AppointmentID", "../includes/Payment/PaymentRegistration.php", "",
                     [
-                        //FormGenerator::generate_element("Appointment_ID", "select", ["1","2"]),
                         FormGenerator::generate_element("Payment_Type", "select", 
                         [
                             [Payment::Cash,     "Cash"],
@@ -24,7 +22,9 @@
                             [Payment::Credit,   "Credit"]
                         ]),
                         FormGenerator::generate_element("Account_Number_for_card_or_cheque", "text", []),
-                        FormGenerator::generate_element("Amount", "text", [])
+                        FormGenerator::generate_element("Amount", "text", []),
+                        FormGenerator::generate_element("AppointmentID", "hidden", [$AppointmentID]),
+
                     ]
                 );
             ?>
