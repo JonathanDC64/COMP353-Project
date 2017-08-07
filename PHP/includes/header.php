@@ -70,28 +70,7 @@
 							<li><a href="patients.php">Patients</a></li>
 						</ul>
 						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Information <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="ListDoctor.html">Doctor</a></li>
-							<li><a href="ListTherapist.html">Therapist</a></li>
-							<li><a href="ListNurse.html">Nurse</a></li>
-							<li><a href="ListAppointment.html">Appointment</a></li>
-						</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Number of Patient During A Time Period</a></li>
-							<li><a href="#">Equipment Never Used</a></li>
-							<li><a href="#">List of All Patients</a></li>
-							<li><a href="#">List of All Therapist</a></li>
-							<li><a href="ListTherapist.html">List of Current Therapist</a></li>
-							<li><a href="SearchPatient.html">Patient Reservation</a></li>
-							<li><a href="#">HCP Availability</a></li>
-							<li><a href="#">query 8</a></li>
-							<li><a href="#">query 9</a></li>
-							<li><a href="#">query 10</a></li>
-							<li><a href="#">query 11</a></li>
-						</ul>
+						<li class=""><a href="reports.php">Reports</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</a></li>

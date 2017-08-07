@@ -1,5 +1,5 @@
 <?php 
-
+    
     include_once("../database/database_connect.php");
     include_once("Payment.php");
     //include_once("Appointment.php");
@@ -46,7 +46,8 @@
     
         
         // Find Appointment ID from get_AppointmentID
-        $AppointmentID = Appointment:: get_AppointmentID()
+        $AppointmentID = null ;
+            //Appointment:: get_AppointmentID()
         
         
         //If there are validation errors, display error message and stop page
@@ -54,17 +55,7 @@
             echo implode("\n", $errors);
             die();
         }
-        /*
-			foreach($PatientAppointments as $PatientAppointment){
-				?>
-				<tr>
-					<td><?= $PatientAppointment["Date"]; ?></td>
-					
-					<td><a href='make_payment.php?AppointmentID=<?= $PatientAppointment["AppointmentID"]; ?>'>Make Payement</a></td>
-				</tr>
-				<?php
-			}
-		*/
+       
         
         $connection->beginTransaction();
         

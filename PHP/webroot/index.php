@@ -5,19 +5,17 @@ include('../includes/header.php');
 include_once('../includes/authentication/AccessRights.php');
 include_once('../includes/authentication/User.php');
 ?>
-<div id="content">
-<h1>My Page</h1>
-<p>This is the content</p>
-<?php
-    /*TableGenerator::generate_table("Test", ["Test1", "Test2", "Test3"],
-        [
-            ["1","2","3"],
-            ["4","5","6"],
-            ["7","8","9"]
-        ],
-        "","",TableGenerator::generate_permission(AccessRights::AdminReceptionist, AccessRights::AdminReceptionist),
-        "../includes/authentication/registration_form.php"
-    );*/
-?>
-</div>
+    <div id="content">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="text-center">Home</h1> 
+                <p class="text-center">
+                    Welcome <strong><?= User::get_name(); ?> (<?= User::get_user_info()->Role; ?>)</strong>.
+                </p> 
+                <p class="text-center">
+                    Please make a selection from the list above.
+                </p>
+            </div>
+        </div>
+    </div>
 <?php include('../includes/footer.php'); ?>

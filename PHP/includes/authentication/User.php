@@ -180,7 +180,7 @@
         }
 
         // Create user with Therapist role
-        public static function create_therapist($UserID){
+        public static function create_therapist($UserID, $Experience){
             global $connection;
             $stmt = $connection->prepare("INSERT INTO Therapist VALUES(0, :UserID, :Experience)"); 
             $stmt->bindParam(':UserID', $UserID);
