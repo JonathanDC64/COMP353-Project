@@ -5,46 +5,28 @@ include ('../includes/header.php');
 include_once ('../includes/authentication/AccessRights.php'); 
 include_once ('../includes/authentication/User.php');
 include_once ('../includes/form/FormGenerator.php');
-include_once("../includes/database/database_connect.php");
-include_once('../includes/appointment/Appointment.php');
+include_once ("../includes/database/database_connect.php");
+include_once ('../includes/appointment/Appointment.php');
 
-$PatientID = User::get_user_info();
+$User = User::get_user_info();
 
-//var_dump($PatientID);
-//$PatientID = $PatientID->UserID;
- /*$sql = $connection->prepare('SELECT PatientID FROM Patient WHERE UserID = :PatientID');
- $sql->bindParam(":PatientID",$PatientID);
- $sql->execute();
- $result = $sql->fetchAll();*/
-// var_dump($PatientID->Role);
-
-$Loging_PatientID = $_GET["Login"];
-
-var_dump($Loging_PatientID);
-
-if($PatientID->Role == "Patient" ){
-	
-		$Patient_Appointment_DR  = Appointment::get_patient_appointment_doctor($PatientID);
-		$Patient_Appointment_TH = Appointment::get_patient_appointment_therapist($PatientID);
-		$Patient_Notes = Appointment::retrieve_doctor_notes($PatientID);
-		
-        //var_dump($Patient_Appointment_DR, $Patient_Appointment_TH, $Patient_Notes);
+if($User->Role == "Patient" ){
+    $Patient_Appointment_DR  = Appointment::get_patient_appointment_doctor();
+    $Patient_Appointment_TH = Appointment::get_patient_appointment_therapist();
 }
-
-
-/*function get_PatientID()
-{
-    return $PatientID;
-}*/
 
 
 ?> 
 
 
 <div id="content">
-    
-       	<div id="Patients-List">
-            <h2>Patients</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#Doctor-Appointments">Doctor Appointments</a></li>
+		<li><a data-toggle="tab" href="#Therapist-Appointments">Therapist Appointments</a></li>
+	</ul>
+    <div class="tab-content well">
+        <div id="Doctor-Appointments" class="tab-pane fade in active">
+            <h2>Doctor Appointments</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -52,8 +34,8 @@ if($PatientID->Role == "Patient" ){
                         <th>First Name</th>
                         <th>Last Name</th>
 						<th>Type</th>
-                        
-                     </tr>
+                        <th>View Details<th/>
+                    </tr>
                 </thead>
 				<tbody>
                     <?php foreach($Patient_Appointment_DR as $PatientAppointment) { ?>
@@ -63,11 +45,26 @@ if($PatientID->Role == "Patient" ){
                             <td><?= $PatientAppointment["Last_Name"]; ?></td>
                             <td>Doctor</td>
                             <td>
-                            <a href="#" class="btn btn-info" role="button">Make New Appointment</a>
+                            <a href="my_appointment.php?AppointmentID=<?= $PatientAppointment["AppointmentID"] ?>&Type=Doctor" class="btn btn-info" role="button">View Details</a>
                             </td>
                         </tr>
                     <?php } ?>
-                
+                </tbody>
+            </table>
+        </div>
+        <div  id="Therapist-Appointments" class="tab-pane fade in">
+            <h2>Therapist Appointments</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+						<th>Type</th>
+                        <th>View Details<th/>
+                    </tr>
+                </thead>
+				<tbody>
                     <?php foreach($Patient_Appointment_TH as $Patient_Appointment_TH) { ?>
                         <tr>
                             <td><?= $Patient_Appointment_TH ["Appointment_Date"]; ?></td>
@@ -75,14 +72,12 @@ if($PatientID->Role == "Patient" ){
                             <td><?= $Patient_Appointment_TH["Last_Name"]; ?></td>
                             <td>Therapist</td>
                             <td>
-                            <a href="AppointmentPage Where" class="btn btn-info" role="button">Make New Appointment</a>
+                            <a href="my_appointment.php?AppointmentID=<?= $Patient_Appointment_TH["AppointmentID"] ?>&Type=Therapist" class="btn btn-info" role="button">View Details</a>
                             </td>
                         </tr>
                     <?php } ?>
             </table>
-		</div>
-
-    
+        </div>
 </div>
 
 <?php include('../includes/footer.php'); ?>
