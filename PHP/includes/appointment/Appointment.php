@@ -8,7 +8,7 @@
 
 	class Appointment
 	{	
-		static function get_patient_appointment_doctor($PatientID)
+		static function get_patient_appointment_doctor($PatientInfo)
 		{
 			global $connection;
 			
@@ -23,13 +23,13 @@
 														Appointment.AppointmentID = DoctorAppointment.AppointmentID AND 
 														DoctorAppointment.DoctorID = Doctor.DoctorID');*/
 														//die(var_dump($PatientID));
-			$sql->bindParam(':PatientID',$PatientID->UserID);
+			$sql->bindParam(':PatientID',$PatientInfo->UserID);
 			$sql->execute();
 			return $sql->fetchAll();
 			//return $row;
 		}
 		
-		static function get_patient_appointment_therapist($PatientID)
+		static function get_patient_appointment_therapist($PatientInfo)
 		{
 			global $connection;
 			
@@ -44,13 +44,13 @@
 														WHERE Appointment.PatientID = :PatientID AND 
 														Appointment.AppointmentID = TherapistAppointment.AppointmentID AND 
 														TherapistAppointment.TherapistID = Therapist.TherapistID');*/
-			$sql->bindParam(':PatientID',$PatientID->UserID);
+			$sql->bindParam(':PatientID',$PatientInfo->UserID);
 			$sql->execute();
-			return $sql->fetchAll();
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
 			//return $row;
 		}
 		
-		static function retrieve_doctor_notes($PatientID)
+		static function retrieve_doctor_notes($PatientInfo)
 		{
 			global $connection;
 			
