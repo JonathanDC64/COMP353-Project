@@ -2,94 +2,82 @@
     
     include_once("../database/database_connect.php");
     include_once("Payment.php");
-    //include_once("Appointment.php");
-    
-    
+
     
     if(isset($_REQUEST["submitted"])){
         
         $errors = array();
-        
-        $Payment_Type= " ";
-        
+		
+		$Appointment_ID = "";
+        if(isset($_POST["Appointment_ID"])){
+            $Appointment_ID = $_POST["Appointment_ID"];
+        }
+		else
+		{
+			array_push($errors, "Appointment is required");
+		}
+		
+		$Payment_Type = "";
         if(isset($_POST["Payment_Type"])){
             $Payment_Type = $_POST["Payment_Type"];
-            
-        }else{
-            array_push($errors, "Payment Type is required");
         }
-        
-        $Account_Number= " ";
-        
-        if($Payment_Type != "Cash"){
-            
-           if(isset($_POST["Account_Number"])){
-               $Account_Number = $_POST["Account_Number"]; 
-           }
-            else{
-                array_push($errors, "Payment Type is required");
-            }
-         
+		else
+		{
+			array_push($errors, "Payment type is required");
+		}
+		
+		$Account_Number_for_card_or_cheque = "";
+        if(isset($_POST["Account_Number_for_card_or_cheque"])){
+            $Account_Number_for_card_or_cheque = $_POST["Account_Number_for_card_or_cheque"];
         }
-            
-            
-        $Amount = " ";
-        
+		else
+		{
+			array_push($errors, "Account number for cards or cheque is required");
+		}
+		
+		$Amount;
         if(isset($_POST["Amount"])){
             $Amount = $_POST["Amount"];
-            
-        }else{
-            array_push($errors, "Amount is required");
         }
-        
-        
-    
-        
-        // Find Appointment ID from get_AppointmentID
-        $AppointmentID = null ;
-            //Appointment:: get_AppointmentID()
-        
-        
-        //If there are validation errors, display error message and stop page
+		else
+		{
+			array_push($errors, "Amount is required");
+			echo "WTF";
+		}
+		//If there are validation errors, display error message and stop page
         if(count($errors) > 0){
-            echo implode("\n", $errors);
+            echo "Enter required fields!";
             die();
         }
-       
-        
+		
         $connection->beginTransaction();
-        
-        // Create Payment_Type
-        Payment::create_Payment_Type($Payment_Type);
-        
-        $connection->commit();
-        
-        
-        //Find  Payment ID
-        $Payment_TypeID = Payment::get_Payment_Type($Payment_Type);
-        
-         if(!isset($Payment_TypeID)){
-            array_push($errors, "Payment does not exist");
+		
+		if(Payment::payment_exists($Appointment_ID))
+		{
+			echo "Thank you for wanting to give us more money, but no thanks!";
+		}
+		else
+		{
+			if($Payment_Type == "Cash"){
+				$Payment_Type=1;
+				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, null);
+			}
+			elseif($Payment_Type == "Cheque"){
+				$Payment_Type=2;
+				Payment::create_Payment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+			}
+			elseif($Payment_Type == "Debit"){
+				$Payment_Type=3;
+				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+			}
+			else{
+				$Payment_Type=4;
+				Payment::create_DailyPayment($Payment_Type,$Appointment_ID,$Amount, $Account_Number_for_card_or_cheque);
+			}
         }
-        
 
         
-        
-        $connection->beginTransaction();
-        
-        // Create Dailypaymeny and Payment
-            if($Payment_Type == "Cash"){
-                Payment::create_Payment($Payment_TypeID,$AppointmentID,$Amount, null);
-            }
-            elseif($Payment_Type == "Cheque"){
-                Payment::create_Payment($Payment_TypeID,$AppointmentID,$Amount, $Account_Number);
-            }
-            else{
-                Payment::create_DailyPayment($Payment_TypeID,$AppointmentID,$Amount, $Account_Number);
-            }
-                
-            
-         $connection->commit();
+        $connection->commit();
         
     }
 
