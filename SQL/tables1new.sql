@@ -133,30 +133,10 @@ ALTER TABLE Treatment
 CREATE TABLE Prescription(
     PrescriptionID INT(8) UNSIGNED AUTO_INCREMENT,
 	DoctorsNote VARCHAR(1000),
+	Diagnosis VARCHAR(50),
     PRIMARY KEY(PrescriptionID)
 );
 
-CREATE TABLE Diagnosis(
-    DiagnosisID INT(8) UNSIGNED AUTO_INCREMENT,
-    Description VARCHAR(50),
-    PRIMARY KEY(DiagnosisID)
-);
-
-CREATE TABLE Prescription_Diagnosis(
-    PrescriptionID INT(8) UNSIGNED,
-    DiagnosisID INT(8) UNSIGNED,
-    PRIMARY KEY(PrescriptionID,DiagnosisID)
-);
-
-ALTER TABLE Prescription_Diagnosis
-    ADD CONSTRAINT FK_Prescription_Diagnosis
-    FOREIGN KEY(DiagnosisID)
-    REFERENCES Diagnosis(DiagnosisID);
-
-ALTER TABLE Prescription_Diagnosis
-    ADD CONSTRAINT FK_Diagnosis_Prescription
-    FOREIGN KEY(PrescriptionID)
-    REFERENCES Prescription(PrescriptionID);
 
 CREATE TABLE Appointment(
     AppointmentID INT(8) UNSIGNED AUTO_INCREMENT,
