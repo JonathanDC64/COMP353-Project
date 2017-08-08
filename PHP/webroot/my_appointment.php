@@ -18,12 +18,12 @@
                 $Title = null;
                 if($Type == "Doctor"){
                     $Appointment = Appointment::get_patient_doctor_appointment($AppointmentID)[0];
-                    $Prescription = Appointment::get_doctor_prescription($AppointmentID)[0];
+                    $Prescription = Appointment::get_doctor_prescription($AppointmentID);
                     $Title = "Doctors Appointment";
                 }
                 else{ //Therapist
                     $Appointment = Appointment::get_patient_therapist_appointment($AppointmentID)[0];
-                    $Prescription = Appointment::get_therapist_prescription($AppointmentID)[0];
+                    $Prescription = Appointment::get_therapist_prescription($AppointmentID);
                     $Title = "Therapist Appointment";
                 }
 ?>
@@ -44,11 +44,11 @@
                         </tr>
                         <tr>
                             <td><strong>Doctors Note:</strong></td>
-                            <td><?= isset($Prescription["DoctorsNote"]) ? $Prescription["DoctorsNote"] : ""; ?></td>
+                            <td><?= isset($Prescription[0]["DoctorsNote"]) ? $Prescription[0]["DoctorsNote"] : ""; ?></td>
                         </tr>
                         <tr>
                             <td><strong>Diagnosis:</strong></td>
-                            <td><?= isset($Prescription["Diagnosis"]) ? $Prescription["Diagnosis"] : ""; ?></td>
+                            <td><?= isset($Prescription[0]["Diagnosis"]) ? $Prescription[0]["Diagnosis"] : ""; ?></td>
                         </tr>
                     </table>
                 </div>
