@@ -21,7 +21,7 @@
         $Therapist_Appointment= $TherapistAppointmentID;
 
 		$Note = "";
-		if(isset($_POST["Note"])){
+		if(isset($_POST["Note"]) && !empty($_POST["Note"])){
 			$Note = $_POST["Note"];
 		}
 		else{
@@ -29,7 +29,7 @@
 		}
 
 		$Diagnosis = "";
-		if(isset($_POST["Diagnosis"])){
+		if(isset($_POST["Diagnosis"]) && !empty($_POST["Diagnosis"])){
 			$Diagnosis = $_POST["Diagnosis"];
 		}
 		else{
@@ -37,7 +37,7 @@
 		}
 		
 		$Treatment = "";
-		if(isset($_POST["Treatment"])){
+		if(isset($_POST["Treatment"]) && !empty($_POST["Treatment"])){
 			$Treatment = $_POST["Treatment"];
 		}
 		else{
@@ -45,7 +45,7 @@
 		}
 		
 		$Treatment_Cost = "";
-		if(isset($_POST["Treatment_Cost"])){
+		if(isset($_POST["Treatment_Cost"]) && !empty($_POST["Treatment_Cost"])){
 			$Treatment_Cost = $_POST["Treatment_Cost"];
 		}
 		else{

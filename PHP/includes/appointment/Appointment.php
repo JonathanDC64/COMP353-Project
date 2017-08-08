@@ -184,9 +184,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT DoctorsNote, Diagnosis 
+			'SELECT DoctorsNote, Diagnosis, Description, Cost, Name 
 				FROM TherapistAppointment 
 				INNER JOIN Prescription ON TherapistAppointment.PrescriptionID = Prescription.PrescriptionID
+				INNER JOIN Treatment ON TherapistAppointment.TreatmentID = Treatment.TreatmentID
+				INNER JOIN Equipment ON Treatment.EquipmentID = Equipment.EquipmentID
 				WHERE AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));

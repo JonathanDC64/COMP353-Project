@@ -19,7 +19,7 @@
         $Doctor_Appointment= $DoctorAppointmentID;
 		
 		$Note = "";
-		if(isset($_POST["Note"])){
+		if(isset($_POST["Note"]) && !empty($_POST["Note"])){
 			$Note = $_POST["Note"];
 		}
 		else{
@@ -27,7 +27,7 @@
 		}
 
 		$Diagnosis = "";
-		if(isset($_POST["Diagnosis"])){
+		if(isset($_POST["Diagnosis"]) && !empty($_POST["Diagnosis"])){
 			$Diagnosis = $_POST["Diagnosis"];
 		}
 		else{

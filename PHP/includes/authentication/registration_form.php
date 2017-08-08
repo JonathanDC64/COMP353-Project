@@ -14,7 +14,7 @@
 			<?php
 				FormGenerator::generate_form("Patient Register", "../includes/authentication/registration.php", "Registration Succeeded",
 				[
-					FormGenerator::generate_element("Referal#", "text", []),
+					FormGenerator::generate_element("Referral", "text", []),
 					FormGenerator::generate_element("Username", "text", []),
 					FormGenerator::generate_element("Password", "password", []),
 					FormGenerator::generate_element("First_Name", "text", []),
