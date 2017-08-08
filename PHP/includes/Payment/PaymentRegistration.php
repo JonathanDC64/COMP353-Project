@@ -26,13 +26,17 @@
 		}
 		
 		$Account_Number_for_card_or_cheque = "";
-        if(isset($_POST["Account_Number_for_card_or_cheque"])){
-            $Account_Number_for_card_or_cheque = $_POST["Account_Number_for_card_or_cheque"];
-        }
-		else
+		if($Payment_Type != 1)
 		{
-			array_push($errors, "Account number for cards or cheque is required");
+			if(isset($_POST["Account_Number_for_card_or_cheque"]) && !empty($_POST["Account_Number_for_card_or_cheque"])){
+				$Account_Number_for_card_or_cheque = $_POST["Account_Number_for_card_or_cheque"];
+			}
+			else
+			{
+				array_push($errors, "Account number for cards or cheque is required");
+			}
 		}
+
 		
 		$Amount;
         if(isset($_POST["Amount"])){
