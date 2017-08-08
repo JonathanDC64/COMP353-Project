@@ -1,10 +1,12 @@
 <?php
     include_once("../database/database_connect.php");
     include_once("TherapistAppointment.php");
+	session_start();
     //TODO check for access rights here, use die() function
     
     //Only execute this when form is submitted
     //Use <input type="hidden" name="submitted" value="true" />
+	
     if(isset($_REQUEST["submitted"])){
         
         $errors = array();
@@ -14,10 +16,9 @@
 		
         // Get User data
 
-        $Therapist_Appointment= "";
-        if(isset($_POST["Therapist_Appointment"])){
-            $Therapist_Appointment = $_POST["Therapist_Appointment"];
-        }
+		$TherapistAppointmentID = $_SESSION['TherapistAppointmentID'];
+		
+        $Therapist_Appointment= $TherapistAppointmentID;
  
 		$Note = "";
 		if(isset($_POST["Note"])){

@@ -1,6 +1,7 @@
 <?php
     include_once("../database/database_connect.php");
     include_once("DoctorAppointment.php");
+	session_start();
     //TODO check for access rights here, use die() function
     
     //Only execute this when form is submitted
@@ -13,10 +14,9 @@
 		
         // Get User data
 		
-        $Doctor_Appointment = "";
-        if(isset($_POST["Doctor_Appointment"])){
-            $Doctor_Appointment = $_POST["Doctor_Appointment"];
-        }
+		$DoctorAppointmentID = $_SESSION['DoctorAppointmentID'];
+		
+        $Doctor_Appointment= $DoctorAppointmentID;
 		
 		$Note = "";
 		if(isset($_POST["Note"])){
@@ -46,7 +46,6 @@
 
 
 		$PrescriptionID=DoctorAppointment::create_prescription($Note,$Diagnosis);
-		echo $PrescriptionID;
 		DoctorAppointment::create_doctor_appointment($Doctor_Appointment,$PrescriptionID);
 		
         $connection->commit();
