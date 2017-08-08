@@ -1,29 +1,16 @@
-DELIMITER $$
+SET GLOBAL event_scheduler = ON;
 
-CREATE
-
-	EVENT Daily_Payment_Verification
-    ON SCHEDULE EVERY 1 DAY STARTS '2017-08-5 19:00:00'
-    DO BEGIN
-    
-		INSERT INTO PAYMENT(PaymentID, PaymentTypeID, AppointmentID, Amount, AccountNumber)
-        SELECT DailyPaymentID, PaymentTypeID, AppointmentID, Amount, AccountNumber
-        FROM DailyPayment;
-        
-	END $$
-    
-DELIMITER ;
-
-DELIMITER $$
-
-CREATE
-
-	EVENT Delete_Daily_Payment
-    ON SCHEDULE EVERY 1 DAY STARTS '2017-08-5 19:05:00'
-    DO BEGIN
-    
-		TRUNCATE DAILYPAYMENT;
-        
-	END $$
-    
-DELIMITER ;
+CREATE  
+	EVENT `Daily_Payment_Verification`
+	ON SCHEDULE EVERY 1 DAY STARTS '2017-08-08 17:00:00' ON COMPLETION NOT PRESERVE ENABLE 
+	DO 
+		INSERT INTO Payment (PaymentTypeID, AppointmentID, Amount, AccountNumber)
+		SELECT PaymentTypeID, AppointmentID, Amount, AccountNumber
+		FROM DailyPayment;
+		
+		
+CREATE 
+	EVENT `Delete_Daily_Payment` 
+	ON SCHEDULE EVERY 1 DAY STARTS '2017-08-08 17:05:00' ON COMPLETION NOT PRESERVE ENABLE 
+	DO 
+		TRUNCATE DailyPayment;
