@@ -33,7 +33,6 @@
         }
         else{ //Therapist
             $Appointment = Appointment::get_patient_therapist_appointment($AppointmentID);
-            var_dump($Appointment);
             $TherapistID = $Appointment[0]["TherapistID"];
             $Therapists = User::retrieve_therapists();
             $Therapists_Select = array();

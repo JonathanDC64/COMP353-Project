@@ -67,7 +67,7 @@
                                 <td><?= $TherapistReservation["Appointment_Date"]; ?></td>
                                 <?php if(AccessRights::require_admin_receptionist_access()): ?>
                                 <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $TherapistReservation["AppointmentID"];?>">Make Payment</a></td>
-                                <td><a class="btn btn-info" href="update_appointment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>&Type=Therapist&PatientID=<?= $PatientID; ?>">Update</a></td>
+                                <td><a class="btn btn-info" href="update_appointment.php?AppointmentID=<?= $TherapistReservation["AppointmentID"];?>&Type=Therapist&PatientID=<?= $PatientID; ?>">Update</a></td>
                                 <?php endif; ?>
                             </tr>
                         <?php } ?>
