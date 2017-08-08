@@ -6,7 +6,8 @@
     $username = null;
     $password = null;
     $connection = null;
-    if(strpos($_SERVER["HTTP_HOST"], "ytc353_1")){
+	
+    if(strpos($_SERVER["HTTP_HOST"],"ytc353_1") !== false){
         $servername = "ytc353_1.encs.concordia.ca";
         $dbName = "ytc353_1";
         $username = "ytc353_1";
