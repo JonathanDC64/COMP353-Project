@@ -195,7 +195,49 @@
             ?>
             <h1>There are a total of <?= $NumPatients; ?> patients registered at the center.</h1>
         </div>
-    </div>
+	</div>	
+		
+	<ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#Therapist-Daily-Appointments">Therapist Daily Appointments</a></li>
+        <li><a data-toggle="tab" href="#Doctor-Daily-Appointments">Doctor Daily Appointments</a></li>
+    </ul>
+    <div class="tab-content well">
+		<div id="Therapist-Daily-Appointments" class="tab-pane fade in active">
+		    <?php
+                $Therapist = User::retrieve_therapists();
+                $Therapist_Select = array();
+				
+				foreach($Therapist as $Therapist){
+                    array_push($Therapist_Select, [$Therapist["TherapistID"], $Therapist["First_Name"], $Therapist["Last_Name"]]);
+                }
+
+                FormGenerator::generate_form("Therapist Daily Appointments", "../includes/reports/therapist_daily_appointments.php", "Search successful",
+					[
+						FormGenerator::generate_element("Therapist", "select", $Therapist_Select)
+					]
+				);
+            ?>
+			<
+        </div>
+		<div id="Doctor-Daily-Appointments" class="tab-pane fade in">
+		    <?php
+                $Doctor = User::retrieve_doctors();
+                $Doctor_Select = array();
+				
+				foreach($Doctor as $Doctor){
+                    array_push($Doctor_Select, [$Doctor["DoctorID"], $Doctor["First_Name"], $Doctor["Last_Name"]]);
+                }
+
+                FormGenerator::generate_form("Doctor Daily Appointments", "../includes/reports/doctor_daily_appointments.php", "Search successful",
+					[
+						FormGenerator::generate_element("Doctor", "select", $Doctor_Select)
+					]
+				);
+            ?>
+			<
+        </div>
+	
+	</div>
 </div>
 
 <?php include ('../includes/footer.php'); ?>
