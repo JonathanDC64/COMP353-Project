@@ -7,8 +7,11 @@
 	include_once('../includes/DoctorAppointment/DoctorAppointment.php');
 	
 	$AppointmentID=$_GET['AppointmentID'];
+	$DoctorAppointmentID=DoctorAppointment::retrieve_doctor_appointmentID($AppointmentID);
+	$_SESSION['DoctorAppointmentID']=$DoctorAppointmentID;
+	
 	$DocAptInfo=DoctorAppointment::retrive_doctor_appointment($AppointmentID);
-
+	
 	$Doctor_Select = array();
 	foreach($DocAptInfo as $DocAptInfo){
 		array_push($Doctor_Select, [$DocAptInfo["DoctorsNote"], $DocAptInfo["Diagnosis"]]);
@@ -31,7 +34,6 @@
     <?php
         FormGenerator::generate_form("Doctor Appointment Registration", "../includes/DoctorAppointment/DoctorAppointmentRegistration.php", "Registration Succeeded",
             [
-				FormGenerator::generate_element("Doctor_Appointment", "select", [$AppointmentID]),
 				FormGenerator::generate_element("Note", "text", [$DocNote]),
 				FormGenerator::generate_element("Diagnosis", "text", [$DocDiagnosis])
 			]

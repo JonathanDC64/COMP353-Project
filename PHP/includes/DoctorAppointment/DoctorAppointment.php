@@ -25,6 +25,15 @@
 			return $connection->lastInsertId();
 		}
 		
+		public static function retrieve_doctor_appointmentID($AppointmentID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT DoctorAppointmentID FROM DoctorAppointment WHERE DoctorAppointment.AppointmentID = :AppointmentID"); 
+            $stmt->bindParam(':AppointmentID', $AppointmentID);
+            $stmt->execute();
+            $row = $stmt->fetch();
+			return $row["DoctorAppointmentID"];
+        }	
+		
 		//Create Doctor Appointment
 		public static function retrive_doctor_appointment($AppointmentID)
 		{

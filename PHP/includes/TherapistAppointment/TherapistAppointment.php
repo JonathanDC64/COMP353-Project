@@ -90,6 +90,15 @@
 			return $row["TreatmentID"];
         }	
 		
+		public static function retrieve_therapist_appointmentID($AppointmentID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT TherapistAppointmentID FROM TherapistAppointment WHERE TherapistAppointment.AppointmentID = :AppointmentID"); 
+            $stmt->bindParam(':AppointmentID', $AppointmentID);
+            $stmt->execute();
+            $row = $stmt->fetch();
+			return $row["TherapistAppointmentID"];
+        }	
+		
 		public static function retrieve_therapist_appointment($TherapistAppointmentID){
             global $connection;
 			$stmt = $connection->prepare("SELECT Prescription.DoctorsNote, Prescription.Diagnosis, Treatment.Description, Treatment.Cost, Equipment.Name

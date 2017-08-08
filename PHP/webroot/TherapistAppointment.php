@@ -7,8 +7,10 @@
 	include_once('../includes/TherapistAppointment/TherapistAppointment.php');
 	
 	$AppointmentID=$_GET['AppointmentID'];
+	$TherapistAppointmentID=TherapistAppointment::retrieve_therapist_appointmentID($AppointmentID);
+	$_SESSION['TherapistAppointmentID']=$TherapistAppointmentID;
 	
-	$TheAptInfo=TherapistAppointment::retrieve_therapist_appointment($AppointmentID);
+	$TheAptInfo=TherapistAppointment::retrieve_therapist_appointment($TherapistAppointmentID);
 
 	$Therapist_Select = array();
 	foreach($TheAptInfo as $TheAptInfo){
@@ -38,7 +40,6 @@
     <?php
         FormGenerator::generate_form("Therapist Appointment Registration", "../includes/TherapistAppointment/TherapistAppointmentRegistration.php", "Registration Succeeded",
             [
-				FormGenerator::generate_element("Therapist_Appointment", "", [$AppointmentID]),
 				FormGenerator::generate_element("Note", "text", [$TheNote]),
 				FormGenerator::generate_element("Diagnosis", "text", [$TheDiagnosis]),
 				FormGenerator::generate_element("Treatment", "text", [$TheTreatment]),
