@@ -223,12 +223,12 @@
             global $connection;
             $stmt = $connection->prepare(
             "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
-			 FROM UserInformation, TherapistAppointment, Appointment, Patient
-			 WHERE TherapistAppointment.TherapistID = :TherapistID AND
-				   TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
-				   Appointment.PatientID=Patient.PatientID AND
-				   Patient.UserID=UserInformation.UserID AND
-				   Appointment.Appointment_Date = curdate();
+			    FROM UserInformation, TherapistAppointment, Appointment, Patient
+                WHERE TherapistAppointment.TherapistID = :TherapistID AND
+                    TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
+                    Appointment.PatientID=Patient.PatientID AND
+                    Patient.UserID=UserInformation.UserID AND
+                    Appointment.Appointment_Date = curdate();
             "
             );
 			$stmt->bindParam(':TherapistID', $TherapistID);
@@ -241,12 +241,12 @@
             global $connection;
             $stmt = $connection->prepare(
             "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
-			 FROM UserInformation, DoctorAppointment, Appointment, Patient
-			 WHERE DoctorAppointment.DoctorID = :DoctorID AND
-				   DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
-				   Appointment.PatientID=Patient.PatientID AND
-				   Patient.UserID=UserInformation.UserID AND
-				   Appointment.Appointment_Date = curdate();
+                FROM UserInformation, DoctorAppointment, Appointment, Patient
+                WHERE DoctorAppointment.DoctorID = :DoctorID AND
+                    DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
+                    Appointment.PatientID=Patient.PatientID AND
+                    Patient.UserID=UserInformation.UserID AND
+                    Appointment.Appointment_Date = curdate();
             "
             );
 			$stmt->bindParam(':DoctorID', $DoctorID);

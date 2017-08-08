@@ -217,7 +217,6 @@
 					]
 				);
             ?>
-			<
         </div>
 		<div id="Doctor-Daily-Appointments" class="tab-pane fade in">
 		    <?php
@@ -234,7 +233,6 @@
 					]
 				);
             ?>
-			<
         </div>
 	
 	</div>
