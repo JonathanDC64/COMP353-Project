@@ -1,4 +1,5 @@
 <?php
+    session_start();
     set_include_path("/COMP353-Project/PHP/includes");
     if(!isset($connection)){
         include_once ($_SERVER["DOCUMENT_ROOT"] . "/COMP353-Project/PHP/includes/database/database_connect.php");
