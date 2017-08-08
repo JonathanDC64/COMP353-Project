@@ -37,7 +37,7 @@
 											FROM Patient, User, UserInformation 
 												WHERE Patient.UserID = User.UserID 
                                                 AND User.UserID = UserInformation.UserID
-                                                AND (User.UserID = :UserID OR Patient.PatientID = :UserID)");
+                                                AND (User.UserID = :UserID OR Patient.UserID = :UserID)");
             $stmt->bindParam(':UserID', $UserID);					
 			$stmt->execute();
 			
