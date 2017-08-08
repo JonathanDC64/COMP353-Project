@@ -23,6 +23,7 @@
                             <th>Appointment Date</th>
                             <?php if(AccessRights::require_admin_receptionist_access()): ?>
                             <th>Make Payment</th>
+                            <th>Update</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                                 <td><?= $DoctorReservation["Appointment_Date"]; ?></td>
                                 <?php if(AccessRights::require_admin_receptionist_access()): ?>
                                 <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>">Make Payment</a></td>
+                                <td><a class="btn btn-info" href="update_appointment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>&Type=Doctor&PatientID=<?= $PatientID; ?>">Update</a></td>
                                 <?php endif; ?>
                             </tr>
                         <?php } ?>
@@ -52,6 +54,7 @@
                             <th>Appointment Date</th>
                             <?php if(AccessRights::require_admin_receptionist_access()): ?>
                             <th>Make Payment</th>
+                            <th>Update</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -64,6 +67,7 @@
                                 <td><?= $TherapistReservation["Appointment_Date"]; ?></td>
                                 <?php if(AccessRights::require_admin_receptionist_access()): ?>
                                 <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $TherapistReservation["AppointmentID"];?>">Make Payment</a></td>
+                                <td><a class="btn btn-info" href="update_appointment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>&Type=Therapist&PatientID=<?= $PatientID; ?>">Update</a></td>
                                 <?php endif; ?>
                             </tr>
                         <?php } ?>
