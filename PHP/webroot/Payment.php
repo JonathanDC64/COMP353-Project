@@ -11,8 +11,9 @@
 ?>
 
         <div id="content">
+            <h1 class="text-center">Payment for Appointment <?= $AppointmentID?></h1>
             <?php
-                FormGenerator::generate_form("Payment for Appointment #$AppointmentID", "../includes/Payment/PaymentRegistration.php", "",
+                FormGenerator::generate_form("Make Payment", "../includes/Payment/PaymentRegistration.php", "",
                     [
                         FormGenerator::generate_element("Payment_Type", "select", 
                         [

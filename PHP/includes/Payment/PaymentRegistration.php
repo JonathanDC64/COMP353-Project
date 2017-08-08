@@ -3,7 +3,6 @@
     include_once("../database/database_connect.php");
     include_once("Payment.php");
 
-    
     if(isset($_REQUEST["submitted"])){
         
         $errors = array();
