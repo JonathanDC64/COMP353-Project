@@ -32,7 +32,7 @@
 
 <div id="content">
     <?php
-        FormGenerator::generate_form("Doctor Appointment Registration", "../includes/DoctorAppointment/DoctorAppointmentRegistration.php", "Registration Succeeded",
+        FormGenerator::generate_form("Doctor Patient Appointment Update", "../includes/DoctorAppointment/DoctorAppointmentRegistration.php", "Registration Succeeded",
             [
 				FormGenerator::generate_element("Note", "text", [$DocNote]),
 				FormGenerator::generate_element("Diagnosis", "text", [$DocDiagnosis])

@@ -61,10 +61,12 @@
         elseif($User->Role == "Doctor" || $User->Role == "Therapist"){
             $Appointment = null;
             $validated = false;
+            $UpdateButton = null;
             if($User->Role == "Doctor"){
                 $DoctorID = User::retrieve_doctor($User->UserID);
                 $Appointment = Appointment::get_doctor_patient_appointment($AppointmentID)[0];
                 $Prescription = Appointment::get_doctor_prescription($AppointmentID)[0];
+                $UpdateButton = "DoctorAppointment";
                 if(Appointment::validate_doctor_appointment($AppointmentID, $DoctorID)){
                     $validated = true;
                 }
@@ -73,7 +75,7 @@
                 $TherapistID = User::retrieve_therapist($User->UserID)["TherapistID"];
                 $Appointment = Appointment::get_therapist_patient_appointment($AppointmentID)[0];
                 $Prescription = Appointment::get_therapist_prescription($AppointmentID);
-                
+                $UpdateButton = "TherapistAppointment";
                 if(Appointment::validate_therapist_appointment($AppointmentID, $TherapistID)){
                     $validated = true;
                 }
@@ -84,6 +86,7 @@
 ?>
                 <div id="content">
                     <h2>My <?= $User->Role; ?> Appointment</h2>
+                    <a href="<?= $UpdateButton; ?>.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class='btn btn-info' role='button'>Update Record</a>						
                     <table class="table well">
                         <tr>
                             <td><strong>Appointment ID:</strong></td>

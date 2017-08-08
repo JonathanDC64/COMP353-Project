@@ -19,7 +19,7 @@
 		$TherapistAppointmentID = $_SESSION['TherapistAppointmentID'];
 		
         $Therapist_Appointment= $TherapistAppointmentID;
- 
+
 		$Note = "";
 		if(isset($_POST["Note"])){
 			$Note = $_POST["Note"];
@@ -92,5 +92,6 @@
 		TherapistAppointment::create_therapist_appointment($Therapist_Appointment,$PrescriptionID,$TreatmentID);
 		
         $connection->commit();
+		echo "Patient Information Updated Successfully.";
     }
 ?>

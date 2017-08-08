@@ -38,7 +38,7 @@
 
 <div id="content">
     <?php
-        FormGenerator::generate_form("Therapist Appointment Registration", "../includes/TherapistAppointment/TherapistAppointmentRegistration.php", "Registration Succeeded",
+        FormGenerator::generate_form("Therapist Patient Appointment Update", "../includes/TherapistAppointment/TherapistAppointmentRegistration.php", "Registration Succeeded",
             [
 				FormGenerator::generate_element("Note", "text", [$TheNote]),
 				FormGenerator::generate_element("Diagnosis", "text", [$TheDiagnosis]),

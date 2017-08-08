@@ -50,7 +50,8 @@
                                 <div class='form-group'>
                                     <label class='control-label' for='$ID_Title'></label>
                                     <input type='button' class='btn btn-success btn-block' role='button' id='$ID_Title' value='$DisplayTitle'>
-                                    <div id='$ID_Title-output'></div>
+                                    <br />
+                                    <div id='$ID_Title-output' class='well'></div>
                                 </div>
                             </form>
                         </div>

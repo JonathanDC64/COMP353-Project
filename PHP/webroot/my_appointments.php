@@ -100,20 +100,20 @@
                             <a href="my_appointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">View Details</a>
                         </td>
 						<td>
-						  <?php 
-							  if($User->Role=="Doctor")
-							  {?>
-										<div class="col-sm-offset-2 col-lg-4">
-										  <a href="DoctorAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
-										</div>	
-					    <?php } 
-		             	      elseif($User->Role=="Therapist")
-						      {?>
-										<div class="col-sm-offset-2 col-lg-4">
-										  <a href="TherapistAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
-										</div>	
-					     <?php }?>
-						 </td>
+                            <?php   if($User->Role=="Doctor"){ ?>
+                                            <div class="col-sm-offset-2 col-lg-4">
+                                                <a href="DoctorAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
+                                            </div>	
+                            <?php 
+                                    } 
+                                    elseif($User->Role=="Therapist"){ ?>
+                                            <div class="col-sm-offset-2 col-lg-4">
+                                                <a href="TherapistAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
+                                            </div>	
+                            <?php 
+                                    }
+                            ?>
+						</td>
                     </tr>
                 <?php } ?>
             </tbody>
