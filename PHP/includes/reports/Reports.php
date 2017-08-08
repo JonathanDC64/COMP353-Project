@@ -201,5 +201,22 @@
             }
             return $availabilities;
         }
+
+        //#8
+        public static function num_patients(){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT COUNT(PatientID) AS Patient_Count
+                FROM Patient
+            "
+            );
+
+            $stmt->execute();
+
+            $row = $stmt->fetch();
+
+            return $row["Patient_Count"];
+        }
+
     }
 ?>

@@ -105,6 +105,7 @@
         <li class="active"><a data-toggle="tab" href="#Working-Therapist-List">Working Therapist List</a></li>
         <li><a data-toggle="tab" href="#Patient-Reservations">Patient Reservations</a></li>
         <li><a data-toggle="tab" href="#Doctor-Therapist-Availabilities">Doctor/Therapist-Availabilities</a></li>
+        <li><a data-toggle="tab" href="#Patient-Count">Number Of Patients</a></li>
     </ul>
     <div class="tab-content well">
         <div id="Working-Therapist-List" class="tab-pane fade in active">
@@ -188,6 +189,12 @@
                 </div>
             </div>
 		</div>
+        <div id="Patient-Count" class="tab-pane fade in">
+            <?php
+                $NumPatients = Reports::num_patients();
+            ?>
+            <h1>There are a total of <?= $NumPatients; ?> patients registered at the center.</h1>
+        </div>
     </div>
 </div>
 
