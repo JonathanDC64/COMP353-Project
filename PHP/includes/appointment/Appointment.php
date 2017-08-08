@@ -284,6 +284,64 @@
 			return $diff;
 		}
 		
+		public static function multiple_appointment_patient($PatientID,$Appointment_Date)
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT Appointment_Date 
+											FROM Appointment
+                                            WHERE PatientID = :PatientID AND
+												  Appointment_Date = :Appointment_Date");
+			
+			$stmt->bindParam(':PatientID', $PatientID);		
+			$stmt->bindParam(':Appointment_Date', $Appointment_Date);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            return $stmt->rowCount() > 0;
+		}
+		
+		public static function multiple_appointment_doctor($DoctorID,$Appointment_Date)
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT Appointment_Date 
+											FROM DoctorAppointment, Appointment
+                                            WHERE DoctorAppointment.DoctorID = :DoctorID AND
+												  Appointment.Appointment_Date = :Appointment_Date");
+			
+			$stmt->bindParam(':DoctorID', $DoctorID);		
+			$stmt->bindParam(':Appointment_Date', $Appointment_Date);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            return $stmt->rowCount() > 0;
+		}
+		
+		public static function multiple_appointment_therapist($TherapistID,$Appointment_Date)
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT Appointment_Date 
+											FROM TherapistAppointment, Appointment
+                                            WHERE TherapistAppointment.TherapistID = :TherapistID AND
+												  Appointment.Appointment_Date = :Appointment_Date");
+			
+			$stmt->bindParam(':TherapistID', $TherapistID);		
+			$stmt->bindParam(':Appointment_Date', $Appointment_Date);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            return $stmt->rowCount() > 0;
+		}
+		
+		public static function retrieve_patientID($UserID)
+		{
+			global $connection;
+			$stmt = $connection->prepare("SELECT PatientID 
+											FROM Patient
+                                            WHERE Patient.UserID = :UserID");
+			
+			$stmt->bindParam(':UserID', $UserID);		
+            $stmt->execute();
+            $row = $stmt->fetch();
+			return $row["PatientID"];
+		}
+		
 			
 	}
 ?>

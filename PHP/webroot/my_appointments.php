@@ -9,10 +9,26 @@
     include_once ('../includes/appointment/Appointment.php');
 
     $User = User::get_user_info();
-
+	
+	$Doctors = User::retrieve_doctors();
+	$Doctors_Select = array();
+	foreach($Doctors as $Doctor){
+		array_push($Doctors_Select, [$Doctor["DoctorID"], $Doctor["First_Name"] . " " . $Doctor["Last_Name"]]);
+	}
+	
+	$Therapists = User::retrieve_therapists();
+	$Therapist_Select = array();
+	foreach($Therapists as $Therapist){
+		array_push($Therapist_Select, [$Therapist["TherapistID"], $Therapist["First_Name"] . " " . $Therapist["Last_Name"]]);
+	}
+	
     if($User->Role == "Patient"){
         $Patient_Appointment_DR  = Appointment::get_patient_appointment_doctor();
         $Patient_Appointment_TH = Appointment::get_patient_appointment_therapist();
+		
+		$PatientID=Appointment::retrieve_patientID($User->UserID);
+		$_SESSION['PatientID']=$PatientID;
+		
 ?> 
         <h1>My Appointments</h1>
         <div id="content">
@@ -22,7 +38,18 @@
             </ul>
             <div class="tab-content well">
                 <div id="Doctor-Appointments" class="tab-pane fade in active">
-                    <h2>Doctor Appointments</h2>
+                 
+						<div id="Doctor">
+							<?php
+								FormGenerator::generate_form("Add Doctor Appointment", "../includes/appointment/patient_AppointmentScheduling.php", "Doctor Appointment added Succeeded",
+								[
+									FormGenerator::generate_element("Appointment_Date", "date", []),
+									FormGenerator::generate_element("Doctor_ID", "select", $Doctors_Select)
+								]
+							);
+							?>
+					</div>
+					   <h2 class="text-center">Doctor Appointments</h2>
                     <table class="table well">
                         <thead>
                             <tr>
@@ -45,7 +72,18 @@
                     </table>
                 </div>
                 <div  id="Therapist-Appointments" class="tab-pane fade in">
-                    <h2>Therapist Appointments</h2>
+
+							<div id="Therapist">
+							<?php
+								FormGenerator::generate_form("Add Therapist Appointment", "../includes/appointment/patient_AppointmentScheduling.php", "Therapist Appointment added Succeeded",
+								[
+									FormGenerator::generate_element("Appointment_Date", "date", []),
+									FormGenerator::generate_element("Therapist_ID", "select", $Therapist_Select)
+								]
+							);
+							?>
+						</div>
+					<h2 class="text-center">Therapist Appointments</h2>
                     <table class="table well">
                         <thead>
                             <tr>
@@ -100,20 +138,20 @@
                             <a href="my_appointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">View Details</a>
                         </td>
 						<td>
-                            <?php   if($User->Role=="Doctor"){ ?>
-                                            <div class="col-sm-offset-2 col-lg-4">
-                                                <a href="DoctorAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
-                                            </div>	
-                            <?php 
-                                    } 
-                                    elseif($User->Role=="Therapist"){ ?>
-                                            <div class="col-sm-offset-2 col-lg-4">
-                                                <a href="TherapistAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
-                                            </div>	
-                            <?php 
-                                    }
-                            ?>
-						</td>
+						  <?php 
+							  if($User->Role=="Doctor")
+							  {?>
+										<div class="col-sm-offset-2 col-lg-4">
+										  <a href="DoctorAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
+										</div>	
+					    <?php } 
+		             	      elseif($User->Role=="Therapist")
+						      {?>
+										<div class="col-sm-offset-2 col-lg-4">
+										  <a href="TherapistAppointment.php?AppointmentID=<?= $Appointment["AppointmentID"]; ?>&Type=<?= $User->Role; ?>" class="btn btn-info" role="button">Update Record</a>						
+										</div>	
+					     <?php }?>
+						 </td>
                     </tr>
                 <?php } ?>
             </tbody>
