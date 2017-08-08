@@ -99,7 +99,8 @@
                 INNER JOIN Doctor USING(DoctorID)
                 INNER JOIN User ON Doctor.UserID = User.UserID
                 INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
-                WHERE PatientID = :PatientID;
+                WHERE PatientID = :PatientID
+                ORDER BY Appointment_Date ASC
             "
             );
 
@@ -119,7 +120,8 @@
                 INNER JOIN Therapist USING(TherapistID)
                 INNER JOIN User ON Therapist.UserID = User.UserID
                 INNER JOIN UserInformation ON User.UserID = UserInformation.UserID
-                WHERE PatientID = :PatientID;
+                WHERE PatientID = :PatientID
+                ORDER BY Appointment_Date ASC
             "
             );
 

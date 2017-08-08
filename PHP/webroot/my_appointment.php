@@ -83,7 +83,7 @@
                 $Prescription = count($Prescription) > 0 ? $Prescription[0] : null;
 ?>
                 <div id="content">
-                    <h2>My <?= $User->Role; ?> Appointments</h2>
+                    <h2>My <?= $User->Role; ?> Appointment</h2>
                     <table class="table well">
                         <tr>
                             <td><strong>Appointment ID:</strong></td>

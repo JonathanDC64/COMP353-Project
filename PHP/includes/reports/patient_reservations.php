@@ -1,8 +1,11 @@
 <?php
+    set_include_path("/COMP353-Project/PHP/includes");
     if(!isset($connection)){
-        include_once ("../database/database_connect.php");
+        include_once ($_SERVER["DOCUMENT_ROOT"] . "/COMP353-Project/PHP/includes/database/database_connect.php");
     }
     
+    include_once($_SERVER["DOCUMENT_ROOT"] . '/COMP353-Project/PHP/includes/authentication/AccessRights.php');
+
     include_once ('Reports.php');
     if(isset($_POST["Patient"])){
         $PatientID = $_POST["Patient"];
@@ -18,7 +21,9 @@
                             <th>Doctor ID</th>
                             <th>Doctor Name</th>
                             <th>Appointment Date</th>
+                            <?php if(AccessRights::require_admin_receptionist_access()): ?>
                             <th>Make Payment</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,7 +33,9 @@
                                 <td><?= $DoctorReservation["DoctorID"]; ?></td>
                                 <td><?= $DoctorReservation["Doctor_Name"]; ?></td>
                                 <td><?= $DoctorReservation["Appointment_Date"]; ?></td>
+                                <?php if(AccessRights::require_admin_receptionist_access()): ?>
                                 <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $DoctorReservation["AppointmentID"];?>">Make Payment</a></td>
+                                <?php endif; ?>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -43,7 +50,9 @@
                             <th>Therapist ID</th>
                             <th>Therapist Name</th>
                             <th>Appointment Date</th>
+                            <?php if(AccessRights::require_admin_receptionist_access()): ?>
                             <th>Make Payment</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +62,9 @@
                                 <td><?= $TherapistReservation["TherapistID"]; ?></td>
                                 <td><?= $TherapistReservation["Therapist_Name"]; ?></td>
                                 <td><?= $TherapistReservation["Appointment_Date"]; ?></td>
+                                <?php if(AccessRights::require_admin_receptionist_access()): ?>
                                 <td><a class="btn btn-primary" href="Payment.php?AppointmentID=<?= $TherapistReservation["AppointmentID"];?>">Make Payment</a></td>
+                                <?php endif; ?>
                             </tr>
                         <?php } ?>
                     </tbody>
