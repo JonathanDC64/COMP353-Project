@@ -11,7 +11,7 @@
 
         // Get User data
         $Username = "";
-        if(isset($_POST["Username"])){
+        if(isset($_POST["Username"]) && !empty($_POST["Username"])){
             $Username = $_POST["Username"];
         }
         else{
@@ -23,7 +23,7 @@
         }
 
         $Password = "";
-        if(isset($_POST["Password"])){
+        if(isset($_POST["Password"]) && !empty($_POST["Password"])){
             $Password = password_hash($_POST["Password"], PASSWORD_DEFAULT);
         }
         else{
@@ -31,18 +31,30 @@
         }
 
         $Role = "";
-        if(isset($_POST["Role"])){
+        if(isset($_POST["Role"]) && !empty($_POST["Role"])){
             $Role = $_POST["Role"]; # Access rights
         }
         else{
             array_push($errors, "Role is required");
         }
 
+		if($Role=="Patient")
+		{
+			$Referral = "";
+			if(isset($_POST["Referral"]) && !empty($_POST["Referral"])){
+				$Referral = $_POST["Referral"];
+			}
+			else{
+				array_push($errors, "Referral number is required");
+			}
+		}
+		
+
         $DoctorExperience = 6;
         $TherapistExperience = 2;
 
         $Experience = 0;
-        if(isset($_POST["Experience"])){
+        if(isset($_POST["Experience"]) && !empty($_POST["Experience"])){
             $Exp = intval($_POST["Experience"]);
             if($Role == User::Doctor){
                 if($Exp >= $DoctorExperience){
@@ -64,7 +76,7 @@
 
         // Get UserInformation data
         $First_Name = "";
-        if(isset($_POST["First_Name"])){
+        if(isset($_POST["First_Name"]) && !empty($_POST["First_Name"])){
             $First_Name = $_POST["First_Name"];
         }
         else{
@@ -72,7 +84,7 @@
         }
 
         $Last_Name = "";
-        if(isset($_POST["Last_Name"])){
+        if(isset($_POST["Last_Name"]) && !empty($_POST["Last_Name"])){
             $Last_Name = $_POST["Last_Name"];
         }
         else{
@@ -80,7 +92,7 @@
         }
 
         $Phone_Number = "";
-        if(isset($_POST["Phone_Number"])){
+        if(isset($_POST["Phone_Number"]) && !empty($_POST["Phone_Number"])){
             $Phone_Number = $_POST["Phone_Number"];
         }
         else{
@@ -90,7 +102,7 @@
 
         // Must be at least 18 years old
         $Age = "";
-        if(isset($_POST["Age"])){
+        if(isset($_POST["Age"]) && !empty($_POST["Username"])){
             if(intval($_POST["Age"]) >= 18){
                 $Age = $_POST["Age"];
             }
