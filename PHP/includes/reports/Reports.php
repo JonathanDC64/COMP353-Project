@@ -217,6 +217,44 @@
 
             return $row["Patient_Count"];
         }
+		
+		//#9
+		public static function therapist_current_appointment($TherapistID){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+			 FROM UserInformation, TherapistAppointment, Appointment, Patient
+			 WHERE TherapistAppointment.TherapistID = :TherapistID AND
+				   TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
+				   Appointment.PatientID=Patient.PatientID AND
+				   Patient.UserID=UserInformation.UserID AND
+				   Appointment.Appointment_Date = curdate();
+            "
+            );
+			$stmt->bindParam(':TherapistID', $TherapistID);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
+		
+		//#10
+		public static function doctor_current_appointment($DoctorID){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+			 FROM UserInformation, DoctorAppointment, Appointment, Patient
+			 WHERE DoctorAppointment.DoctorID = :DoctorID AND
+				   DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
+				   Appointment.PatientID=Patient.PatientID AND
+				   Patient.UserID=UserInformation.UserID AND
+				   Appointment.Appointment_Date = curdate();
+            "
+            );
+			$stmt->bindParam(':DoctorID', $DoctorID);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
+		
+		
 
     }
 ?>
