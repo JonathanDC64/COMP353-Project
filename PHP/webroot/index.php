@@ -1,9 +1,8 @@
 <?php 
-$pageTitle = 'Home';
-include('../includes/header.php'); 
-//include_once('../includes/table/TableGenerator.php');
-include_once('../includes/authentication/AccessRights.php');
-include_once('../includes/authentication/User.php');
+    $pageTitle = 'Home';
+    include ('../includes/header.php'); 
+    include_once ('../includes/authentication/AccessRights.php');
+    include_once ('../includes/authentication/User.php');
 ?>
     <div id="content">
         <div class="container">

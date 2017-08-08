@@ -61,6 +61,7 @@
 										<li><a href="registration.php">Registration</a></li>
 										<li><a href="appointment.php">Appointment</a></li>
 										<li><a href="patients.php">Patients</a></li>
+										<li><a href="staff.php">Staff</a></li>
 									</ul>
 								</li>
 							<?php endif; ?>

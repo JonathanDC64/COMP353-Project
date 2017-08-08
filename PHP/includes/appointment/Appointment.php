@@ -2,7 +2,48 @@
 	//create function doctor,therapist function
 	//get,update insert appointment
 	class Appointment
-	{	
+	{
+		public static function update_doctor_appointment($AppointmentID, $AppointmentDate, $DoctorID){
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'UPDATE DoctorAppointment 
+				SET DoctorID = :DoctorID
+				WHERE AppointmentID = :AppointmentID'
+			);
+			$sql->bindParam(':DoctorID', intval($DoctorID));
+			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+			Appointment::update_appointment($AppointmentID, $AppointmentDate);
+		}
+
+		public static function update_therapist_appointment($AppointmentID, $AppointmentDate, $TherapistID){
+			global $connection;
+			
+			$sql = $connection->prepare(
+			'UPDATE TherapistAppointment 
+				SET TherapistID = :TherapistID
+				WHERE AppointmentID = :AppointmentID'
+			);
+			$sql->bindParam(':TherapistID', intval($TherapistID));
+			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+			Appointment::update_appointment($AppointmentID, $AppointmentDate);
+		}
+
+		private static function update_appointment($AppointmentID, $AppointmentDate){
+			global $connection;
+
+			$sql = $connection->prepare(
+			'UPDATE Appointment 
+				SET Appointment_Date = :Appointment_Date
+				WHERE AppointmentID = :AppointmentID'
+			);
+			$sql->bindParam(':Appointment_Date', $AppointmentDate);
+			$sql->bindParam(':AppointmentID', intval($AppointmentID));
+			$sql->execute();
+		}
+
 		public static function get_patient_appointment_doctor($PatientID)
 		{
 			global $connection;
@@ -26,7 +67,7 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Doctor.DoctorID, Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
 				FROM Appointment 
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
@@ -74,7 +115,7 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Therapist.TherapistID, Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
 				FROM Appointment 
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
