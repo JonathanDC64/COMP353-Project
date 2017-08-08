@@ -3,7 +3,7 @@
 	//get,update insert appointment
 	class Appointment
 	{	
-		public static function get_patient_appointment_doctor()
+		public static function get_patient_appointment_doctor($PatientID)
 		{
 			global $connection;
 			
@@ -13,9 +13,10 @@
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
 				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID
+				WHERE Appointment.PatientID = :PatientID
 				ORDER BY Appointment.Appointment_Date ASC'
 			);
-			
+			$sql->bindParam(':PatientID', $PatientID);
 			$sql->execute();
 			return $sql->fetchAll();
 		}
@@ -152,7 +153,7 @@
 			return $sql->fetchAll();
 		}
 		
-		public static function get_patient_appointment_therapist(){
+		public static function get_patient_appointment_therapist($PatientID){
 			global $connection;
 			
 			$sql = $connection->prepare(
@@ -161,8 +162,9 @@
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
 				INNER JOIN userinformation ON Therapist.UserID = userinformation.UserID
+				WHERE Appointment.PatientID = :PatientID
 				ORDER BY Appointment.Appointment_Date ASC');
-			
+			$sql->bindParam(':PatientID',$PatientID);
 			$sql->execute();
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}

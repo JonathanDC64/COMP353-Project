@@ -23,10 +23,10 @@
 	}
 	
     if($User->Role == "Patient"){
-        $Patient_Appointment_DR  = Appointment::get_patient_appointment_doctor();
-        $Patient_Appointment_TH = Appointment::get_patient_appointment_therapist();
-		
 		$PatientID=Appointment::retrieve_patientID($User->UserID);
+        $Patient_Appointment_DR  = Appointment::get_patient_appointment_doctor($PatientID);
+        $Patient_Appointment_TH = Appointment::get_patient_appointment_therapist($PatientID);
+		
 		$_SESSION['PatientID']=$PatientID;
 		
 ?> 
