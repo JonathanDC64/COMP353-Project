@@ -305,6 +305,7 @@
 			$stmt = $connection->prepare("SELECT Appointment_Date 
 											FROM DoctorAppointment, Appointment
                                             WHERE DoctorAppointment.DoctorID = :DoctorID AND
+												  DoctorAppointment.AppointmentID = Appointment.AppointmentID AND
 												  Appointment.Appointment_Date = :Appointment_Date");
 			
 			$stmt->bindParam(':DoctorID', $DoctorID);		
@@ -320,6 +321,7 @@
 			$stmt = $connection->prepare("SELECT Appointment_Date 
 											FROM TherapistAppointment, Appointment
                                             WHERE TherapistAppointment.TherapistID = :TherapistID AND
+												  TherapistAppointment.AppointmentID = Appointment.AppointmentID AND
 												  Appointment.Appointment_Date = :Appointment_Date");
 			
 			$stmt->bindParam(':TherapistID', $TherapistID);		

@@ -50,12 +50,10 @@
 						{	
 							if(Appointment::multiple_appointment_doctor($_POST["Doctor_ID"],$enteredDate))
 							{
-								echo "Here1";
 								array_push($errors, "Doctor is busy on said day. Please chose another date or doctor");
 							}
 							else
 							{
-								echo "Here2";
 								$previousID = Appointment::book_appointment($PatientID,$_POST["Appointment_Date"]);
 								Appointment::book_doctor_appointment($previousID,$_POST["Doctor_ID"],null);
 										
