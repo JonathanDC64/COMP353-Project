@@ -44,10 +44,10 @@
 
 		$connection->beginTransaction();
 
-
 		$PrescriptionID=DoctorAppointment::create_prescription($Note,$Diagnosis);
 		DoctorAppointment::create_doctor_appointment($Doctor_Appointment,$PrescriptionID);
 		
         $connection->commit();
+		echo "Patient Information Updated Successfully.";
     }
 ?>

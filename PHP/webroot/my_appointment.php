@@ -65,7 +65,7 @@
             if($User->Role == "Doctor"){
                 $DoctorID = User::retrieve_doctor($User->UserID);
                 $Appointment = Appointment::get_doctor_patient_appointment($AppointmentID)[0];
-                $Prescription = Appointment::get_doctor_prescription($AppointmentID)[0];
+                $Prescription = Appointment::get_doctor_prescription($AppointmentID);
                 $UpdateButton = "DoctorAppointment";
                 if(Appointment::validate_doctor_appointment($AppointmentID, $DoctorID)){
                     $validated = true;
