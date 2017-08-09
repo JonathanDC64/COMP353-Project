@@ -1,7 +1,5 @@
-    
-    
 <?php 
-    include ('../includes/header.php'); 
+    include_once ('../includes/header.php'); 
     include_once ('../includes/authentication/AccessRights.php'); 
     include_once ('../includes/authentication/User.php');
     include_once ('../includes/form/FormGenerator.php');
@@ -41,7 +39,7 @@
                  
 						<div id="Doctor">
 							<?php
-								FormGenerator::generate_form("Add Doctor Appointment", "../includes/appointment/patient_AppointmentScheduling.php", "Doctor Appointment added Succeeded",
+								FormGenerator::generate_form("Add Doctor Appointment", "../includes/appointment/patient_appointmentScheduling.php", "Doctor Appointment added Succeeded",
 								[
 									FormGenerator::generate_element("Appointment_Date", "date", []),
 									FormGenerator::generate_element("Doctor_ID", "select", $Doctors_Select)
@@ -75,7 +73,7 @@
 
 							<div id="Therapist">
 							<?php
-								FormGenerator::generate_form("Add Therapist Appointment", "../includes/appointment/patient_AppointmentScheduling.php", "Therapist Appointment added Succeeded",
+								FormGenerator::generate_form("Add Therapist Appointment", "../includes/appointment/patient_appointmentScheduling.php", "Therapist Appointment added Succeeded",
 								[
 									FormGenerator::generate_element("Appointment_Date", "date", []),
 									FormGenerator::generate_element("Therapist_ID", "select", $Therapist_Select)

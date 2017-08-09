@@ -9,6 +9,7 @@
     if(isset($_GET["AppointmentID"], $_GET["Type"]) && !empty($_GET["AppointmentID"])&& !empty($_GET["Type"])){
         $AppointmentID = $_GET["AppointmentID"];
         $Type = $_GET["Type"];
+		
         if($User->Role == "Patient"){
             $PatientID = User::retrieve_patient($UserID)["PatientID"];
             //validate that user is patient
@@ -108,7 +109,7 @@
             $validated = false;
             $UpdateButton = null;
             if($User->Role == "Doctor"){
-                $DoctorID = User::retrieve_doctor($User->UserID);
+                $DoctorID = User::retrieve_doctor($User->UserID)["DoctorID"];
                 $Appointment = Appointment::get_doctor_patient_appointment($AppointmentID)[0];
                 $Prescription = Appointment::get_doctor_prescription($AppointmentID);
                 $UpdateButton = "DoctorAppointment";
@@ -207,6 +208,7 @@
 				}
             }
             else{
+			
                 echo "This is not your appointment.";
             }
         }
