@@ -15,8 +15,7 @@
 			$diff=Appointment::appointment_time_constraint($enteredDate);
 			$diffStringSign=$diff->format("%R");
 			$diffStringValue=$diff->format("%a");
-			
-			if($diffStringSign=="-")
+			if(($diffStringSign . $diffStringValue) < -1)
 			{
 				array_push($errors, "Appointment can not be in the past!");
 			}

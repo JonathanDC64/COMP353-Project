@@ -223,12 +223,12 @@
             global $connection;
             $stmt = $connection->prepare(
             "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
-			 FROM UserInformation, TherapistAppointment, Appointment, Patient
-			 WHERE TherapistAppointment.TherapistID = :TherapistID AND
-				   TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
-				   Appointment.PatientID=Patient.PatientID AND
-				   Patient.UserID=UserInformation.UserID AND
-				   Appointment.Appointment_Date = curdate();
+			    FROM UserInformation, TherapistAppointment, Appointment, Patient
+                WHERE TherapistAppointment.TherapistID = :TherapistID AND
+                    TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
+                    Appointment.PatientID=Patient.PatientID AND
+                    Patient.UserID=UserInformation.UserID AND
+                    Appointment.Appointment_Date = curdate();
             "
             );
 			$stmt->bindParam(':TherapistID', $TherapistID);
@@ -241,12 +241,12 @@
             global $connection;
             $stmt = $connection->prepare(
             "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
-			 FROM UserInformation, DoctorAppointment, Appointment, Patient
-			 WHERE DoctorAppointment.DoctorID = :DoctorID AND
-				   DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
-				   Appointment.PatientID=Patient.PatientID AND
-				   Patient.UserID=UserInformation.UserID AND
-				   Appointment.Appointment_Date = curdate();
+                FROM UserInformation, DoctorAppointment, Appointment, Patient
+                WHERE DoctorAppointment.DoctorID = :DoctorID AND
+                    DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
+                    Appointment.PatientID=Patient.PatientID AND
+                    Patient.UserID=UserInformation.UserID AND
+                    Appointment.Appointment_Date = curdate();
             "
             );
 			$stmt->bindParam(':DoctorID', $DoctorID);
@@ -254,7 +254,22 @@
             return $stmt->fetchAll();
         }
 		
-		
+		//#11
+		public static function patient_current_appointment($PatientID){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT Appointment.AppointmentID, userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+                FROM Patient
+                INNER JOIN Appointment USING(PatientID)
+                INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
+                WHERE Appointment.PatientID = :PatientID 
+                AND Appointment.Appointment_Date = curdate()
+            "
+            );
+			$stmt->bindParam(':PatientID', $PatientID);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
 
     }
 ?>
