@@ -222,7 +222,7 @@
 		public static function therapist_current_appointment($TherapistID){
             global $connection;
             $stmt = $connection->prepare(
-            "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+            "SELECT UserInformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
 			    FROM UserInformation, TherapistAppointment, Appointment, Patient
                 WHERE TherapistAppointment.TherapistID = :TherapistID AND
                     TherapistAppointment.AppointmentID=Appointment.AppointmentID AND
@@ -240,7 +240,7 @@
 		public static function doctor_current_appointment($DoctorID){
             global $connection;
             $stmt = $connection->prepare(
-            "SELECT userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+            "SELECT UserInformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
                 FROM UserInformation, DoctorAppointment, Appointment, Patient
                 WHERE DoctorAppointment.DoctorID = :DoctorID AND
                     DoctorAppointment.AppointmentID=Appointment.AppointmentID AND
@@ -258,7 +258,7 @@
 		public static function patient_current_appointment($PatientID){
             global $connection;
             $stmt = $connection->prepare(
-            "SELECT Appointment.AppointmentID, userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+            "SELECT Appointment.AppointmentID, UserInformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
                 FROM Patient
                 INNER JOIN Appointment USING(PatientID)
                 INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
