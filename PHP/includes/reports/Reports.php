@@ -254,7 +254,22 @@
             return $stmt->fetchAll();
         }
 		
-		
+		//#11
+		public static function patient_current_appointment($PatientID){
+            global $connection;
+            $stmt = $connection->prepare(
+            "SELECT Appointment.AppointmentID, userinformation.First_Name, UserInformation.Last_Name, Patient.PatientID, Appointment.Appointment_Date
+                FROM Patient
+                INNER JOIN Appointment USING(PatientID)
+                INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
+                WHERE Appointment.PatientID = :PatientID 
+                AND Appointment.Appointment_Date = curdate()
+            "
+            );
+			$stmt->bindParam(':PatientID', $PatientID);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
 
     }
 ?>

@@ -200,6 +200,7 @@
 	<ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#Therapist-Daily-Appointments">Therapist Daily Appointments</a></li>
         <li><a data-toggle="tab" href="#Doctor-Daily-Appointments">Doctor Daily Appointments</a></li>
+        <li><a data-toggle="tab" href="#Patient-Daily-Appointments">Patient Daily Appointments</a></li>
     </ul>
     <div class="tab-content well">
 		<div id="Therapist-Daily-Appointments" class="tab-pane fade in active">
@@ -208,7 +209,7 @@
                 $Therapist_Select = array();
 				
 				foreach($Therapist as $Therapist){
-                    array_push($Therapist_Select, [$Therapist["TherapistID"], $Therapist["First_Name"], $Therapist["Last_Name"]]);
+                    array_push($Therapist_Select, [$Therapist["TherapistID"], $Therapist["First_Name"] . " " .$Therapist["Last_Name"]]);
                 }
 
                 FormGenerator::generate_form("Therapist Daily Appointments", "../includes/reports/therapist_daily_appointments.php", "Search successful",
@@ -220,11 +221,11 @@
         </div>
 		<div id="Doctor-Daily-Appointments" class="tab-pane fade in">
 		    <?php
-                $Doctor = User::retrieve_doctors();
+                $Doctors = User::retrieve_doctors();
                 $Doctor_Select = array();
 				
-				foreach($Doctor as $Doctor){
-                    array_push($Doctor_Select, [$Doctor["DoctorID"], $Doctor["First_Name"], $Doctor["Last_Name"]]);
+				foreach($Doctors as $Doctor){
+                    array_push($Doctor_Select, [$Doctor["DoctorID"], $Doctor["First_Name"] . " " .$Doctor["Last_Name"]]);
                 }
 
                 FormGenerator::generate_form("Doctor Daily Appointments", "../includes/reports/doctor_daily_appointments.php", "Search successful",
@@ -234,7 +235,22 @@
 				);
             ?>
         </div>
-	
+        <div id="Patient-Daily-Appointments" class="tab-pane fade in">
+		    <?php
+                $Patients = User::retrieve_patients();
+                $Patient_Select = array();
+				
+				foreach($Patients as $Patient){
+                    array_push($Patient_Select, [$Patient["PatientID"], $Patient["First_Name"] . " " . $Patient["Last_Name"]]);
+                }
+
+                FormGenerator::generate_form("Patient Daily Appointments", "../includes/reports/patient_daily_appointments.php", "Search successful",
+					[
+						FormGenerator::generate_element("Patient", "select", $Patient_Select)
+					]
+				);
+            ?>
+        </div>
 	</div>
 </div>
 
