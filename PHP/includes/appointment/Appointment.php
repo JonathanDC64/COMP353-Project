@@ -49,11 +49,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM Appointment 
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
-				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Doctor.UserID = UserInformation.UserID
 				WHERE Appointment.PatientID = :PatientID
 				ORDER BY Appointment.Appointment_Date ASC'
 			);
@@ -67,11 +67,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Doctor.DoctorID, Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Doctor.DoctorID, Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM Appointment 
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
-				INNER JOIN userinformation ON Doctor.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Doctor.UserID = UserInformation.UserID
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
@@ -84,11 +84,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM DoctorAppointment 
 				INNER JOIN Appointment ON DoctorAppointment.AppointmentID = Appointment.AppointmentID 
 				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID 
-				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
@@ -115,11 +115,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Therapist.TherapistID, Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Therapist.TherapistID, Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM Appointment 
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
-				INNER JOIN userinformation ON Therapist.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Therapist.UserID = UserInformation.UserID
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
@@ -132,11 +132,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM TherapistAppointment 
 				INNER JOIN Appointment ON TherapistAppointment.AppointmentID = Appointment.AppointmentID 
 				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID 
-				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
 				WHERE Appointment.AppointmentID = :AppointmentID'
 			);
 			$sql->bindParam(':AppointmentID', intval($AppointmentID));
@@ -148,12 +148,12 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM Appointment 
 				INNER JOIN DoctorAppointment ON Appointment.AppointmentID = DoctorAppointment.AppointmentID 
 				INNER JOIN Doctor ON DoctorAppointment.DoctorID = Doctor.DoctorID 
 				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID
-				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
 				WHERE DoctorAppointment.DoctorID = :DoctorID
 				ORDER BY Appointment.Appointment_Date ASC'
 			);
@@ -166,12 +166,12 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name
 				FROM Appointment 
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
 				INNER JOIN Patient ON Appointment.PatientID = Patient.PatientID
-				INNER JOIN userinformation ON Patient.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Patient.UserID = UserInformation.UserID
 				WHERE TherapistAppointment.TherapistID = :TherapistID
 				ORDER BY Appointment.Appointment_Date ASC'
 			);
@@ -200,11 +200,11 @@
 			global $connection;
 			
 			$sql = $connection->prepare(
-			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,userinformation.First_Name,userinformation.Last_Name 
+			'SELECT Appointment.AppointmentID,Appointment.Appointment_Date,UserInformation.First_Name,UserInformation.Last_Name 
 				FROM Appointment 
 				INNER JOIN TherapistAppointment ON Appointment.AppointmentID = TherapistAppointment.AppointmentID 
 				INNER JOIN Therapist ON TherapistAppointment.TherapistID = Therapist.TherapistID 
-				INNER JOIN userinformation ON Therapist.UserID = userinformation.UserID
+				INNER JOIN UserInformation ON Therapist.UserID = UserInformation.UserID
 				WHERE Appointment.PatientID = :PatientID
 				ORDER BY Appointment.Appointment_Date ASC');
 			$sql->bindParam(':PatientID',$PatientID);
