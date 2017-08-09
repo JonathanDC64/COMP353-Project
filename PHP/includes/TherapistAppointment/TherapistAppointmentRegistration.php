@@ -6,7 +6,7 @@
     
     //Only execute this when form is submitted
     //Use <input type="hidden" name="submitted" value="true" />
-	
+		
     if(isset($_REQUEST["submitted"])){
         
         $errors = array();
@@ -17,8 +17,7 @@
         // Get User data
 
 		$TherapistAppointmentID = $_SESSION['TherapistAppointmentID'];
-		
-        $Therapist_Appointment= $TherapistAppointmentID;
+		$Therapist_Appointment= $TherapistAppointmentID;
 
 		$Note = "";
 		if(isset($_POST["Note"]) && !empty($_POST["Note"])){
@@ -90,8 +89,15 @@
 
 		$PrescriptionID=TherapistAppointment::create_prescription($Note,$Diagnosis);
 		TherapistAppointment::create_therapist_appointment($Therapist_Appointment,$PrescriptionID,$TreatmentID);
+		$_SESSION["PrescriptionID"]=$PrescriptionID;
+		$_SESSION["AppointmentID"]=TherapistAppointment::retrieve_appointmentID($Therapist_Appointment);
+		$_SESSION["TherapistID"]=TherapistAppointment::retrieve_therapistID($Therapist_Appointment);
+		
 		
         $connection->commit();
-		echo "Patient Information Updated Successfully.";
+		
+		echo "Patient Information Updated Successfully. <br/>";
+		echo "Would you like to add a treatment?.\n <a href='treatment.php'>Click here.</a>";
+		
     }
 ?>

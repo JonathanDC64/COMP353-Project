@@ -48,6 +48,18 @@
 			return $connection->lastInsertId();
 		}
 		
+		public static function add_treatment($AppointmentID,$TherapistID,$PrescriptionID,$TreatmentID)
+		{
+			global $connection;
+			$stmt = $connection->prepare("INSERT INTO TherapistAppointment VALUES(0,:AppointmentID,:TherapistID,:PrescriptionID,:TreatmentID)");
+			$stmt->bindParam(':AppointmentID', $AppointmentID);
+			$stmt->bindParam(':TherapistID', $TherapistID);
+			$stmt->bindParam(':PrescriptionID', $PrescriptionID);
+			$stmt->bindParam(':TreatmentID', $TreatmentID);
+			$stmt->execute();
+			return $connection->lastInsertId();
+		}
+		
 		// Check  if equipment already exists
         public static function equipment_exists($Name)
 		{
@@ -89,6 +101,24 @@
             $row = $stmt->fetch();
 			return $row["TreatmentID"];
         }	
+		
+		public static function retrieve_appointmentID($AppointmentID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT AppointmentID FROM TherapistAppointment WHERE TherapistAppointment.TherapistAppointmentID = :AppointmentID"); 
+            $stmt->bindParam(':AppointmentID', $AppointmentID);
+            $stmt->execute();
+            $row = $stmt->fetch();
+			return $row["AppointmentID"];
+        }	
+		
+		public static function retrieve_therapistID($TherapistAppointmentID){
+            global $connection;
+			$stmt = $connection->prepare("SELECT TherapistID FROM TherapistAppointment WHERE TherapistAppointment.TherapistAppointmentID = :TherapistAppointmentID"); 
+            $stmt->bindParam(':TherapistAppointmentID', $TherapistAppointmentID);
+            $stmt->execute();
+            $row = $stmt->fetch();
+			return $row["TherapistID"];
+        }
 		
 		public static function retrieve_therapist_appointmentID($AppointmentID){
             global $connection;
